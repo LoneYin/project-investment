@@ -7,7 +7,7 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import './assets/css/font-awsome-in-element.less'
-import './assets/css/index.less'
+import './assets/css/base.less'
 
 Vue.use(ElementUI)
 

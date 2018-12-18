@@ -1,5 +1,9 @@
 
-import { GET_ADVERTISEMENT_LIST, GET_DAILY_PROJECTS_LIST, GET_HOT_PROJECTS_LIST } from '../mutations-types'
+import {
+    GET_ADVERTISEMENT_LIST,
+    GET_DAILY_PROJECTS_LIST,
+    GET_HOT_PROJECTS_LIST
+} from '../mutations-types'
 import { getData } from '@/http'
 
 const store = {
@@ -10,13 +14,13 @@ const store = {
     },
     mutations: {
         [GET_ADVERTISEMENT_LIST](state, payload) {
-            state.advertisementList = {...payload.data}
+            state.advertisementList = { ...payload.data }
         },
         [GET_DAILY_PROJECTS_LIST](state, payload) {
-            state.dailyProjectsList = [...payload.data]
+            state.dailyProjectsList = [...payload.data.data]
         },
         [GET_HOT_PROJECTS_LIST](state, payload) {
-            state.hotProjectsList = [...payload.data]
+            state.hotProjectsList = [...payload.data.data]
         }
     },
     actions: {
@@ -29,7 +33,7 @@ const store = {
             res.data && commit('GET_DAILY_PROJECTS_LIST', res.data)
         },
         async getHotProjectsList({ commit }) {
-            const res = await getData('/index/project/dayProject')
+            const res = await getData('/index/project/hotProject')
             res.data && commit('GET_HOT_PROJECTS_LIST', res.data)
         }
     }
