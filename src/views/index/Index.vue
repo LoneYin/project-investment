@@ -229,11 +229,11 @@ export default {
 		])
 	},
 	created() {
-		this.getAdvertisementList()
-		this.getDailyProjectsList()
-		this.getHotProjectsList()
-		this.getAuthenticatedUsersList()
-		this.getRecommendedInvestorsList()
+		!this.advertisementList && this.getAdvertisementList()
+		!this.dailyProjectsList && this.getDailyProjectsList()
+		!this.hotProjectsList && this.getHotProjectsList()
+		!this.authenticatedUsersList && this.getAuthenticatedUsersList()
+		!this.consultInvestorsList && this.getRecommendedInvestorsList()
 	}
 }
 </script>

@@ -18,21 +18,21 @@ export const getData = (url, params) => {
     })
 }
 
-export const postData = (url, params) => {
+export const postData = (url, params, contentType) => {
     const sign = encrypt(params, authKey)
     return axios.post(server + url, params, {
         headers: {
             sign,
-            'access-user-token': getCookie('access-user-token') || ''
+            'access-user-token': getCookie('access-user-token') || '',
+            'Content-Type': contentType || 'application/json; charset=utf-8'
         }
     })
 }
 
 axios.interceptors.response.use(
 	res => {
-        debugger
         if (res.data.status === 1) {
-            return res
+            return res.data
         } else {
             Message.error(res.data.message)
             return Promise.reject(res)

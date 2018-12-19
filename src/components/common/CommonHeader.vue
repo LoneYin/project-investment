@@ -1,7 +1,7 @@
 <template>
 	<div class="common-header">
 		<div class="auth-navigator">
-			<el-menu @select="handleSelect" mode="horizontal" router>
+			<el-menu @select="handleSelect" mode="horizontal" router :default-active="activeMenu">
 				<el-menu-item index="/submit_project">提交项目</el-menu-item>
 				<el-menu-item index="/auth_investor">认证投资人</el-menu-item>
 				<template v-if="isLogin">
@@ -24,18 +24,28 @@
 import { mapState } from 'vuex'
 export default {
 	data() {
-		return {}
+		return {
+			activeMenu: ''
+		}
     },
     computed: {
         ...mapState({
-            isLogin: state =>  state.app.loginStatus,
-            currentUserData:  state => state.app.currentUserData
+            isLogin: state => state.app.loginStatus,
+            currentUserData: state => state.app.currentUserData
         })
     },
 	methods: {
 		handleSelect(index) {
-			console.log(index)
+			this.activeMenu = index
 		}
+	},
+	watch: {
+		$route(to) {
+			this.activeMenu = to.path
+		}
+	},
+	created() {
+		this.activeMenu = this.$route.path
 	}
 }
 </script>

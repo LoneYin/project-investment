@@ -38,7 +38,7 @@
 <script>
 import validator from '@/utils/validator'
 import { postData } from '@/http'
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
 	data() {
 		return {
@@ -61,24 +61,39 @@ export default {
 	},
 	methods: {
 		...mapMutations({
-			setLoginStatus: 'SET_LOGIN_STATUS'
+			setLoginStatus: 'SET_LOGIN_STATUS',
+			clearRecentMobile: 'SET_RECENT_MOBILE'
 		}),
 		...mapActions(['getCurrentUserData']),
 		handleSubmit() {
+			this.submitButtonLoading = true
 			postData('/index/login', {
 				mobile: this.formData.mobile,
 				password: this.formData.password
 			}).then(
-				res => {
-					this.$message.success('登陆成功')
-					this.setLoginStatus(res.data.data)
-					this.getCurrentUserData()
-					this.$router.push({ path: '/' })
-				},
-				err => {
-					console.log(err)
+					res => {
+						this.$message.success('登陆成功')
+						this.setLoginStatus(res.data)
+						this.getCurrentUserData()
+						this.$router.push({ path: '/' })
+					},
+					err => {
+						console.log(err)
 				}
-			)
+			).finally(() => {
+				this.submitButtonLoading = false
+			})
+		}
+	},
+	computed: {
+		...mapState({
+			recentMobile: state => state.app.recentMobile
+		})
+	},
+	mounted() {
+		if (this.recentMobile) {
+			this.formData.mobile = this.recentMobile 
+			this.clearRecentMobile()
 		}
 	}
 }

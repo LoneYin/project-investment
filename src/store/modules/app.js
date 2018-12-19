@@ -1,4 +1,4 @@
-import { SET_LOGIN_STATUS, SET_LOGOUT, GET_CURRENT_USER_DATA, SET_AUTO_LOGIN } from '../mutations-types'
+import { SET_LOGIN_STATUS, SET_LOGOUT, GET_CURRENT_USER_DATA, SET_AUTO_LOGIN, SET_RECENT_MOBILE } from '../mutations-types'
 import { setCookie, delCookie } from '@/utils/cookie'
 import { getData } from '@/http'
 
@@ -6,7 +6,8 @@ export default {
     state: {
         loginStatus: false,
         accessUserToken: '',
-        currentUserData: undefined
+        currentUserData: undefined,
+        recentMobile: ''
     },
     mutations: {
         [SET_LOGIN_STATUS](state, data) {
@@ -21,11 +22,18 @@ export default {
             delCookie('access-user-token')
         },
         [GET_CURRENT_USER_DATA](state, payload) {
-            state.currentUserData = { ...payload.data }
+            state.currentUserData = { ...payload }
         },
         [SET_AUTO_LOGIN](state, token) {
             state.loginStatus = true
             state.accessUserToken = token
+        },
+        [SET_RECENT_MOBILE](state, mobile) {
+            if (mobile) {
+                state.recentMobile = mobile
+            } else {
+                state.recentMobile = ''
+            }
         }
     },
     actions: {

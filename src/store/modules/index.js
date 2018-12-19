@@ -19,16 +19,16 @@ export default {
     },
     mutations: {
         [GET_ADVERTISEMENT_LIST](state, payload) {
-            state.advertisementList = { ...payload.data }
+            state.advertisementList = { ...payload }
         },
         [GET_DAILY_PROJECTS_LIST](state, payload) {
-            state.dailyProjectsList = [...payload.data.data]
+            state.dailyProjectsList = [...payload.data]
         },
         [GET_HOT_PROJECTS_LIST](state, payload) {
-            state.hotProjectsList = [...payload.data.data]
+            state.hotProjectsList = [...payload.data]
         },
         [GET_AUTHENTICATED_USERS_LIST](state, payload) {
-            state.authenticatedUsersList = [...payload.data.data]
+            state.authenticatedUsersList = [...payload.data]
         },
         [GET_RECOMMENDED_INVESTORS_LIST](state, payload) {
             state.consultInvestorsList = [...payload.consultInvestorsList]
@@ -76,9 +76,9 @@ export default {
                 })
             ])
             res && res.length == 3 && commit('GET_RECOMMENDED_INVESTORS_LIST', {
-                consultInvestorsList: res[0].data.data.data,
-                activeInvestorsList: res[1].data.data.data,
-                popularInvestorsList: res[2].data.data.data
+                consultInvestorsList: res[0].data.data,
+                activeInvestorsList: res[1].data.data,
+                popularInvestorsList: res[2].data.data
             })
         }
     }

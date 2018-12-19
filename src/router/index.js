@@ -8,6 +8,7 @@ import Login from '@/views/userAuth/Login.vue'
 import Register from '@/views/userAuth/Register.vue'
 import Logout from '@/views/userAuth/Logout.vue'
 import Forget from '@/views/userAuth/Forget.vue'
+import Projects from '@/views/discovery/Projects.vue'
 
 Vue.use(Router)
 
@@ -23,7 +24,7 @@ const router = new Router({
 			path: '/login',
 			name: 'login',
 			component: Login
-		},  {
+		}, {
 			path: '/register',
 			name: 'register',
 			component: Register
@@ -36,6 +37,10 @@ const router = new Router({
 			path: '/forget',
 			name: 'forget',
 			component: Forget
+		}, {
+			path: '/projects',
+			name: 'project',
+			component: Projects
 		}
 	]
 })
