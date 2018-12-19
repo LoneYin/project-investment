@@ -79,38 +79,5 @@ export default {
 </script>
 
 <style lang="less">
-.common-aside {
-	height: 100%;
-	width: 100%;
-	position: relative;
 
-	.el-menu-vertical-demo {
-		height: 100%;
-	}
-
-	.el-menu-aside {
-		height: 100%;
-    }
-    
-	.el-menu-item-group__title,
-	.el-submenu,
-	.el-menu-item {
-		text-align: left;
-	}
-
-	.main-container-copyright {
-		position: absolute;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		text-align: center;
-		font-size: 12px;
-		line-height: 24px;
-		color: rgb(153, 153, 153);
-		background-color: rgb(51, 55, 66);
-	}
-}
-.el-menu-item.is-active {
-    background: rgb(41, 44, 53) !important;
-}
 </style>

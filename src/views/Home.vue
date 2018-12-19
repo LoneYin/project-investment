@@ -20,12 +20,27 @@
 // @ is an alias to /src
 import CommonAside from '@/components/common/CommonAside.vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
+import { mapMutations, mapActions } from 'vuex'
+import { getCookie } from '@/utils/cookie'
 
 export default {
 	name: 'home',
 	components: {
 		CommonAside,
 		CommonHeader
+	},
+	methods: {
+		...mapMutations({
+			autoLogin: 'SET_AUTO_LOGIN'
+		}),
+		...mapActions(['getCurrentUserData'])
+	},
+	created() {
+		const token = getCookie('access-user-token')
+		if (token) {
+			this.autoLogin(token)
+			this.getCurrentUserData()
+		}
 	}
 }
 </script>

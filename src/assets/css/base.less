@@ -3,13 +3,34 @@
     padding: 0;
 }
 
-html, body, #app, .home {
+html,
+body,
+#app,
+.home {
     height: 100%;
+}
+
+ul,
+li {
+    list-style: none;
 }
 
 .no-border {
     border: 0 !important;
     border-radius: 0 !important;
+}
+
+.pull-right {
+    float: right !important;
+}
+
+.pull-left {
+    float: left !important;
+}
+
+.el-form-link {
+    text-decoration: none;
+    color: #409EFF;
 }
 
 .home {
@@ -25,3 +46,5 @@ html, body, #app, .home {
 }
 
 @import './index.less';
+@import './common.less';
+@import './userAuth.less';

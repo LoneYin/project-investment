@@ -5,6 +5,12 @@
     .index-carousel {
         height: 265px;
     }
+    .el-carousel {
+        background: #ffffff;
+        .el-carousel__button {
+            width: 18px;
+        }
+    }
 }
 
 .index-col-left {
@@ -33,6 +39,9 @@
     height: 330px;
     .el-card {
         height: 100%;
+        &>div {
+            padding-top: 10px;
+        }
     }
 }
 
@@ -43,6 +52,7 @@
         border: 1px solid #f3f6ff;
         &:hover {
             background: #f7f9fe;
+            cursor: pointer;
         }
     }
     .el-card__body {
@@ -78,6 +88,7 @@
         font-weight: 700;
     }
     .text-round_name {
+        margin-bottom: 2px;
         font-size: 14px;
     }
     .text-summary {
@@ -91,5 +102,100 @@
         padding: 2px 6px;
         margin-left: 5px;
         color: #999;
+    }
+}
+.index-users {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 330px;
+    .index-users-title {
+        border-left: 4px solid #409EFF;
+        text-align: left;
+        padding-left: 10px;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 20px;
+    }
+    .el-card {
+        height: 100%;
+    }
+    .index-users-item {
+        height: 74px;
+        margin: 10px 0;
+    }
+}
+
+.index-users-item-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 36px;
+    padding: 2px;
+    border: 1px solid #e5e5e5;
+    img {
+        width: 68px;
+        height: 68px;
+        border-radius: 34px;
+    }
+}
+.index-users-item-text {
+    margin-top: 16px;
+    text-align: left;
+    .text-full_name {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 2px;
+    }
+    .text-position {
+        font-size: 14px;
+        color: #999;
+    }
+}
+
+.index-investor-item-avatar {
+    width: 68px;
+    height: 68px;
+    border-radius: 36px;
+    padding: 2px;
+    border: 1px solid #e5e5e5;
+    margin: 0 auto;
+    img {
+        width: 68px;
+        height: 68px;
+        border-radius: 34px;
+    }
+}
+.index-investor-item  {
+    margin-top: 10px;
+    height: 252px;
+    .el-card {
+        height: 236px;
+        border: 1px solid #f3f6ff;
+        &:hover {
+            background: #f7f9fe;
+            cursor: pointer;
+        }
+    }
+}
+
+
+.index-investor-item-text {
+    margin-bottom: 20px;
+    .text-real_name {
+        margin-top: 10px;
+        line-height: 30px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    .text-position {
+        color: #999;
+        font-size: 14px;
+    }
+}
+
+.index-investors {
+    &>.el-card {
+        &>div {
+            padding-top: 10px;
+        }
     }
 }
