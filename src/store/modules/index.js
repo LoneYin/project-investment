@@ -62,15 +62,15 @@ export default {
         },
         async getRecommendedInvestorsList({ commit }) {
             const res = await Promise.all([
-                getData('/index/investor/index', {
+                getData('/index/investor/getStatus', {
                     consult: 1,
                     page_size: 4
                 }),
-                getData('/index/investor/index', {
+                getData('/index/investor/getStatus', {
                     active: 1,
                     page_size: 4
                 }), 
-                getData('/index/investor/index', {
+                getData('/index/investor/getStatus', {
                     have_the_call: 1,
                     page_size: 4
                 })

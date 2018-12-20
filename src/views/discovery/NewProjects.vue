@@ -18,7 +18,7 @@ import ProjectTable from '@/components/project/ProjectTable.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-	name: 'projects',
+	name: 'newProjects',
 	data() {
 		return {
 			selectorsData: {},
@@ -37,10 +37,10 @@ export default {
 		})
 	},
 	methods: {
-		...mapActions(['getProjectsList']),
+		...mapActions(['getNewProjectsList']),
 		getProjets(data) {
 			this.selectorsData = { ...data }
-			this.getProjectsList({
+			this.getNewProjectsList({
 				...data,
 				page: 1
 			}).finally(() => {
@@ -53,16 +53,18 @@ export default {
 				page
 			}
 			this.moreLoading = true
-			this.getProjectsList(params).finally(() => {
+			this.getNewProjectsList(params).finally(() => {
 				this.moreLoading = false
 			})
 		}
 	},
 	created() {
-		this.tableInitLoading = true
-        this.getProjectsList().finally(() => {
+        this.tableInitLoading = true
+        this.getNewProjectsList().finally(() => {
             this.tableInitLoading = false
         })
-	}
+    }
 }
 </script>
+
+

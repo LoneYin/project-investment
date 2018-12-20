@@ -36,7 +36,7 @@ axios.interceptors.response.use(
         } else {
             Message.error(res.data.message)
             return Promise.reject(res)
-        } 
+        }
 	},
 	err => {
 		return Promise.reject(err.response)

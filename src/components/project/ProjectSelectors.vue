@@ -1,7 +1,7 @@
 <template>
-	<el-card class="no-border">
+	<el-card class="no-border project-selectors">
 		<el-row class="project-checkbox checkbox-round">
-			<el-col :span="1" class="project-checkbox-label">偏好轮次</el-col>
+			<el-col :span="1" class="project-checkbox-label">轮次</el-col>
 			<el-col :span="22" :style="roundShowAll && 'max-height: 200px;'" class="project-checkbox-list">
 				<el-row>
 					<el-col :span="2" class="project-checkbox-item">
@@ -104,9 +104,9 @@ export default {
 	},
 	computed: {
 		...mapState({
-			roundList: state => state.project.roundList,
-			industryList: state => state.project.industryList,
-			areaList: state => state.project.areaList
+			roundList: state => state.discovery.roundList,
+			industryList: state => state.discovery.industryList,
+			areaList: state => state.discovery.areaList
 		})
 	},
 	methods: {
@@ -179,37 +179,4 @@ export default {
 	}
 }
 </script>
-
-<style lang="less">
-.project-checkbox {
-	margin-bottom: 15px;
-}
-.project-checkbox-label {
-	font-size: 14px;
-	font-weight: 700;
-	text-align: left;
-}
-.project-checkbox-list {
-	position: relative;
-	margin-left: 20px;
-	border-bottom: 1px dashed #e5e5e5;
-	max-height: 34px;
-	overflow: hidden;
-	transition: max-height ease-in-out 0.3s;
-}
-.project-checkbox-item {
-	text-align: left;
-	margin-bottom: 15px;
-}
-.dropDown-button {
-	position: absolute;
-	right: 0;
-	top: 0;
-	transition: all ease-in-out 0.3s;
-	cursor: pointer;
-}
-.arrow-down-rotated {
-	transform: rotate(180deg);
-}
-</style>
 

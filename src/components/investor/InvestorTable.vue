@@ -1,35 +1,11 @@
 <template>
 	<el-card class="no-border project-table" v-loading="initLoading">
 		<el-table :data="defaultData" row-class-name="project-table-item">
-			<el-table-column label="投资项目" width="600">
-				<template slot-scope="scope">
-					<el-row>
-						<el-col :span="4">
-							<div class="item-logo">
-								<img :src="scope.row.logo" alt>
-							</div>
-						</el-col>
-						<el-col :span="20" class="item-text">
-							<p class="text-name">{{scope.row.name}}</p>
-							<p class="text-summary">{{scope.row.summary}}</p>
-							<p v-if="scope.row.tags.length > 0">
-								<span :key="item.tag_id" v-for="item in scope.row.tags" class="text-tag">
-									<i class="el-icon-fa-tags"></i>
-                                    {{item.name}}
-								</span>
-							</p>
-						</el-col>
-					</el-row>
-				</template>
-			</el-table-column>
-			<el-table-column label="行业" prop="industry_name"></el-table-column>
-			<el-table-column label="轮次" prop="round_name"></el-table-column>
-			<el-table-column label="所在地" prop="region_name"></el-table-column>
-            <el-table-column label="成立时间">
-                <template slot-scope="scope">
-                    {{scope.row.create_time ? scope.row.create_time.substring(0, 7) : scope.row.time}}
-                </template>
-            </el-table-column>
+			<el-table-column label="投资人" width="400" prop="real_name">1</el-table-column>
+			<el-table-column label="关注领域" prop="investor_id"></el-table-column>
+			<el-table-column label="偏好轮次" prop="region_id"></el-table-column>
+			<el-table-column label="投资总数" prop="status"></el-table-column>
+			<el-table-column label="所在地" prop="area_name"></el-table-column>
 		</el-table>
 		<el-row class="project-table-footer" v-if="moreLoading">
 			<el-col>
