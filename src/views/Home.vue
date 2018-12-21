@@ -37,6 +37,13 @@ export default {
 		}),
 		...mapActions(['getCurrentUserData'])
 	},
+	watch: {
+		$route() {
+			setTimeout(() => {
+				document.querySelector('.el-main').scrollTo(0, 0)
+			}, 300)
+		}
+	},
 	created() {
 		const token = getCookie('access-user-token')
 		if (token) {

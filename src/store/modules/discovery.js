@@ -1,4 +1,4 @@
-import { GET_ROUND_LIST, GET_INDUSTRY_LIST, GET_AREA_LIST, GET_PROJECTS_LIST, GET_INVESTORS_LIST } from '../mutations-types'
+import { GET_ROUND_LIST, GET_INDUSTRY_LIST, GET_AREA_LIST, GET_PROJECTS_LIST, GET_INVESTORS_LIST, CLEAR_PROJECTS_LIST } from '../mutations-types'
 import { getData, postData } from "@/http"
 
 export default {
@@ -38,6 +38,13 @@ export default {
             }
             state.projectsListPages.total = payload.pages
             state.projectsListPages.currentPage = payload.current_page
+        },
+        [CLEAR_PROJECTS_LIST](state) {
+            state.projectsList = []
+            state.projectsListPages = {
+                total: 1,
+                currentPage: 1
+            }
         },
         [GET_INVESTORS_LIST](state, payload) {
             if (payload.current_page == 1) {

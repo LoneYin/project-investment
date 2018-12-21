@@ -47,15 +47,18 @@ export default {
 				this.$refs.projectTable.page = 1
 			})
 		},
-		getMoreProjects(page) {
+		getMoreProjects(page, scrollTop) {
 			const params = {
 				...this.selectorsData,
 				page
 			}
 			this.moreLoading = true
-			this.getNewProjectsList(params).finally(() => {
-				this.moreLoading = false
-			})
+			setTimeout(() => {
+				this.getNewProjectsList(params).finally(() => {
+					this.moreLoading = false
+					document.querySelector('.el-main').scrollTo(0, scrollTop)
+				})
+			}, 1000)
 		}
 	},
 	created() {

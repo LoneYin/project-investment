@@ -77,9 +77,6 @@ export default {
 	watch: {
 		$route(to) {
 			this.activeMenu = to.path
-			setTimeout(() => {
-				document.querySelector('.el-main').scrollTo(0, 0)
-			}, 300)
 		}
 	},
 	created() {

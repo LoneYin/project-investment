@@ -47,22 +47,27 @@ export default {
 				this.$refs.investorTable.page = 1
 			})
 		},
-		getMoreInvestors(page) {
+		getMoreInvestors(page, scrollTop) {
 			const params = {
 				...this.selectorsData,
 				page
 			}
 			this.moreLoading = true
-			this.getInvestorsList(params).finally(() => {
-				this.moreLoading = false
-			})
+			setTimeout(() => {
+				this.getInvestorsList(params).finally(() => {
+					this.moreLoading = false
+					document.querySelector('.el-main').scrollTo(0, scrollTop)
+				})
+			}, 1000)
 		}
 	},
 	created() {
-		this.tableInitLoading = true
-        this.getInvestorsList().finally(() => {
-            this.tableInitLoading = false
-        })
+		if (!this.investorsList) {
+			this.tableInitLoading = true
+			this.getInvestorsList().finally(() => {
+				this.tableInitLoading = false
+			})
+		}
 	}
 }
 </script>
