@@ -25,7 +25,15 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			activeMenu: ''
+			activeMenu: '',
+			pathArr: [
+				'/submit_project',
+				'/auth_investor',
+				'/user',
+				'/logout',
+				'/register',
+				'/login'
+			]
 		}
     },
     computed: {
@@ -41,7 +49,14 @@ export default {
 	},
 	watch: {
 		$route(to) {
-			this.activeMenu = to.path
+			if (this.pathArr.includes(to.path)) {
+				this.activeMenu = to.path
+			} else {
+				this.activeMenu = ''
+				const menu = document.querySelector('.common-header')
+				const active = menu.querySelector('.is-active')
+				active && active.classList.remove('is-active')
+			}
 		}
 	},
 	created() {

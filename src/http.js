@@ -2,9 +2,10 @@ import axios from 'axios'
 import encrypt from './utils/encrypt'
 import { getCookie } from './utils/cookie'
 import { Message } from 'element-ui'
+import router from './router'
 
-const server = 'http://api.dtai88.com'
-const authKey = 'asjs82iqos0ad823'
+export const server = 'http://api.dtai88.com'
+export const authKey = 'asjs82iqos0ad823'
 
 export const getData = (url, params) => {
     const sign = encrypt(params, authKey)
@@ -39,6 +40,10 @@ axios.interceptors.response.use(
         }
 	},
 	err => {
+        if (err.response.status == 401) {
+            Message.error('请您先登录')
+            router.push({path: '/login'})
+        }
 		return Promise.reject(err.response)
 	}
 )

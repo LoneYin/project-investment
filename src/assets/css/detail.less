@@ -1,0 +1,247 @@
+.project-detail {
+    height: 100%;
+    position: relative;
+    .el-card__body {
+        padding: 0;
+    }
+    .project-detail-header {
+        width: 100%;
+        background: #ffffff;
+    }
+    .header-container {
+        width: 60%;
+        margin: 0 auto;
+        .header-title {
+            width: 500px;
+            padding-top: 20px;
+        }
+    }
+    .project-logo {
+        margin: 0 auto;
+        width: 82px;
+        height: 82px;
+        border-radius: 42px;
+        padding: 1px;
+        border: 1px solid #e5e5e5;
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 39px;
+            margin-top: 1px;
+        }
+    }
+    .project-text {
+        // padding: 14px 0;
+        height: 86px;
+        text-align: left;
+        span {
+            display: inline-block;
+        }
+        .text-name {
+            font-size: 20px;
+            margin-right: 10px;
+            max-width: 100px;
+            position: relative;
+            top: 5px;
+        }
+        .text-industry,
+        .text-area {
+            font-size: 15px;
+            color: #666;
+        }
+        .text-dot {
+            margin: 5px 10px;
+            width: 2px;
+            height: 2px;
+            line-height: 21px;
+            background: #666;
+        }
+        i {
+            color: #666;
+            margin-right: 5px;
+        }
+        .text-link {
+            position: relative;
+            top: -3px;
+            margin-left: 15px;
+            display: inline-block;
+            width: 32px;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+            background: #6ba2fc;
+            color: #ffffff;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        .project-summary {
+            color: #999;
+            margin-top: 5px;
+            width: 100%;
+            font-size: 15px;
+        }
+    }
+    .header-navbar {
+        height: 40px;
+        margin-top: 10px;
+    }
+    .el-tabs__nav-wrap::after {
+        background-color: #ffffff;
+    }
+    .project-detail-main {
+        width: 60%;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+    .prject-detail-section {
+        margin-bottom: 20px;
+        .el-card__header {
+            padding: 0 20px;
+            text-align: left;
+            line-height: 40px;
+            i {
+                margin-right: 10px;
+            }
+        }
+        .section-content {
+            min-height: 40px;
+            padding: 20px 40px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 24px;
+            color: #5a626d;
+        }
+        // .section-content-text-indent {
+        //     text-indent: 32px;
+        // }
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+    }
+    .absolute-navbar {
+        position: fixed;
+        width: calc(100% - 180px);
+        top: 60px;
+        left: 180px;
+        z-index: 100;
+        background: #ffffff;
+        .header-navbar {
+            width: 60%;
+            height: 40px;
+            margin: 0 auto;
+        }
+    }
+    .section-history-item {
+        &>div {
+            display: inline-block;
+        }
+        .history-time {
+            width: 56px;
+            vertical-align: middle;
+            margin-right: 10px;
+            text-align: center;
+        }
+        .history-line {
+            height: 100px;
+            width: 2px;
+            border-left: 2px solid #dedede;
+            vertical-align: middle;
+            position: relative;
+            .circle {
+                border-radius: 10px;
+                position: absolute;
+                left: -8px;
+                padding: 2px;
+                border: 2px solid #409eff;
+                top: calc(50% - 8px);
+            }
+            .inside-circle {
+                width: 7px;
+                height: 7px;
+                background-color: #409eff;
+                border-radius: 10px;
+            }
+        }
+        .history-info {
+            background: #fff;
+            border: 1px solid #f2f4f5;
+            box-shadow: 0 0 10px 0 #e9f0f5;
+            display: inline-block;
+            position: relative;
+            margin-left: 15px;
+            padding: 10px 0;
+            .info-angle {
+                border-left: 1px solid #e9f0f5;
+                border-bottom: 1px solid #e9f0f5;
+                width: 12px;
+                height: 12px;
+                background: #fff;
+                transform: rotate(45deg);
+                display: inline-block;
+                position: absolute;
+                left: -6px;
+                top: 50%;
+                margin-top: -6px;
+            }
+            .info-round-name {
+                font-weight: 700;
+                font-size: 18px;
+                margin-left: 20px;
+                vertical-align: middle;
+                text-align: center;
+                width: 80px;
+                display: inline-block;
+            }
+            .info-round-detail {
+                margin: 0 20px;
+                padding: 5px 20px;
+                border-left: 2px solid #dedede; // border-right: 2px solid #dedede;
+                display: inline-block;
+                vertical-align: middle;
+            }
+            .info-round-price-title {
+                font-size: 14px;
+                color: #969fa9;
+                line-height: 16px;
+                margin-right: 15px;
+                font-weight: 700;
+                width: 60px;
+                display: inline-block;
+            }
+            .info-round-investor {
+                font-size: 14px;
+                color: #969fa9;
+                line-height: 16px;
+                margin-right: 15px;
+                width: 60px;
+                display: inline-block;
+            }
+            .info-round-price {
+                font-size: 14px;
+                line-height: 21px;
+                color: #5a626d;
+                letter-spacing: 0;
+                position: relative;
+                font-weight: 700;
+            }
+            .info-round-detail-row {
+                line-height: 24px;
+            }
+            .info-round-investor-name {
+                font-size: 14px;
+                line-height: 21px;
+                letter-spacing: 0;
+                position: relative;
+                color: #409eff;
+                text-decoration: none;
+            }
+        }
+    }
+    .section-team-table {
+        padding-bottom: 10px;
+        .cell {
+            text-align: center;
+        }
+    }
+}

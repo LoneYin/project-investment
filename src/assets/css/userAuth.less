@@ -1,6 +1,7 @@
 .auth {
     width: 400px;
     margin: 0 auto;
+    padding-top: 40px;
     h5 {
         font-size: 14px;
         margin-bottom: 20px;
@@ -23,5 +24,98 @@
         font-size: 14px;
         margin-bottom: 10px;
         overflow: hidden;
+    }
+}
+
+.auth-investor {
+    min-height: 1000px;
+    background: #ffffff;
+    .auth-investor-header {
+        height: 84px;
+        background: url('../../assets/images/auth-investor-title.png') no-repeat 50%;
+        background-size: cover;
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+        letter-spacing: 0;
+        line-height: 21px;
+        padding-top: 36px;
+    }
+    .header-title {
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+    .auth-investor-form {
+        box-sizing: border-box;
+        width: 1140px;
+        padding: 40px 200px;
+        margin: 0 auto;
+    }
+    .form-steps {
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 20px;
+    }
+    .form-body { 
+        text-align: left;
+        .form-auth {
+            padding: 30px 60px;
+            padding-right: 120px;
+        }
+        .form-extra {
+            padding: 30px 0;
+        }
+        .el-form-item__label {
+            padding-right: 30px;
+            font-size: 15px;
+        }
+        .el-textarea {
+            .el-textarea__inner {
+                font-family: Arial;
+            }
+        }
+        .el-checkbox {
+            margin-left: 20px;
+        }
+        .el-radio {
+            margin-left: 10px;
+        }
+        .el-input-number {
+            width: 100%;
+        }
+        .el-checkbox-group {
+            position: relative;
+            left: -20px;
+        }
+    }
+    .avatar-uploader .el-upload {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    .avatar-uploader .el-upload:hover {
+        border-color: #409EFF;
+    }
+    .avatar-uploader-icon {
+        font-size: 28px;
+        color: #8c939d;
+        width: 78px;
+        height: 78px;
+        line-height: 78px;
+        text-align: center;
+    }
+    .avatar {
+        width: 78px;
+        height: 78px;
+        display: block;
+    }
+    .on-success {
+        margin-top: 40px;
+        font-size: 24px;
+        line-height: 100px;
+        text-align: center;
+        color: #999999;
     }
 }

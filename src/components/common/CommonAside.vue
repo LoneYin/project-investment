@@ -66,7 +66,18 @@
 export default {
 	data() {
 		return {
-			activeMenu: '/'
+			activeMenu: '/',
+			pathArr: [
+				'/',
+				'/projects',
+				'/investors',
+				'/optimal_projects',
+				'/new_projects',
+				'/new_experience_projects',
+				'/financing_projects',
+				'/subscribed_tags',
+				'/star_projects'
+			]
 		}
 	},
 	methods: {
@@ -76,7 +87,14 @@ export default {
 	},
 	watch: {
 		$route(to) {
-			this.activeMenu = to.path
+			if (this.pathArr.includes(to.path)) {
+				this.activeMenu = to.path
+			} else {
+				this.activeMenu = ''
+				const menu = document.querySelector('.common-aside')
+				const active = menu.querySelector('.is-active')
+				active && active.classList.remove('is-active')
+			}
 		}
 	},
 	created() {

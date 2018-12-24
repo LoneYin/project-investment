@@ -13,5 +13,13 @@ export default {
         } else {
             callback(new Error('手机号格式不正确'))
         }
+    },
+    email(rule, value, callback) {
+        const reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/
+        if (reg.test(value)) {
+            callback()
+        } else {
+            callback(new Error('邮箱格式不正确'))
+        }
     }
 }

@@ -20,7 +20,10 @@
 									<span>官网</span>
 								</a>
 							</p>
-							<p class="project-summary text-ellipsis">{{projectDetail.synopsis}}</p>
+							<p
+								:title="projectDetail.synopsis"
+								class="project-summary text-ellipsis"
+							>{{projectDetail.synopsis}}</p>
 						</el-col>
 					</el-row>
 					<div class="header-navbar">
@@ -37,44 +40,98 @@
 				</div>
 			</el-card>
 			<div class="project-detail-main">
-				<el-card class="no-border prject-detail-section" id="projectIntroduce">
-					<div slot="header">
+				<el-card
+					class="no-border prject-detail-section"
+					id="projectIntroduce"
+					v-if="projectDetail.detail"
+				>
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-file-text-o"></i>项目介绍
 					</div>
-					<div class="section-content"></div>
+					<div class="section-content" v-html="projectDetail.detail"></div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="projectService">
-					<div slot="header">
+				<el-card
+					class="no-border prject-detail-section"
+					id="projectService"
+					v-if="projectDetail.product_service"
+				>
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-server"></i>产品服务
 					</div>
-					<div class="section-content"></div>
+					<div class="section-content" v-html="projectDetail.product_service"></div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="investmentHistory">
-					<div slot="header">
+				<el-card
+					class="no-border prject-detail-section"
+					id="investmentHistory"
+					v-if="projectDetail.experience && projectDetail.experience.length > 0"
+				>
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-money"></i>融资历史
 					</div>
-					<div class="section-content"></div>
+					<div class="section-content">
+						<div
+							:key="index"
+							class="section-history-item"
+							v-for="(item, index) in projectDetail.experience"
+						>
+							<div class="history-time">{{ item.create_time }}</div>
+							<div class="history-line">
+								<div class="circle">
+									<div class="inside-circle"></div>
+								</div>
+							</div>
+							<div class="history-info">
+								<div class="info-angle"></div>
+								<span class="info-round-name">{{ item.experience_name }}</span>
+								<span class="info-round-detail">
+									<p class="info-round-detail-row">
+										<span class="info-round-price-title">融资金额</span>
+										<span class="info-round-price">{{ item.financing_price }} 人民币</span>
+									</p>
+									<p class="info-round-detail-row">
+										<span class="info-round-investor">投资方</span>
+										<a class="info-round-investor-name" href="#">IMBA资本</a>
+									</p>
+								</span>
+								<!-- <span class="history-info-round-link">
+                                    <a :href="item.new_url"><i class="el-icon-document"></i></a>
+								</span>-->
+							</div>
+						</div>
+					</div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="projectTeam">
-					<div slot="header">
+				<el-card
+					class="no-border prject-detail-section"
+					id="projectTeam"
+					v-if="projectDetail.team && projectDetail.team.length > 0"
+				>
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-users"></i>创始团队
 					</div>
-					<div class="section-content"></div>
+					<div class="section-content">
+						<div class="section-team-table">
+							<el-table :data="projectDetail.team" style="width: 90%; margin: 0 auto;">
+								<el-table-column label="姓名" prop="real_name" width="180"></el-table-column>
+								<el-table-column label="职位" prop="position" width="180"></el-table-column>
+								<el-table-column label="介绍" prop="introduce"></el-table-column>
+							</el-table>
+						</div>
+					</div>
 				</el-card>
 				<el-card class="no-border prject-detail-section" id="projectData">
-					<div slot="header">
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-bar-chart"></i>项目数据
 					</div>
 					<div class="section-content"></div>
 				</el-card>
 				<el-card class="no-border prject-detail-section" id="projectNews">
-					<div slot="header">
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-newspaper-o"></i>相关新闻
 					</div>
 					<div class="section-content"></div>
 				</el-card>
 				<el-card class="no-border prject-detail-section" id="similarProjects">
-					<div slot="header">
+					<div class="section-title" slot="header">
 						<i class="el-icon-fa-briefcase"></i>类似项目
 					</div>
 					<div class="section-content"></div>
@@ -118,6 +175,9 @@ export default {
 			scrollLock: false
 		}
 	},
+	props: {
+		projectId: String
+	},
 	computed: {
 		...mapState({
 			projectDetail: state => state.project.projectDetail
@@ -125,13 +185,14 @@ export default {
 	},
 	methods: {
 		...mapActions(['getProjectDetail']),
+
 		handleTabsClick(tab) {
-            this.scrollLock = true
+			this.scrollLock = true
 			scroll.scrollTo(tab.name, () => {
-                setTimeout(() => {
-                    this.scrollLock = false
-                }, 150)
-            })
+				setTimeout(() => {
+					this.scrollLock = false
+				}, 150)
+			})
 		},
 		onScroll() {
 			if (!this.navbarWidth) {
@@ -141,13 +202,13 @@ export default {
 			}
 
 			const container = document.querySelector('.el-main')
-            
-			if (container.scrollTop > 136 && !this.showFixedBar) {
+
+			if (container.scrollTop > 116 && !this.showFixedBar) {
 				this.showFixedBar = true
-			} else if (container.scrollTop <= 136 && this.showFixedBar) {
+			} else if (container.scrollTop <= 116 && this.showFixedBar) {
 				this.showFixedBar = false
-            }
-            
+			}
+
 			if (!this.scrollLock) {
 				if (container.scrollTop < this.anchorArr[1]) {
 					this.currentName = this.anchorNameArr[0]
@@ -189,11 +250,7 @@ export default {
 				this.anchorArr.push(item.offsetTop)
 				this.anchorNameArr.push(item.id)
 			})
-			console.log(this.anchorArr, this.anchorNameArr)
 		}
-	},
-	props: {
-		projectId: String
 	},
 	created() {
 		this.init = true
@@ -215,132 +272,8 @@ export default {
 		document
 			.querySelector('.el-main')
 			.removeEventListener('scroll', this.onScroll, false)
+		this.$store.commit('CLEAR_PROJECT_DETAIL')
 	}
 }
 </script>
 
-<style lang="less">
-.project-detail {
-	height: 100%;
-	position: relative;
-	.el-card__body {
-		padding: 0;
-	}
-	.project-detail-header {
-		width: 100%;
-		background: #ffffff;
-	}
-	.header-container {
-		width: 60%;
-		margin: 0 auto;
-		.header-title {
-			width: 500px;
-			padding-top: 40px;
-		}
-	}
-	.project-logo {
-		margin: 0 auto;
-		width: 82px;
-		height: 82px;
-		border-radius: 42px;
-		padding: 1px;
-		border: 1px solid #e5e5e5;
-		img {
-			width: 80px;
-			height: 80px;
-			border-radius: 39px;
-			margin-top: 1px;
-		}
-	}
-	.project-text {
-		padding: 14px 0;
-		height: 86px;
-		text-align: left;
-		span {
-			display: inline-block;
-		}
-		.text-name {
-			font-size: 20px;
-			margin-right: 10px;
-			max-width: 100px;
-			position: relative;
-			top: 5px;
-		}
-		.text-industry,
-		.text-area {
-			font-size: 15px;
-			color: #666;
-		}
-		.text-dot {
-			margin: 5px 10px;
-			width: 2px;
-			height: 2px;
-			line-height: 21px;
-			background: #666;
-		}
-		i {
-			color: #666;
-			margin-right: 5px;
-		}
-		.text-link {
-			position: relative;
-			top: -3px;
-			margin-left: 15px;
-			display: inline-block;
-			width: 32px;
-			height: 18px;
-			line-height: 18px;
-			text-align: center;
-			background: #6ba2fc;
-			color: #ffffff;
-			font-size: 12px;
-			border-radius: 4px;
-		}
-		.project-summary {
-			color: #999;
-			margin-top: 5px;
-			width: 100%;
-		}
-	}
-	.header-navbar {
-		height: 40px;
-		margin-top: 10px;
-	}
-	.el-tabs__nav-wrap::after {
-		background-color: #ffffff;
-	}
-
-	.project-detail-main {
-		width: 60%;
-		margin: 0 auto;
-		padding-top: 20px;
-	}
-	.prject-detail-section {
-		margin-bottom: 20px;
-		.el-card__header {
-			padding: 0 20px;
-			text-align: left;
-			line-height: 40px;
-			i {
-				margin-right: 10px;
-			}
-		}
-		.section-content {
-			min-height: 200px;
-		}
-	}
-	.absolute-navbar {
-		position: fixed;
-		width: calc(100% - 180px);
-		top: 60px;
-		left: 180px;
-		z-index: 100;
-		background: #ffffff;
-		.header-navbar {
-			width: 60%;
-			height: 40px;
-			margin: 0 auto;
-		}
-	}
-}
-</style>

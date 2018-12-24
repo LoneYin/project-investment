@@ -1,4 +1,4 @@
-import { GET_PROJECT_DETAIL } from "../mutations-types";
+import { GET_PROJECT_DETAIL, CLEAR_PROJECT_DETAIL } from "../mutations-types";
 import {getData} from '@/http'
 export default {
     state: {
@@ -7,6 +7,9 @@ export default {
     mutations: {
         [GET_PROJECT_DETAIL](state, payload) {
             state.projectDetail = {...payload}
+        },
+        [CLEAR_PROJECT_DETAIL](state) {
+            state.projectDetail = {}
         }
     },
     actions: {

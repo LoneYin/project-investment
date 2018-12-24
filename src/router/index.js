@@ -18,6 +18,9 @@ import FinancingProjects from '@/views/discovery/FinancingProjects.vue'
 import Investors from '@/views/discovery/Investors.vue'
 // project
 import ProjectDetail from '@/views/project/ProjectDetail.vue'
+import SubmitProject from '@/views/project/SubmitProject.vue'
+// investor
+import AuthInvestor from '@/views/investor/AuthInvestor.vue'
 
 Vue.use(Router)
 
@@ -75,6 +78,14 @@ const router = new Router({
 			name: 'projectDetail',
 			component: ProjectDetail,
 			props: true
+		}, {
+			path: '/auth_investor',
+			name: 'authInvestor',
+			component: AuthInvestor
+		}, {
+			path: '/submit_project',
+			name: 'submitProject',
+			component: SubmitProject
 		}
 	]
 })
