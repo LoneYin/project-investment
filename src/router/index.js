@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store'
 
 import guard from './routerGuard'
 
@@ -23,6 +24,8 @@ import SubmitProject from '@/views/project/SubmitProject.vue'
 import AuthInvestor from '@/views/investor/AuthInvestor.vue'
 
 Vue.use(Router)
+
+
 
 const router = new Router({
 	mode: 'history',
@@ -88,6 +91,10 @@ const router = new Router({
 			component: SubmitProject
 		}
 	]
+})
+
+router.afterEach((to) => {
+	store.commit('SET_ACTIVE_INDEX', to.path)
 })
 
 export default router

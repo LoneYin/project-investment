@@ -11,6 +11,7 @@ export const SET_LOGOUT = 'SET_LOGOUT'
 export const GET_CURRENT_USER_DATA = 'GET_CURRENT_USER_DATA'
 export const SET_AUTO_LOGIN = 'SET_AUTO_LOGIN'
 export const SET_RECENT_MOBILE = 'SET_RECENT_MOBILE'
+export const SET_ACTIVE_INDEX = 'SET_ACTIVE_INDEX'
 
 // discovery
 export const GET_ROUND_LIST = 'GET_ROUND_LIST'

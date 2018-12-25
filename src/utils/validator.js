@@ -21,5 +21,28 @@ export default {
         } else {
             callback(new Error('邮箱格式不正确'))
         }
+    },
+    synopsis(rule, value, callback) {
+        const reg = /^[\u4e00-\u9fa50-9A-Za-z]+$/ // 只能输入中英文和数字
+        if (value.length <= 5) {
+            callback(new Error('可以描述的更加详细一些(不得少于5个字)'))
+        } else if (value.length > 30) {
+            callback(new Error('一句话简介请限制在30字以内'))
+        } else {
+            if (!reg.test(value)) {
+                callback(new Error('一句话简介中请不要含有标点符号和特殊字符'))
+            } else {
+                callback()
+            }   
+        }
+    },
+    maxLength(length) {
+        return (rule, value, callback) => {
+            if (value.length > length) {
+                callback(new Error(`最大输入长度不能超过${length}个字节`))
+            } else {
+                callback()
+            }
+        }
     }
 }

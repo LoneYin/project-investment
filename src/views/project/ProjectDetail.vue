@@ -29,7 +29,6 @@
 					<div class="header-navbar">
 						<el-tabs @tab-click="handleTabsClick" v-model="currentName">
 							<el-tab-pane label="项目介绍" name="projectIntroduce"></el-tab-pane>
-							<el-tab-pane label="产品服务" name="projectService"></el-tab-pane>
 							<el-tab-pane label="融资历史" name="investmentHistory"></el-tab-pane>
 							<el-tab-pane label="创始团队" name="projectTeam"></el-tab-pane>
 							<el-tab-pane label="项目数据" name="projectData"></el-tab-pane>
@@ -40,82 +39,69 @@
 				</div>
 			</el-card>
 			<div class="project-detail-main">
-				<el-card
-					class="no-border prject-detail-section"
-					id="projectIntroduce"
-					v-if="projectDetail.detail"
-				>
+				<el-card class="no-border prject-detail-section" id="projectIntroduce">
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-file-text-o"></i>项目介绍
 					</div>
-					<div class="section-content" v-html="projectDetail.detail"></div>
-				</el-card>
-				<el-card
-					class="no-border prject-detail-section"
-					id="projectService"
-					v-if="projectDetail.product_service"
-				>
-					<div class="section-title" slot="header">
-						<i class="el-icon-fa-server"></i>产品服务
+					<div class="section-content">
+						<template v-if="projectDetail.detail">
+							<div v-html="projectDetail.detail"></div>
+						</template>
+						<p v-else>暂无项目介绍</p>
 					</div>
-					<div class="section-content" v-html="projectDetail.product_service"></div>
 				</el-card>
-				<el-card
-					class="no-border prject-detail-section"
-					id="investmentHistory"
-					v-if="projectDetail.experience && projectDetail.experience.length > 0"
-				>
+				<el-card class="no-border prject-detail-section" id="investmentHistory">
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-money"></i>融资历史
 					</div>
 					<div class="section-content">
-						<div
-							:key="index"
-							class="section-history-item"
-							v-for="(item, index) in projectDetail.experience"
-						>
-							<div class="history-time">{{ item.create_time }}</div>
-							<div class="history-line">
-								<div class="circle">
-									<div class="inside-circle"></div>
+						<template v-if="projectDetail.experience && projectDetail.experience.length > 0">
+							<div
+								:key="index"
+								class="section-history-item"
+								v-for="(item, index) in projectDetail.experience"
+							>
+								<div class="history-time">{{ item.create_time }}</div>
+								<div class="history-line">
+									<div class="circle">
+										<div class="inside-circle"></div>
+									</div>
+								</div>
+								<div class="history-info">
+									<div class="info-angle"></div>
+									<span class="info-round-name">{{ item.experience_name }}</span>
+									<span class="info-round-detail">
+										<p class="info-round-detail-row">
+											<span class="info-round-price-title">融资金额</span>
+											<span class="info-round-price">{{ item.financing_price }} 人民币</span>
+										</p>
+										<p class="info-round-detail-row">
+											<span class="info-round-investor">投资方</span>
+											<a class="info-round-investor-name" href="#">IMBA资本</a>
+										</p>
+									</span>
+									<!-- <span class="history-info-round-link">
+                                    <a :href="item.new_url"><i class="el-icon-document"></i></a>
+									</span>-->
 								</div>
 							</div>
-							<div class="history-info">
-								<div class="info-angle"></div>
-								<span class="info-round-name">{{ item.experience_name }}</span>
-								<span class="info-round-detail">
-									<p class="info-round-detail-row">
-										<span class="info-round-price-title">融资金额</span>
-										<span class="info-round-price">{{ item.financing_price }} 人民币</span>
-									</p>
-									<p class="info-round-detail-row">
-										<span class="info-round-investor">投资方</span>
-										<a class="info-round-investor-name" href="#">IMBA资本</a>
-									</p>
-								</span>
-								<!-- <span class="history-info-round-link">
-                                    <a :href="item.new_url"><i class="el-icon-document"></i></a>
-								</span>-->
-							</div>
-						</div>
+						</template>
+						<p v-else>暂无融资历史</p>
 					</div>
 				</el-card>
-				<el-card
-					class="no-border prject-detail-section"
-					id="projectTeam"
-					v-if="projectDetail.team && projectDetail.team.length > 0"
-				>
+				<el-card class="no-border prject-detail-section" id="projectTeam">
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-users"></i>创始团队
 					</div>
 					<div class="section-content">
-						<div class="section-team-table">
+						<div class="section-team-table" v-if="projectDetail.team && projectDetail.team.length > 0">
 							<el-table :data="projectDetail.team" style="width: 90%; margin: 0 auto;">
 								<el-table-column label="姓名" prop="real_name" width="180"></el-table-column>
 								<el-table-column label="职位" prop="position" width="180"></el-table-column>
 								<el-table-column label="介绍" prop="introduce"></el-table-column>
 							</el-table>
 						</div>
+						<p v-else>暂无创始团队信息</p>
 					</div>
 				</el-card>
 				<el-card class="no-border prject-detail-section" id="projectData">
@@ -145,7 +131,6 @@
 					<div class="header-navbar">
 						<el-tabs @tab-click="handleTabsClick" v-model="currentName">
 							<el-tab-pane label="项目介绍" name="projectIntroduce"></el-tab-pane>
-							<el-tab-pane label="产品服务" name="projectService"></el-tab-pane>
 							<el-tab-pane label="融资历史" name="investmentHistory"></el-tab-pane>
 							<el-tab-pane label="创始团队" name="projectTeam"></el-tab-pane>
 							<el-tab-pane label="项目数据" name="projectData"></el-tab-pane>
@@ -232,13 +217,8 @@ export default {
 					container.scrollTop <= this.anchorArr[5]
 				) {
 					this.currentName = this.anchorNameArr[4]
-				} else if (
-					container.scrollTop >= this.anchorArr[5] &&
-					container.scrollTop <= this.anchorArr[6]
-				) {
-					this.currentName = this.anchorNameArr[5]
 				} else {
-					this.currentName = this.anchorNameArr[6]
+					this.currentName = this.anchorNameArr[5]
 				}
 			}
 		},

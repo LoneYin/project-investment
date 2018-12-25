@@ -8,12 +8,13 @@
 		<div class="auth-investor-form">
 			<div class="form-steps">
 				<el-steps :active="activeStep" align-center finish-status="success">
-					<el-step class="steps-item" description icon="el-icon-edit-outline" title="提交身份信息"></el-step>
-					<el-step class="steps-item" description icon="el-icon-tickets" title="提交投资偏好信息"></el-step>
+					<el-step class="steps-item" description icon="el-icon-edit-outline" title="填写身份信息"></el-step>
+					<el-step class="steps-item" description icon="el-icon-tickets" title="填写投资偏好信息"></el-step>
 					<el-step class="steps-item" description icon="el-icon-circle-check" title="完成"></el-step>
 				</el-steps>
 			</div>
 			<div class="form-body">
+				<!-- primary form -->
 				<el-form
 					:model="authForm"
 					:rules="rules"
@@ -29,6 +30,7 @@
 						<el-upload
 							:action="action"
 							:before-upload="beforeAvatarUpload"
+							:data="{type: 'investor'}"
 							:headers="headers"
 							:on-success="handleAvatarSuccess"
 							:show-file-list="false"
@@ -72,6 +74,7 @@
 						<el-button @click="handleFirstStep('authForm')" type="primary">下一步，填写投资偏好信息</el-button>
 					</el-form-item>
 				</el-form>
+				<!-- extra form -->
 				<el-form :model="extraForm" class="form-extra" label-width="120px" v-show="activeStep == 1">
 					<el-form-item label="偏好投资领域">
 						<el-checkbox-group v-model="extraForm.industry_id">
@@ -111,6 +114,7 @@
 						<el-button @click="handleSecondStep" type="primary">提交您的投资偏好信息</el-button>
 					</el-form-item>
 				</el-form>
+				<!-- finished -->
 				<div class="on-success" v-show="activeStep == 2">
 					<p>您的信息已登记，请耐心等待认证结果</p>
 					<div>

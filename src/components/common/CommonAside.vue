@@ -1,7 +1,7 @@
 <template>
 	<div class="common-aside">
 		<el-menu
-			:default-active="activeMenu"
+			:default-active="activeIndex"
 			active-text-color="#ffffff"
 			background-color="#333742"
 			class="el-menu-aside"
@@ -63,10 +63,12 @@
 </template>
 
 <script>
+
+import { mapState } from 'vuex'
+
 export default {
 	data() {
 		return {
-			activeMenu: '/',
 			pathArr: [
 				'/',
 				'/projects',
@@ -80,26 +82,28 @@ export default {
 			]
 		}
 	},
-	methods: {
-		handleSelect(index) {
-			this.activeMenu = index
-		}
-	},
-	watch: {
-		$route(to) {
-			if (this.pathArr.includes(to.path)) {
-				this.activeMenu = to.path
-			} else {
-				this.activeMenu = ''
-				const menu = document.querySelector('.common-aside')
-				const active = menu.querySelector('.is-active')
-				active && active.classList.remove('is-active')
-			}
-		}
-	},
-	created() {
-		this.activeMenu = this.$route.path
+	computed: {
+		...mapState({
+			activeIndex: state => state.app.activeIndex
+		})
 	}
+	// watch: {
+	// 	$route(to) {
+	// 		if (this.pathArr.includes(to.path)) {
+	// 			this.activeMenu = to.path
+	// 		} else {
+	// 			if (this.activeMenu) {
+	// 				this.activeMenu = ''
+	// 				const menu = document.querySelector('.common-aside')
+	// 				const active = menu.querySelector('.is-active')
+	// 				active && active.classList.remove('is-active')
+	// 			}
+	// 		}
+	// 	}
+	// },
+	// created() {
+	// 	this.activeMenu = this.$route.path
+	// }
 }
 </script>
 

@@ -1,19 +1,22 @@
 <template>
 	<div class="common-header">
 		<div class="auth-navigator">
-			<el-menu @select="handleSelect" mode="horizontal" router :default-active="activeMenu">
+			<el-menu
+				:default-active="activeIndex"
+				mode="horizontal"
+				ref="headerMenu"
+				router
+			>
 				<el-menu-item index="/submit_project">提交项目</el-menu-item>
 				<el-menu-item index="/auth_investor">认证投资人</el-menu-item>
 				<template v-if="isLogin">
-                    <el-menu-item index="/user">
-                         {{ currentUserData ? currentUserData.user_name : ''}}
-                    </el-menu-item>
-                   
-                    <el-menu-item index="/logout">退出登陆</el-menu-item>
+					<el-menu-item index="/user">{{ currentUserData ? currentUserData.user_name : ''}}</el-menu-item>
+
+					<el-menu-item index="/logout">退出登陆</el-menu-item>
 				</template>
-                <template v-else>
-                    <el-menu-item index="/register">注册</el-menu-item>
-                    <el-menu-item index="/login">登录</el-menu-item>
+				<template v-else>
+					<el-menu-item index="/register">注册</el-menu-item>
+					<el-menu-item index="/login">登录</el-menu-item>
 				</template>
 			</el-menu>
 		</div>
@@ -25,7 +28,6 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			activeMenu: '',
 			pathArr: [
 				'/submit_project',
 				'/auth_investor',
@@ -35,32 +37,31 @@ export default {
 				'/login'
 			]
 		}
-    },
-    computed: {
-        ...mapState({
-            isLogin: state => state.app.loginStatus,
-            currentUserData: state => state.app.currentUserData
-        })
-    },
-	methods: {
-		handleSelect(index) {
-			this.activeMenu = index
-		}
 	},
-	watch: {
-		$route(to) {
-			if (this.pathArr.includes(to.path)) {
-				this.activeMenu = to.path
-			} else {
-				this.activeMenu = ''
-				const menu = document.querySelector('.common-header')
-				const active = menu.querySelector('.is-active')
-				active && active.classList.remove('is-active')
-			}
-		}
+	computed: {
+		...mapState({
+			isLogin: state => state.app.loginStatus,
+			currentUserData: state => state.app.currentUserData,
+			activeIndex: state => state.app.activeIndex
+		})
 	},
-	created() {
-		this.activeMenu = this.$route.path
-	}
+	// watch: {
+	// 	$route(to) {
+	// 		if (this.pathArr.includes(to.path)) {
+	// 			this.activeMenu = to.path
+	// 		} else {
+	// 			if (this.activeMenu) {
+	// 				// this.$refs['headerMenu'].items[this.activeMenu].active = false
+	// 				this.activeMenu = ''
+	// 				const menu = document.querySelector('.common-header')
+	// 				const active = menu.querySelector('.is-active')
+	// 				active && active.classList.remove('is-active')
+	// 			}	
+	// 		}
+	// 	}
+	// },
+	// created() {
+	// 	this.activeMenu = this.$route.path
+	// }
 }
 </script>
