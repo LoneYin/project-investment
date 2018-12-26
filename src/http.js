@@ -4,7 +4,7 @@ import { getCookie } from './utils/cookie'
 import { Message } from 'element-ui'
 import router from './router'
 
-export const server = 'http://api.dtai88.com'
+export const server = 'http://api.ir8.vip/'
 export const authKey = 'asjs82iqos0ad823'
 
 export const getData = (url, params) => {

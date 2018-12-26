@@ -20,6 +20,7 @@
 					class="form-primary"
 					label-width="160px"
 					v-show="activeStep == 0"
+					ref="primaryForm"
 				>
 					<el-form-item label="项目名称" prop="name">
 						<el-input placeholder="请输入项目名称" v-model="primaryForm.name"></el-input>
@@ -193,7 +194,7 @@
 								</el-col>
 							</el-row>
 						</el-form-item>
-						<el-form-item class="is-required" label="商业计划书">
+						<el-form-item class="is-required margin-bottom-10" label="商业计划书">
 							<el-upload
 								:action="action"
 								:before-upload="beforeFileUpload"
@@ -238,9 +239,76 @@
 
 					<el-form-item>
 						<el-row>
-							<el-button type="primary" size="small" style="padding: 10px 40px;">下一步</el-button>
+							<el-button
+								type="primary"
+								size="small"
+								style="padding: 10px 40px;"
+								@click="handleFirstStep"
+							>下一步</el-button>
 						</el-row>
 					</el-form-item>
+				</el-form>
+
+				<el-form
+					:model="extraForm"
+					:rules="extraRules"
+					v-show="activeStep == 1"
+					label-width="160px"
+					class="form-primary"
+					ref="extraForm"
+				>
+					<el-form-item label="产品服务" prop="product_service">
+						<el-input
+							minlength="8"
+							type="textarea"
+							:rows="4"
+							v-model="extraForm.product_service"
+							placeholder="描述公司所提供的产品和服务是什么，是如何解决痛点和需求的、其它附加的产品和服务是什么"
+						></el-input>
+						<span class="max-length">{{extraForm.product_service.length}}/1000</span>
+					</el-form-item>
+					<el-form-item label="市场用户" prop="market_users">
+						<el-input
+							minlength="8"
+							type="textarea"
+							:rows="4"
+							v-model="extraForm.market_users"
+							placeholder="描述公司所针对的细分市场是什么、市场规模及增速如何、目标用户的画像、用户或者行业的痛点和需求"
+						></el-input>
+						<span class="max-length">{{extraForm.market_users.length}}/1000</span>
+					</el-form-item>
+					<el-form-item label="商业模式" prop="business_model">
+						<el-input
+							minlength="8"
+							type="textarea"
+							:rows="4"
+							v-model="extraForm.business_model"
+							placeholder="描述公司的商业逻辑、如何盈利、主要的收入来源、以及未来的盈利能力"
+						></el-input>
+						<span class="max-length">{{extraForm.business_model.length}}/1000</span>
+					</el-form-item>
+					<el-form-item label="运营数据" prop="operational_data">
+						<el-input
+							minlength="8"
+							type="textarea"
+							:rows="4"
+							v-model="extraForm.operational_data"
+							placeholder="描述公司取得的业务进展或增速、用户量/收入/利润等关键业务指标"
+						></el-input>
+						<span class="max-length">{{extraForm.operational_data.length}}/1000</span>
+					</el-form-item>
+					<el-form-item label="核心资源" prop="core_resources">
+						<el-input
+							minlength="8"
+							type="textarea"
+							:rows="4"
+							v-model="extraForm.core_resources"
+							placeholder="描述公司相较于竞争对手所具有的优势、对于公司发展有重要意义的资源或亮点"
+						></el-input>
+						<span class="max-length">{{extraForm.core_resources.length}}/1000</span>
+					</el-form-item>
+
+					<el-form-item></el-form-item>
 				</el-form>
 			</div>
 		</div>
@@ -257,8 +325,9 @@ export default {
 	data() {
 		return {
 			isSubmiting: false,
-			activeStep: 0,
+			activeStep: 1,
 			showUploadButton: true,
+			mediaCount: 1,
 			primaryForm: {
 				name: '', // 项目名称
 				industry_id: '', // 项目类别
@@ -277,13 +346,7 @@ export default {
 				android_download_address: '', // 安卓下载地址
 				wechat_subscription: '', // 微信公众号
 				related_links: '', // 相关链接
-				project_overview: '', // 项目概述
-				media_coverage: '', // 媒体报道
-				product_service: '', // 产品服务
-				market_users: '', // 市场用户
-				business_model: '', // 商业模式
-				operational_data: '', // 运营数据
-				core_resources: '', // 核心资源
+				project_overview: '', // 项目概述				
 				financing_price: undefined, // 融资金额
 				financing_unit: 1, // 融资金额单位 1人民币 2美元
 				is_financing: '', // 1融资中 2不需要融资
@@ -316,23 +379,42 @@ export default {
 				region_id: [{ required: true, message: '注册地区不能为空' }],
 				role: [{ required: true, message: '您的角色不能为空' }],
 				is_financing: [{ required: true, message: '融资需求不能为空' }],
-				round_id:  [{ required: true, message: '融资轮次不能为空' }],
-				financing_price:  [{ required: true, message: '融资金额不能为空' }],
+				round_id: [{ required: true, message: '融资轮次不能为空' }],
+				financing_price: [{ required: true, message: '融资金额不能为空' }],
 			},
-			financingDemands: [
-				{
-					name: '需求融资',
-					value: 1
-				},
-				{
-					name: '暂无需求',
-					value: 2
-				},
-				{
-					name: '需求收购',
-					value: 3
-				}
-			]
+			extraForm: {
+				product_service: '', // 产品服务
+				market_users: '', // 市场用户
+				business_model: '', // 商业模式
+				operational_data: '', // 运营数据
+				core_resources: '', // 核心资源
+				media_coverage: [] // 媒体报道
+			},
+			extraRules: {
+				product_service: [{
+					validator: validator.maxLength(1000),
+					trigger: 'blur'
+				}],
+				market_users: [{
+					validator: validator.maxLength(1000),
+					trigger: 'blur'
+				}],
+				business_model: [{
+					validator: validator.maxLength(1000),
+					trigger: 'blur'
+				}],
+				operational_data: [{
+					validator: validator.maxLength(1000),
+					trigger: 'blur'
+				}],
+				core_resources: [{
+					validator: validator.maxLength(1000),
+					trigger: 'blur'
+				}],
+			},
+			teamForm: {
+
+			}
 		}
 	},
 	computed: {
@@ -392,6 +474,24 @@ export default {
 				return false
 			}
 			this.showUploadButton = false
+		},
+		handleFirstStep() {
+			if (!this.primaryForm.logo) {
+				this.$message.error('请上传公司logo')
+				return
+			}
+			if (this.primaryForm.is_financing == 1 && !this.primaryForm.business_plan) {
+				this.$message.error('请上传商业计划书')
+				return
+			}
+			this.$refs['primaryForm'].validate(valid => {
+				console.log(valid)
+				if (valid) {
+					this.activeStep == 1
+				}
+			}, err => {
+				console.log(err)
+			})
 		}
 	},
 	created() {
