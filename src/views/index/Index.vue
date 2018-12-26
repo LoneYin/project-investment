@@ -26,7 +26,7 @@
 										class="index-project-item"
 										v-for="item in dailyProjectsList"
 									>
-										<el-card shadow="hover">
+										<el-card shadow="hover" @click.native="toProjectDetail(item.project_id)">
 											<el-row>
 												<el-col :span="8">
 													<div class="index-project-item-logo">
@@ -54,7 +54,7 @@
 										class="index-project-item"
 										v-for="item in hotProjectsList"
 									>
-										<el-card shadow="hover">
+										<el-card shadow="hover" @click.native="toProjectDetail(item.project_id)">
 											<el-row>
 												<el-col :span="8">
 													<div class="index-project-item-logo">
@@ -226,7 +226,12 @@ export default {
 			'getHotProjectsList',
 			'getAuthenticatedUsersList',
 			'getRecommendedInvestorsList'
-		])
+		]),
+		toProjectDetail(id) {
+			this.$router.push({
+				path: `/project_detail/${id}`
+			})
+		}
 	},
 	created() {
 		!this.advertisementList && this.getAdvertisementList()

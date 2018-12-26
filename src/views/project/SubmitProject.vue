@@ -14,6 +14,8 @@
 				</el-steps>
 			</div>
 			<div class="form-body">
+
+				<!-- step1: 基础信息表单 -->
 				<!-- primaryForm -->
 				<el-form
 					:model="primaryForm"
@@ -59,7 +61,7 @@
 						</el-select>
 					</el-form-item>
 
-					<!-- typeForm -->
+					<!-- typeForm 根据项目类型变化的动态表单项 -->
 					<el-form-item label="项目类型" prop="type">
 						<el-select placeholder="产品类型" v-model="primaryForm.type">
 							<el-option :value="1" label="Web产品"></el-option>
@@ -150,7 +152,7 @@
 						</el-select>
 					</el-form-item>
 
-					<!-- roleForm -->
+					<!-- roleForm 根据所选角色变化的动态表单项 -->
 					<el-form-item label="您的角色" prop="role">
 						<el-select placeholder="选择角色" v-model="primaryForm.role">
 							<el-option :value="1" label="创始成员"></el-option>
@@ -247,7 +249,8 @@
 						</el-row>
 					</el-form-item>
 				</el-form>
-
+				
+				<!-- step2: 其它信息表单 -->
 				<!-- extraForm -->
 				<el-form
 					:model="extraForm"
@@ -333,6 +336,7 @@
 					</el-form-item>
 				</el-form>
 
+				<!-- step2: 创始人信息表单 -->
 				<!-- founderForm -->
 				<el-form
 					:model="founderForm"
@@ -572,8 +576,8 @@ export default {
 				full_name: '', // 创始人姓名
 				mobile: '', // 创始人手机号码
 				position: '', //创始人职位
-				team: [],
-				team_advantage: ''
+				team: [], // 创始团队
+				team_advantage: '' // 团队优势
 			},
 			founderRules: {
 				your_name: [{ required: true, message: '真实姓名不能为空' }],

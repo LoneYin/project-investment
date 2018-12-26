@@ -11,7 +11,7 @@
 						</el-col>
 						<el-col :span="18" class="project-text">
 							<p class="project-info">
-								<span class="text-name text-ellipsis">{{projectDetail.name}}</span>
+								<span class="text-name text-ellipsis" :title="projectDetail.name">{{projectDetail.name}}</span>
 								<span class="text-industry">{{projectDetail.industry.name}}</span>
 								<span class="text-dot"></span>
 								<i class="el-icon-location"></i>
