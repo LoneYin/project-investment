@@ -55,7 +55,7 @@
         border-bottom: 1px solid #e5e5e5;
         padding-bottom: 20px;
     }
-    .form-body { 
+    .form-body {
         text-align: left;
         .form-auth {
             padding: 30px 60px;
@@ -96,7 +96,6 @@
     }
 }
 
-
 .submit-project {
     min-height: 1000px;
     background: #ffffff;
@@ -128,10 +127,11 @@
     }
     .form-body {
         text-align: left;
-        .form-primary, .form-team {
-            padding: 30px 60px;
-            padding-right: 120px;
+        .el-form-item {
+            padding-right: 60px;
         }
+        .form-primary,
+        .form-founder,
         .form-extra {
             padding: 30px 0;
         }
@@ -145,17 +145,16 @@
         border-radius: 10px;
         padding-top: 22px;
         margin-bottom: 22px;
-        padding-right: 22px;
         .comment {
             padding-left: 160px;
             margin-bottom: 5px;
             font-size: 12px;
             color: #6BA2FC;
-        }    
+        }
     }
     .max-length {
         position: absolute;
-        bottom:10px;
+        bottom: 10px;
         right: 10px;
         font-size: 12px;
         color: #cccccc;
@@ -177,6 +176,80 @@
             padding-left: 10px;
         }
     }
+    .dash-line {
+        border-bottom: 1px dashed #e5e5e5;
+        margin-bottom: 22px;
+    }
+    .creator-text {
+        p {
+            line-height: 20px;
+        }
+        margin-bottom: 10px;
+    }
+    .creator-team-text {
+        height: 30px;
+        line-height: 30px;
+        margin-bottom: 10px;
+        color: #409EFF;
+        cursor: pointer;
+        i {
+            font-size: 20px;
+            position: relative;
+            top: 2px;
+            margin-left: 5px;
+        }
+    }
+    .creator-team-item-title {
+        padding-left: 160px;
+        line-height: 20px;
+        margin-bottom: 10px;
+        font-weight: 700;
+        color: #999;
+        font-size: 14px;
+        position: relative;
+        i {
+            cursor: pointer;
+            position: absolute;
+            right: 65px;
+            top: 5px;
+            &:hover {
+                color: #666;
+            }
+        }
+    }
+    .creator-team-item {
+        background: #F5F9FB;
+        border: 1px dashed #e5e5e5;
+        border-radius: 10px;
+        padding-top: 10px;
+        margin-bottom: 22px;
+        padding-bottom: 10px;
+        .el-form-item {
+            margin-bottom: 10px;
+        }
+    }
+    .person-card-upload {
+        width: 118px;
+        height: 65px;
+        border: 1px dashed #e5e5e5;
+        border-radius: 5px;
+        text-align: center;
+        img {
+            max-height: 65px;
+        }
+        .avatar-uploader-icon {
+            line-height: 65px;
+            width: 65px;
+            height: 65px;
+        }
+    }
+    .on-success {
+        margin-top: 40px;
+        font-size: 24px;
+        line-height: 100px;
+        text-align: center;
+        color: #999999;
+    }
 }
 
 .avatar-uploader .el-upload {
@@ -186,9 +259,11 @@
     position: relative;
     overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
 }
+
 .avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
@@ -197,6 +272,7 @@
     line-height: 78px;
     text-align: center;
 }
+
 .avatar {
     width: 78px;
     height: 78px;

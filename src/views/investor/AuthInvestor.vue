@@ -111,6 +111,7 @@
 						</el-row>
 					</el-form-item>
 					<el-form-item>
+						<el-button @click="activeStep = 0">返回上一步</el-button>
 						<el-button @click="handleSecondStep" type="primary">提交您的投资偏好信息</el-button>
 					</el-form-item>
 				</el-form>
@@ -219,29 +220,14 @@ export default {
 		handleSecondStep() {
 			this.isSubmiting = true
 			postData('/index/investor', {
-				real_name: this.authForm.real_name,
-				position: this.authForm.position,
-				portrait: this.authForm.portrait,
-				region_id: this.authForm.region_id,
-				resume: this.authForm.resume,
-				email: this.authForm.email,
-				wechat: this.authForm.wechat,
-				identity: this.authForm.identity,
-				invitation_code: this.authForm.invitation_code,
-				preference_price1: this.extraForm.preference_price1,
-				preference_price2: this.extraForm.preference_price2,
-				preference_price_unit: this.extraForm.preference_price_unit,
-				industry_id: this.extraForm.industry_id,
-				round_id: this.extraForm.round_id
+				...this.authForm,
+				...this.extraForm
 			})
 				.then(
 					res => {
-						if (res.data.status == 1) {
-							this.$message.success('提交成功')
-							this.activeStep = 2
-						} else {
-							this.$message.error(res.data.message)
-						}
+						console.log(res)
+						this.$message.success('提交成功')
+						this.activeStep = 2
 					},
 					err => {
 						console.log(err)

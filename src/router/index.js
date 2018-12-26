@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import store from '../store'
+import { getCookie } from '@/utils/cookie'
 
 import guard from './routerGuard'
 
@@ -84,14 +85,37 @@ const router = new Router({
 		}, {
 			path: '/auth_investor',
 			name: 'authInvestor',
-			component: AuthInvestor
+			component: AuthInvestor,
+			meta: {
+				requireAuth: true
+			}
 		}, {
 			path: '/submit_project',
 			name: 'submitProject',
-			component: SubmitProject
+			component: SubmitProject,
+			meta: {
+				requireAuth: true
+			}
 		}
 	]
 })
+
+router.beforeEach((to, from, next) => {
+	if (to.meta.requireAuth) {
+		const token = getCookie('access-user-token')
+		if (token && token !== 'undefined' && token !== 'null') {
+			next()
+		} else {
+			next({
+				path: '/login',
+				query: { redirect: to.fullPath }
+			})
+		}
+	} else {
+		next()
+	}
+})
+
 
 router.afterEach((to) => {
 	store.commit('SET_ACTIVE_INDEX', to.path)

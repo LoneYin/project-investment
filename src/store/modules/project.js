@@ -9,7 +9,7 @@ export default {
             state.projectDetail = {...payload}
         },
         [CLEAR_PROJECT_DETAIL](state) {
-            state.projectDetail = {}
+            state.projectDetail = undefined
         }
     },
     actions: {

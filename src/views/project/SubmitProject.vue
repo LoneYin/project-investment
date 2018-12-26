@@ -14,13 +14,14 @@
 				</el-steps>
 			</div>
 			<div class="form-body">
+				<!-- primaryForm -->
 				<el-form
 					:model="primaryForm"
 					:rules="primaryRules"
 					class="form-primary"
 					label-width="160px"
-					v-show="activeStep == 0"
 					ref="primaryForm"
+					v-show="activeStep == 0"
 				>
 					<el-form-item label="项目名称" prop="name">
 						<el-input placeholder="请输入项目名称" v-model="primaryForm.name"></el-input>
@@ -45,7 +46,7 @@
 						</el-upload>
 					</el-form-item>
 					<el-form-item label="一句话介绍" prop="synopsis">
-						<el-input placeholder="一句话概括产品与服务, 30字以内" v-model="primaryForm.company_name"></el-input>
+						<el-input placeholder="一句话概括产品与服务, 30字以内" v-model="primaryForm.synopsis"></el-input>
 					</el-form-item>
 					<el-form-item label="所属领域" prop="industry_id">
 						<el-select placeholder="项目类别" v-model="primaryForm.industry_id">
@@ -178,7 +179,7 @@
 						</el-form-item>
 						<el-form-item label="计划金额" prop="financing_price">
 							<el-row>
-								<el-col :span="12">
+								<el-col :span="9" style="min-width: 180px;">
 									<el-input-number
 										:controls="false"
 										placeholder="输入具体金额"
@@ -214,10 +215,8 @@
 						</el-form-item>
 						<el-form-item label="BP查看设置">
 							<el-checkbox v-model="primaryForm.is_bp">需要投资人申请查看BP</el-checkbox>
-							<!-- <span class="checkbox-text"></span> -->
 						</el-form-item>
 					</div>
-
 					<el-form-item label="商业计划书" v-if="primaryForm.is_financing !== 1">
 						<el-upload
 							:action="action"
@@ -240,76 +239,215 @@
 					<el-form-item>
 						<el-row>
 							<el-button
-								type="primary"
+								@click="handleFirstStep"
 								size="small"
 								style="padding: 10px 40px;"
-								@click="handleFirstStep"
+								type="primary"
 							>下一步</el-button>
 						</el-row>
 					</el-form-item>
 				</el-form>
 
+				<!-- extraForm -->
 				<el-form
 					:model="extraForm"
 					:rules="extraRules"
-					v-show="activeStep == 1"
+					class="form-extra"
 					label-width="160px"
-					class="form-primary"
 					ref="extraForm"
+					v-show="activeStep == 1"
 				>
 					<el-form-item label="产品服务" prop="product_service">
 						<el-input
-							minlength="8"
-							type="textarea"
 							:rows="4"
-							v-model="extraForm.product_service"
+							minlength="8"
 							placeholder="描述公司所提供的产品和服务是什么，是如何解决痛点和需求的、其它附加的产品和服务是什么"
+							type="textarea"
+							v-model="extraForm.product_service"
 						></el-input>
 						<span class="max-length">{{extraForm.product_service.length}}/1000</span>
 					</el-form-item>
 					<el-form-item label="市场用户" prop="market_users">
 						<el-input
-							minlength="8"
-							type="textarea"
 							:rows="4"
-							v-model="extraForm.market_users"
+							minlength="8"
 							placeholder="描述公司所针对的细分市场是什么、市场规模及增速如何、目标用户的画像、用户或者行业的痛点和需求"
+							type="textarea"
+							v-model="extraForm.market_users"
 						></el-input>
 						<span class="max-length">{{extraForm.market_users.length}}/1000</span>
 					</el-form-item>
 					<el-form-item label="商业模式" prop="business_model">
 						<el-input
-							minlength="8"
-							type="textarea"
 							:rows="4"
-							v-model="extraForm.business_model"
+							minlength="8"
 							placeholder="描述公司的商业逻辑、如何盈利、主要的收入来源、以及未来的盈利能力"
+							type="textarea"
+							v-model="extraForm.business_model"
 						></el-input>
 						<span class="max-length">{{extraForm.business_model.length}}/1000</span>
 					</el-form-item>
 					<el-form-item label="运营数据" prop="operational_data">
 						<el-input
-							minlength="8"
-							type="textarea"
 							:rows="4"
-							v-model="extraForm.operational_data"
+							minlength="8"
 							placeholder="描述公司取得的业务进展或增速、用户量/收入/利润等关键业务指标"
+							type="textarea"
+							v-model="extraForm.operational_data"
 						></el-input>
 						<span class="max-length">{{extraForm.operational_data.length}}/1000</span>
 					</el-form-item>
 					<el-form-item label="核心资源" prop="core_resources">
 						<el-input
-							minlength="8"
-							type="textarea"
 							:rows="4"
-							v-model="extraForm.core_resources"
+							minlength="8"
 							placeholder="描述公司相较于竞争对手所具有的优势、对于公司发展有重要意义的资源或亮点"
+							type="textarea"
+							v-model="extraForm.core_resources"
 						></el-input>
 						<span class="max-length">{{extraForm.core_resources.length}}/1000</span>
 					</el-form-item>
+					<p class="dash-line"></p>
+					<el-form-item
+						:key="index"
+						:label="`媒体报道${index == 0? '' : index + 1}`"
+						v-for="(item, index) in extraForm.media_coverage"
+					>
+						<el-row>
+							<el-col :span="20">
+								<el-input placeholder="请输入主流媒体报道的链接地址" v-model="extraForm.media_coverage[index]"></el-input>
+							</el-col>
+							<el-col :offset="1" :span="3">
+								<el-button @click="deleteMedia(index)" size="small" type="danger">删除</el-button>
+							</el-col>
+						</el-row>
+					</el-form-item>
+					<el-form-item>
+						<el-button @click="addMediaCoverage" size="small" type="primary">添加一条</el-button>
+					</el-form-item>
+					<p class="dash-line"></p>
 
-					<el-form-item></el-form-item>
+					<el-form-item>
+						<el-button @click="backStep" size="small">返回上一步</el-button>
+						<el-button @click="handleSecondStep" size="small" type="primary">下一步</el-button>
+					</el-form-item>
 				</el-form>
+
+				<!-- founderForm -->
+				<el-form
+					:model="founderForm"
+					:rules="founderRules"
+					class="form-founder"
+					label-width="160px"
+					ref="founderForm"
+					v-show="activeStep == 2"
+				>
+					<template v-if="primaryForm.role == 1 || primaryForm.role == 2">
+						<el-form-item label="真实姓名" prop="your_name">
+							<el-input placeholder="输入中文真实姓名" v-model="founderForm.your_name"></el-input>
+						</el-form-item>
+						<el-form-item label="职位" prop="your_position">
+							<el-input placeholder="输入职位" v-model="founderForm.your_position"></el-input>
+						</el-form-item>
+						<el-form-item label="手机号码" prop="your_mobile">
+							<el-input placeholder="输入真实手机号" v-model="founderForm.your_mobile"></el-input>
+						</el-form-item>
+						<el-form-item label="公司邮箱" prop="email">
+							<el-input placeholder="输入公司邮箱, 便于审核" v-model="founderForm.email"></el-input>
+						</el-form-item>
+						<el-form-item label="个人微信" prop="wachat">
+							<el-input placeholder="输入个人微信号, 方便联系" v-model="founderForm.wachat"></el-input>
+						</el-form-item>
+						<el-form-item class="is-required person-card" label="个人名片">
+							<el-upload
+								:action="action"
+								:before-upload="beforeCardUpload"
+								:data="{type: 'card'}"
+								:headers="headers"
+								:on-success="handleCardSuccess"
+								:show-file-list="false"
+								accept="image/*"
+								class="person-card-upload"
+								name="image"
+							>
+								<img :src="founderForm.card" v-if="founderForm.card">
+								<i class="el-icon-plus avatar-uploader-icon" v-else></i>
+							</el-upload>
+							<span style="font-size: 12px; color: #999;">建议上传名片尺寸：90mm*50mm</span>
+						</el-form-item>
+					</template>
+
+					<template v-if="primaryForm.role !== 1">
+						<el-form-item class="creator-text">
+							<p style="font-weight: 700;">创始人联系方式</p>
+							<p style="font-size:12px; color: #999999;">便于更好的完善该项目的信息</p>
+						</el-form-item>
+						<el-form-item label="姓名" prop="full_name">
+							<el-input placeholder="输入中文真实姓名" v-model="founderForm.full_name"></el-input>
+						</el-form-item>
+						<el-form-item label="职位" prop="position">
+							<el-input placeholder="输入职位" v-model="founderForm.position"></el-input>
+						</el-form-item>
+						<el-form-item label="手机号码" prop="mobile">
+							<el-input placeholder="输入真实手机号" v-model="founderForm.mobile"></el-input>
+						</el-form-item>
+					</template>
+					<template v-if="primaryForm.role == 1">
+						<el-form-item class="creator-team-text">
+							<span @click="showTeamForm">填写创始成员信息, 让投资人更了解你的团队</span>
+							<i class="el-icon-fa-angle-double-down" v-if="!teamFormVisible"></i>
+							<i class="el-icon-fa-angle-double-up" v-else></i>
+						</el-form-item>
+
+						<div class="dash-line"></div>
+
+						<template v-if="teamFormVisible">
+							<el-form-item label="团队优势">
+								<el-input placeholder="简单介绍你的团队" v-model="founderForm.team_advantage"></el-input>
+							</el-form-item>
+							<div :key="index" class="creator-team-item" v-for="(item, index) in founderForm.team">
+								<p class="creator-team-item-title">
+									<span>{{`团队成员${index + 1}`}}</span>
+									<i
+										@click="removeTeamMember(index)"
+										class="el-icon-fa-close"
+										title="删除该成员"
+										v-if="index !== 0"
+									></i>
+									<i @click="addTeamMember" class="el-icon-fa-plus" title="添加成员" v-if="index == 0"></i>
+								</p>
+								<el-form-item label="姓名">
+									<el-input placeholder="成员的姓名" v-model="founderForm.team[index].real_name"></el-input>
+								</el-form-item>
+								<el-form-item label="职位">
+									<el-input placeholder="成员的职位" v-model="founderForm.team[index].person_position"></el-input>
+								</el-form-item>
+								<el-form-item label="介绍">
+									<el-input
+										placeholder="成员的个人介绍"
+										type="textarea"
+										v-model="founderForm.team[index].introduce"
+									></el-input>
+								</el-form-item>
+							</div>
+						</template>
+
+						<div class="dash-line" v-if="teamFormVisible"></div>
+					</template>
+
+					<el-form-item>
+						<el-button @click="backStep" size="small">返回上一步</el-button>
+						<el-button @click="handleThirdStep" size="small" type="primary">提交项目</el-button>
+					</el-form-item>
+				</el-form>
+
+				<!-- finished -->
+				<div class="on-success" v-show="activeStep == 3">
+					<p>您的项目已提交，请耐心等待审核结果</p>
+					<div>
+						<el-button @click="handleBack" type="primary">返回首页</el-button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -317,7 +455,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import encrypt from '@/utils/encrypt'
-import { server, authKey } from '@/http'
+import { server, authKey, postData } from '@/http'
 import { getCookie } from '@/utils/cookie'
 import validator from '@/utils/validator'
 
@@ -325,9 +463,9 @@ export default {
 	data() {
 		return {
 			isSubmiting: false,
-			activeStep: 1,
+			activeStep: 0,
 			showUploadButton: true,
-			mediaCount: 1,
+			teamFormVisible: false,
 			primaryForm: {
 				name: '', // 项目名称
 				industry_id: '', // 项目类别
@@ -346,7 +484,7 @@ export default {
 				android_download_address: '', // 安卓下载地址
 				wechat_subscription: '', // 微信公众号
 				related_links: '', // 相关链接
-				project_overview: '', // 项目概述				
+				project_overview: '', // 项目概述
 				financing_price: undefined, // 融资金额
 				financing_unit: 1, // 融资金额单位 1人民币 2美元
 				is_financing: '', // 1融资中 2不需要融资
@@ -380,7 +518,9 @@ export default {
 				role: [{ required: true, message: '您的角色不能为空' }],
 				is_financing: [{ required: true, message: '融资需求不能为空' }],
 				round_id: [{ required: true, message: '融资轮次不能为空' }],
-				financing_price: [{ required: true, message: '融资金额不能为空' }],
+				financing_price: [
+					{ required: true, message: '融资金额不能为空' }
+				]
 			},
 			extraForm: {
 				product_service: '', // 产品服务
@@ -388,32 +528,80 @@ export default {
 				business_model: '', // 商业模式
 				operational_data: '', // 运营数据
 				core_resources: '', // 核心资源
-				media_coverage: [] // 媒体报道
+				media_coverage: [''] // 媒体报道
 			},
 			extraRules: {
-				product_service: [{
-					validator: validator.maxLength(1000),
-					trigger: 'blur'
-				}],
-				market_users: [{
-					validator: validator.maxLength(1000),
-					trigger: 'blur'
-				}],
-				business_model: [{
-					validator: validator.maxLength(1000),
-					trigger: 'blur'
-				}],
-				operational_data: [{
-					validator: validator.maxLength(1000),
-					trigger: 'blur'
-				}],
-				core_resources: [{
-					validator: validator.maxLength(1000),
-					trigger: 'blur'
-				}],
+				product_service: [
+					{
+						validator: validator.maxLength(1000),
+						trigger: 'blur'
+					}
+				],
+				market_users: [
+					{
+						validator: validator.maxLength(1000),
+						trigger: 'blur'
+					}
+				],
+				business_model: [
+					{
+						validator: validator.maxLength(1000),
+						trigger: 'blur'
+					}
+				],
+				operational_data: [
+					{
+						validator: validator.maxLength(1000),
+						trigger: 'blur'
+					}
+				],
+				core_resources: [
+					{
+						validator: validator.maxLength(1000),
+						trigger: 'blur'
+					}
+				]
 			},
-			teamForm: {
-
+			founderForm: {
+				your_position: '', // 你的职位
+				your_mobile: '', // 你的手机号
+				your_name: '', // 你的姓名
+				email: '', // 公司邮箱
+				wachat: '', // 个人微信
+				card: '', // 个人名片
+				full_name: '', // 创始人姓名
+				mobile: '', // 创始人手机号码
+				position: '', //创始人职位
+				team: [],
+				team_advantage: ''
+			},
+			founderRules: {
+				your_name: [{ required: true, message: '真实姓名不能为空' }],
+				your_position: [{ required: true, message: '职位不能为空' }],
+				your_mobile: [
+					{ required: true, message: '手机号码不能为空' },
+					{
+						validator: validator.mobile,
+						trigger: 'blur'
+					}
+				],
+				email: [
+					{ required: true, message: '公司邮箱不能为空' },
+					{
+						validator: validator.email,
+						trigger: 'blur'
+					}
+				],
+				wachat: [{ required: true, message: '个人微信不能为空' }],
+				full_name: [{ required: true, message: '创始人姓名不能为空' }],
+				position: [{ required: true, message: '创始人职位不能为空' }],
+				mobile: [
+					{ required: true, message: '创始人手机号码不能为空' },
+					{
+						validator: validator.mobile,
+						trigger: 'blur'
+					}
+				]
 			}
 		}
 	},
@@ -435,36 +623,12 @@ export default {
 	},
 	methods: {
 		...mapActions(['getIndustryList', 'getRoundList', 'getAreaList']),
-		handleAvatarSuccess(res) {
-			console.log(res)
-			if (res.status == 1) {
-				this.primaryForm.logo = res.data.fileUrl
-			} else {
-				this.$message.error(res.message)
-			}
-		},
+		// 上传相关
 		beforeAvatarUpload(file) {
 			if (file.size > 2 * 1024 * 1024) {
 				this.$message.error('图片尺寸过大，请选择2M大小以下的图片上传')
 				return false
 			}
-		},
-		handleFileSuccess(res) {
-			console.log(res)
-			if (res.status == 1) {
-				this.primaryForm.business_plan = res.data.fileUrl
-			} else {
-				this.$message.error(res.message)
-				this.showUploadButton = true
-			}
-			// if (res.data)
-		},
-		handleFileError(err) {
-			console.log(err)
-			this.showUploadButton = true
-		},
-		handleFileRemove() {
-			this.showUploadButton = true
 		},
 		beforeFileUpload(file) {
 			if (file.size > 7.5 * 1024 * 1024) {
@@ -475,23 +639,144 @@ export default {
 			}
 			this.showUploadButton = false
 		},
+		beforeCardUpload(file) {
+			if (file.size > 2 * 1024 * 1024) {
+				this.$message.error('图片尺寸过大，请选择2M大小以下的图片上传')
+				return false
+			}
+		},
+		handleAvatarSuccess(res) {
+			console.log(res)
+			if (res.status == 1) {
+				this.primaryForm.logo = res.data.file
+			} else {
+				this.$message.error(res.message)
+			}
+		},
+		handleFileSuccess(res) {
+			console.log(res)
+			if (res.status == 1) {
+				this.primaryForm.business_plan = res.data.file
+			} else {
+				this.$message.error(res.message)
+				this.showUploadButton = true
+			}
+		},
+		handleCardSuccess(res) {
+			console.log(res)
+			if (res.status == 1) {
+				this.founderForm.card = res.data.file
+			} else {
+				this.$message.error(res.message)
+			}
+		},
+		handleFileError(err) {
+			console.log(err)
+			this.showUploadButton = true
+		},
+		handleFileRemove() {
+			this.showUploadButton = true
+		},
+		// 提交相关
 		handleFirstStep() {
 			if (!this.primaryForm.logo) {
 				this.$message.error('请上传公司logo')
 				return
 			}
-			if (this.primaryForm.is_financing == 1 && !this.primaryForm.business_plan) {
+			if (
+				this.primaryForm.is_financing == 1 &&
+				!this.primaryForm.business_plan
+			) {
 				this.$message.error('请上传商业计划书')
 				return
 			}
-			this.$refs['primaryForm'].validate(valid => {
-				console.log(valid)
-				if (valid) {
-					this.activeStep == 1
+			this.$refs['primaryForm'].validate(
+				valid => {
+					if (valid) {
+						this.activeStep = 1
+					}
+				},
+				err => {
+					console.log(err)
 				}
-			}, err => {
-				console.log(err)
+			)
+		},
+		handleSecondStep() {
+			this.$refs['extraForm'].validate(
+				valid => {
+					if (valid) {
+						this.activeStep = 2
+					}
+				},
+				err => {
+					console.log(err)
+				}
+			)
+		},
+		handleThirdStep() {
+			if (!this.founderForm.card && (this.primaryForm.role == 1 || this.primaryForm.role == 2)) {
+				this.$message.error('请上传名片')
+				return
+			}
+			this.$refs['founderForm'].validate(
+				valid => {
+					if (valid) {
+						this.isSubmiting = true
+						postData('/index/project', {
+							...this.primaryForm,
+							...this.extraForm,
+							...this.founderForm
+						}).then(
+							res => {
+								console.log(res)
+								this.$message.success('提交成功')
+								this.activeStep = 3
+							},
+							err => {
+								console.log(err)
+							}
+						).finally(() => {
+							this.isSubmiting = false
+						})
+					}
+				},
+				err => {
+					console.log(err)
+				}
+			)
+		},
+		backStep() {
+			this.activeStep--
+		},
+		handleBack() {
+			this.$router.push({ path: '/' })
+		},
+		// 表单操作
+		addMediaCoverage() {
+			this.extraForm.media_coverage.push('')
+		},
+		deleteMedia(index) {
+			this.extraForm.media_coverage.splice(index, 1)
+		},
+		showTeamForm() {
+			this.teamFormVisible = !this.teamFormVisible
+			if (this.founderForm.team.length == 0) {
+				this.founderForm.team.push({
+					person_position: '',
+					real_name: '',
+					introduce: ''
+				})
+			}
+		},
+		addTeamMember() {
+			this.founderForm.team.push({
+				person_position: '',
+				real_name: '',
+				introduce: ''
 			})
+		},
+		removeTeamMember(index) {
+			this.founderForm.team.splice(index, 1)
 		}
 	},
 	created() {

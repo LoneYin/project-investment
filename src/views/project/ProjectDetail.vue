@@ -24,6 +24,11 @@
 								:title="projectDetail.synopsis"
 								class="project-summary text-ellipsis"
 							>{{projectDetail.synopsis}}</p>
+							<p class="project-tags">
+								<span v-for="item in projectDetail.tags" :key="item.tag_id">
+									<i class="el-icon-fa-tags">{{item.tag_name}}</i>
+								</span>
+							</p>
 						</el-col>
 					</el-row>
 					<div class="header-navbar">
