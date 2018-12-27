@@ -1,6 +1,6 @@
 <template>
 	<el-card class="no-border project-table" v-loading="initLoading">
-		<el-table :data="defaultData" row-class-name="project-table-item">
+		<el-table :data="defaultData" @row-click="handleClick" row-class-name="project-table-item">
 			<el-table-column label="投资人" width="300">
 				<template slot-scope="scope">
 					<el-row>
@@ -99,10 +99,12 @@ export default {
 					this.loadLock = false
 				}
 			}
+		},
+		handleClick(row) {
+			this.$router.push({
+				path: `/investor/detail/${row.project_id}`
+			})
 		}
-	},
-	created() {
-		// console.log(this.projectsList)
 	},
 	mounted() {
 		document

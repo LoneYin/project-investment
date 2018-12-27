@@ -4,6 +4,7 @@ import index from './modules/index'
 import app from './modules/app'
 import discovery from './modules/discovery'
 import project from './modules/project'
+import investor from './modules/investor'
 
 Vue.use(Vuex)
 
@@ -21,6 +22,7 @@ export default new Vuex.Store({
 		index,
 		app,
 		discovery,
-		project
+		project,
+		investor
 	}
 })

@@ -359,8 +359,8 @@
 						<el-form-item label="公司邮箱" prop="email">
 							<el-input placeholder="输入公司邮箱, 便于审核" v-model="founderForm.email"></el-input>
 						</el-form-item>
-						<el-form-item label="个人微信" prop="wachat">
-							<el-input placeholder="输入个人微信号, 方便联系" v-model="founderForm.wachat"></el-input>
+						<el-form-item label="个人微信" prop="wechat">
+							<el-input placeholder="输入个人微信号, 方便联系" v-model="founderForm.wechat"></el-input>
 						</el-form-item>
 						<el-form-item class="is-required person-card" label="个人名片">
 							<el-upload
@@ -571,7 +571,7 @@ export default {
 				your_mobile: '', // 你的手机号
 				your_name: '', // 你的姓名
 				email: '', // 公司邮箱
-				wachat: '', // 个人微信
+				wechat: '', // 个人微信
 				card: '', // 个人名片
 				full_name: '', // 创始人姓名
 				mobile: '', // 创始人手机号码
@@ -596,7 +596,7 @@ export default {
 						trigger: 'blur'
 					}
 				],
-				wachat: [{ required: true, message: '个人微信不能为空' }],
+				wechat: [{ required: true, message: '个人微信不能为空' }],
 				full_name: [{ required: true, message: '创始人姓名不能为空' }],
 				position: [{ required: true, message: '创始人职位不能为空' }],
 				mobile: [

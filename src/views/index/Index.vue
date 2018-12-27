@@ -88,7 +88,7 @@
 										class="index-investor-item"
 										v-for="item in consultInvestorsList"
 									>
-										<el-card shadow="hover">
+										<el-card shadow="hover" @click.native="toInvestorDetail(item.investor_id)">
 											<div class="index-investor-item-avatar">
 												<img :src="item.portrait" alt>
 											</div>
@@ -109,7 +109,7 @@
 										class="index-investor-item"
 										v-for="item in activeInvestorsList"
 									>
-										<el-card shadow="hover">
+										<el-card shadow="hover" @click.native="toInvestorDetail(item.investor_id)">
 											<div class="index-investor-item-avatar">
 												<img :src="item.portrait" alt>
 											</div>
@@ -130,7 +130,7 @@
 										class="index-investor-item"
 										v-for="item in popularInvestorsList"
 									>
-										<el-card shadow="hover">
+										<el-card shadow="hover" @click.native="toInvestorDetail(item.investor_id)">
 											<div class="index-investor-item-avatar">
 												<img :src="item.portrait" alt>
 											</div>
@@ -230,6 +230,11 @@ export default {
 		toProjectDetail(id) {
 			this.$router.push({
 				path: `/project/detail/${id}`
+			})
+		},
+		toInvestorDetail(id) {
+			this.$router.push({
+				path: `/investor/detail/${id}`
 			})
 		}
 	},
