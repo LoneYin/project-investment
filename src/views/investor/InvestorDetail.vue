@@ -74,11 +74,11 @@
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-suitcase"></i>
 						投资案例
-						<span>{{investmentCases.counts && investmentCases.counts > 0 && `(${investmentCases.counts})` }}</span>
+						<span>{{investmentCases.counts > 0 && `(${investmentCases.counts})` }}</span>
 					</div>
 					<div class="section-content">
 						<template
-							v-if="investmentCases.data && investmentCases.data.length > 0"
+							v-if="investmentCases.data.length > 0"
 						>
 							<p>
 								<span v-for="item in investmentCases.industry" :key="item.id" class="industry-tag">
@@ -97,6 +97,12 @@
 												<p class="case-item-summary">{{item.summary}}</p>
 											</el-col>
 										</el-row>
+										<div v-if="item.experience.length > 0" class="case-item-experiences">
+											<el-row class="experience-item" v-for="(subItem, index) in item.experience" :key="index">
+												<el-col>{{subItem.time}}</el-col>
+												<el-col></el-col>
+											</el-row>
+										</div>
 									</el-card>
 								</el-col>
 							</el-row>

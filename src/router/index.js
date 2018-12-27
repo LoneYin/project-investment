@@ -113,6 +113,9 @@ const router = new Router({
 					path: 'auth',
 					name: 'investorAuth',
 					component: InvestorAuth,
+					meta: {
+						requireAuth: true
+					}
 				}, {
 					path: 'detail/:investorId',
 					name: 'investorDetail',
