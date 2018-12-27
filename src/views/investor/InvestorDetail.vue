@@ -58,7 +58,7 @@
 					</div>
 				</el-card>
 
-				<el-card class="no-border investor-detail-section" id="investmentPreference">
+				<el-card class="no-border investor-detail-section" id="personalResume">
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-user-circle-o"></i>个人履历
 					</div>
@@ -70,37 +70,47 @@
 					</div>
 				</el-card>
 
-				<el-card class="no-border investor-detail-section" id="investmentPreference">
+				<el-card class="no-border investor-detail-section" id="investmentCase">
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-suitcase"></i>
 						投资案例
-						<span>{{investmentCases.counts > 0 && `(${investmentCases.counts})` }}</span>
+						<span>{{investmentCases.counts > 0 ? `(${investmentCases.counts})` : '' }}</span>
 					</div>
 					<div class="section-content">
-						<template
-							v-if="investmentCases.data.length > 0"
-						>
+						<template v-if="investmentCases.data.length > 0">
 							<p>
-								<span v-for="item in investmentCases.industry" :key="item.id" class="industry-tag">
-									{{item.name}}
-								</span>
+								<span
+									:key="item.id"
+									class="industry-tag"
+									v-for="item in investmentCases.industry"
+								>{{item.name}}</span>
 							</p>
 							<el-row>
-								<el-col :span="12" v-for="item in investmentCases.data" :key="item.project_id" class="case-item">
-									<el-card class="no-border">
+								<el-col
+									:key="item.project_id"
+									:span="12"
+									class="case-item"
+									v-for="item in investmentCases.data"
+								>
+									<el-card @click.native="toProjectDetail(item.project_id)" class="scroll no-border">
 										<el-row class="case-item-title">
 											<el-col :span="6" class="case-item-logo">
-												<img :src="item.logo" alt="">
+												<img :src="item.logo" alt>
 											</el-col>
-											<el-col :span="14" :offset="1">
+											<el-col :offset="1" :span="14">
 												<p class="case-item-name">{{item.name}}</p>
 												<p class="case-item-summary">{{item.summary}}</p>
 											</el-col>
 										</el-row>
-										<div v-if="item.experience.length > 0" class="case-item-experiences">
-											<el-row class="experience-item" v-for="(subItem, index) in item.experience" :key="index">
-												<el-col>{{subItem.time}}</el-col>
-												<el-col></el-col>
+										<div class="case-item-experiences" v-if="item.experience.length > 0">
+											<el-row :key="index" class="experience-item" v-for="(subItem, index) in item.experience">
+												<el-col :span="6" class="experience-item-time">{{subItem.time}}</el-col>
+												<el-col :span="16" class="experience-item-round">
+													<div class="circle">
+														<span class="circle-inside"></span>
+													</div>
+													<p>{{subItem.experience_name}}</p>
+												</el-col>
 											</el-row>
 										</div>
 									</el-card>
@@ -111,17 +121,37 @@
 					</div>
 				</el-card>
 			</div>
+			<div
+				:style="{ width: navbarWidth ? `${navbarWidth}px` : 'auto', display: showFixedBar ? 'block' : 'none' }"
+				class="absolute-navbar"
+			>
+				<el-card class="no-border absolute-navbar-container">
+					<div class="header-navbar">
+						<el-tabs @tab-click="handleTabsClick" v-model="currentName">
+							<el-tab-pane label="投资偏好" name="investmentPreference"></el-tab-pane>
+							<el-tab-pane label="个人履历" name="personalResume"></el-tab-pane>
+							<el-tab-pane label="投资案例" name="investmentCase"></el-tab-pane>
+						</el-tabs>
+					</div>
+				</el-card>
+			</div>
 		</template>
 	</div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import scroll from '@/utils/scroll'
 export default {
 	data() {
 		return {
 			init: false,
-			currentName: 'investmentPreference'
+			currentName: 'investmentPreference',
+			navbarWidth: undefined,
+			showFixedBar: false,
+			anchorArr: [],
+			anchorNameArr: [],
+			scrollLock: false
 		}
 	},
 	props: {
@@ -135,8 +165,59 @@ export default {
 	},
 	methods: {
 		...mapActions(['getInvestorDetail', 'getInvestmentCases']),
-		handleTabsClick(name) {
-			console.log(name)
+		toProjectDetail(id) {
+			this.$router.push({
+				path: `/project/detail/${id}`
+			})
+		},
+		handleTabsClick(tab) {
+			if (!this.scrollLock) {
+				this.scrollLock = true
+				scroll.scrollTo(tab.name, () => {
+					setTimeout(() => {
+						this.scrollLock = false
+					}, 50)
+				})
+			} else {
+				this.$message.warning('切换过于频繁')
+			}
+		},
+		onScroll() {
+			if (!this.navbarWidth) {
+				this.navbarWidth = document.querySelector(
+					'.investor-detail'
+				).offsetWidth
+			}
+
+			const container = document.querySelector('.el-main')
+
+			if (container.scrollTop > 116 && !this.showFixedBar) {
+				this.showFixedBar = true
+			} else if (container.scrollTop <= 116 && this.showFixedBar) {
+				this.showFixedBar = false
+			}
+
+			if (!this.scrollLock) {
+				if (container.scrollTop < this.anchorArr[1]) {
+					this.currentName = this.anchorNameArr[0]
+				} else if (
+					container.scrollTop >= this.anchorArr[1] &&
+					container.scrollTop <= this.anchorArr[2]
+				) {
+					this.currentName = this.anchorNameArr[1]
+				} else {
+					this.currentName = this.anchorNameArr[2]
+				}
+			}
+		},
+		initAnchorArr() {
+			const sectionList = document.querySelectorAll(
+				'.investor-detail-section'
+			)
+			Array.from(sectionList).forEach(item => {
+				this.anchorArr.push(item.offsetTop)
+				this.anchorNameArr.push(item.id)
+			})
 		}
 	},
 	created() {
@@ -145,6 +226,22 @@ export default {
 			this.init = false
 		})
 		this.getInvestmentCases(this.investorId)
+	},
+	mounted() {
+		this.$nextTick(() => {
+			document
+				.querySelector('.el-main')
+				.addEventListener('scroll', this.onScroll, false)
+		})
+		setTimeout(() => {
+			this.initAnchorArr()
+		}, 1000)
+	},
+	destroyed() {
+		document
+			.querySelector('.el-main')
+			.removeEventListener('scroll', this.onScroll, false)
+		this.$store.commit('CLEAR_INVESTOR_DETAIL')
 	}
 }
 </script>

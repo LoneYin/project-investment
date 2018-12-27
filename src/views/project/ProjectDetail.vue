@@ -11,7 +11,7 @@
 						</el-col>
 						<el-col :span="18" class="project-text">
 							<p class="project-info">
-								<span class="text-name text-ellipsis" :title="projectDetail.name">{{projectDetail.name}}</span>
+								<span :title="projectDetail.name" class="text-name text-ellipsis">{{projectDetail.name}}</span>
 								<span class="text-industry">{{projectDetail.industry.name}}</span>
 								<span class="text-dot"></span>
 								<i class="el-icon-location"></i>
@@ -25,8 +25,8 @@
 								class="project-summary text-ellipsis"
 							>{{projectDetail.synopsis}}</p>
 							<p class="project-tags">
-								<span v-for="item in projectDetail.tags" :key="item.tag_id">
-									<i class="el-icon-fa-tags">   {{item.tag_name}}</i>
+								<span :key="item.tag_id" v-for="item in projectDetail.tags">
+									<i class="el-icon-fa-tags">&nbsp;{{item.tag_name}}</i>
 								</span>
 							</p>
 						</el-col>
@@ -49,8 +49,41 @@
 						<i class="el-icon-fa-file-text-o"></i>项目介绍
 					</div>
 					<div class="section-content">
-						<template v-if="projectDetail.detail">
-							<div v-html="projectDetail.detail"></div>
+						<template v-if="projectDetail.summary || projectDetail.more">
+							<div class="introduce-item" v-if="projectDetail.summary">
+								<h5>概述</h5>
+								<p>{{projectDetail.summary}}</p>
+							</div>
+							<template v-if="projectDetail.more">
+								<template v-if="moreDetailInfos">
+									<div class="introduce-item" v-if="moreDetailInfos.product_service">
+										<h5>产品服务</h5>
+										<p>{{moreDetailInfos.product_service}}</p>
+									</div>
+									<div class="introduce-item" v-if="moreDetailInfos.market_users">
+										<h5>市场用户</h5>
+										<p>{{moreDetailInfos.market_users}}</p>
+									</div>
+									<div class="introduce-item" v-if="moreDetailInfos.business_model">
+										<h5>商业模式</h5>
+										<p>{{moreDetailInfos.business_model}}</p>
+									</div>
+									<div class="introduce-item" v-if="moreDetailInfos.operational_data">
+										<h5>运营数据</h5>
+										<p>{{moreDetailInfos.operational_data}}</p>
+									</div>
+									<div class="introduce-item" v-if="moreDetailInfos.core_resources">
+										<h5>核心资源</h5>
+										<p>{{moreDetailInfos.core_resources}}</p>
+									</div>
+								</template>
+								<div class="more-info-mask" v-else>
+									<router-link to="/investor/auth">
+										<el-button type="primary">认证投资人</el-button>
+									</router-link>
+									<p>查看项目完整介绍</p>
+								</div>
+							</template>
 						</template>
 						<p v-else>暂无项目介绍</p>
 					</div>
@@ -99,13 +132,22 @@
 						<i class="el-icon-fa-users"></i>创始团队
 					</div>
 					<div class="section-content">
-						<div class="section-team-table" v-if="projectDetail.team && projectDetail.team.length > 0">
-							<el-table :data="projectDetail.team" style="width: 90%; margin: 0 auto;">
-								<el-table-column label="姓名" prop="real_name" width="180"></el-table-column>
-								<el-table-column label="职位" prop="position" width="180"></el-table-column>
-								<el-table-column label="介绍" prop="introduce"></el-table-column>
-							</el-table>
-						</div>
+						<template v-if="projectDetail.team_advantage || (projectDetail.team && projectDetail.team.length > 0)">
+							<div class="section-team-table">
+								<div class="team-advantage" v-if="projectDetail.team_advantage">
+									<h5>团队优势</h5>
+									<p>{{projectDetail.team_advantage}}</p>
+								</div>
+								<div v-if="projectDetail.team && projectDetail.team.length > 0">
+									<h5>成员信息</h5>
+									<el-table :data="projectDetail.team" style="width: 90%; margin: 0 auto;">
+										<el-table-column label="姓名" prop="real_name" width="180"></el-table-column>
+										<el-table-column label="职位" prop="position" width="180"></el-table-column>
+										<el-table-column label="介绍" prop="introduce"></el-table-column>
+									</el-table>
+								</div>
+							</div>
+						</template>
 						<p v-else>暂无创始团队信息</p>
 					</div>
 				</el-card>
@@ -170,19 +212,24 @@ export default {
 	},
 	computed: {
 		...mapState({
-			projectDetail: state => state.project.projectDetail
+			projectDetail: state => state.project.projectDetail,
+			moreDetailInfos: state => state.project.moreDetailInfos
 		})
 	},
 	methods: {
 		...mapActions(['getProjectDetail']),
 
 		handleTabsClick(tab) {
-			this.scrollLock = true
-			scroll.scrollTo(tab.name, () => {
-				setTimeout(() => {
-					this.scrollLock = false
-				}, 150)
-			})
+			if (!this.scrollLock) {
+				this.scrollLock = true
+				scroll.scrollTo(tab.name, () => {
+					setTimeout(() => {
+						this.scrollLock = false
+					}, 50)
+				})
+			} else {
+				this.$message.warning('切换过于频繁')
+			}
 		},
 		onScroll() {
 			if (!this.navbarWidth) {
