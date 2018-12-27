@@ -196,7 +196,7 @@ export default {
 		handleAvatarSuccess(res) {
 			console.log(res)
 			if (res.status == 1) {
-				this.authForm.portrait = res.data.imgUrl
+				this.authForm.portrait = res.data.file
 			} else {
 				this.$message.error(res.message)
 			}

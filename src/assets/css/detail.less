@@ -11,6 +11,7 @@
     .header-container {
         width: 60%;
         margin: 0 auto;
+        min-width: 700px;
         .header-title {
             width: 500px;
             padding-top: 20px;
@@ -100,6 +101,7 @@
     }
     .project-detail-main {
         width: 60%;
+        min-width: 700px;
         margin: 0 auto;
         padding-top: 20px;
     }
@@ -111,6 +113,8 @@
             line-height: 40px;
             i {
                 margin-right: 10px;
+                color: #5a626d;
+                font-size: 18px;
             }
         }
         .section-content {
@@ -120,8 +124,7 @@
             font-size: 14px;
             line-height: 24px;
             color: #5a626d;
-        }
-        // .section-content-text-indent {
+        } // .section-content-text-indent {
         //     text-indent: 32px;
         // }
         .section-title {
@@ -252,6 +255,163 @@
         padding-bottom: 10px;
         .cell {
             text-align: center;
+        }
+    }
+}
+
+.investor-detail {
+    height: 100%;
+    position: relative;
+    .el-card__body {
+        padding: 0;
+    }
+    .investor-detail-header {}
+    .header-container {
+        // height: 160px;
+        width: 60%;
+        margin: 0 auto;
+        .header-title {
+            width: 500px;
+            padding-top: 20px;
+        }
+    }
+    .investor-portrait {
+        margin: 0 auto;
+        width: 82px;
+        height: 82px;
+        border-radius: 42px;
+        padding: 1px;
+        border: 1px solid #e5e5e5;
+        img {
+            width: 80px;
+            height: 80px;
+            border-radius: 39px;
+            margin-top: 1px;
+        }
+    }
+    .investor-text {
+        height: 86px;
+        padding: 14px 0;
+        text-align: left;
+        span {
+            display: inline-block;
+        }
+        .text-name {
+            font-size: 20px;
+            margin-right: 10px;
+            max-width: 100px;
+            position: relative;
+            top: 5px;
+        }
+        i {
+            color: #999;
+            margin-right: 5px;
+        }
+        .text-area {
+            font-size: 15px;
+            color: #999;
+        }
+        .text-position {
+            margin-top: 5px;
+            color: #666;
+            font-size: 14px;
+        }
+    }
+    .header-navbar {
+        height: 40px;
+        margin-top: 10px;
+    }
+    .el-tabs__nav-wrap::after {
+        background-color: #ffffff;
+    }
+    .investor-detail-main {
+        width: 60%;
+        min-width: 700px;
+        margin: 0 auto;
+        padding-top: 20px;
+    }
+    .investor-detail-section {
+        margin-bottom: 20px;
+        .el-card__header {
+            padding: 0 20px;
+            text-align: left;
+            line-height: 40px;
+            i {
+                margin-right: 10px;
+                color: #5a626d;
+                font-size: 18px;
+            }
+        }
+        .section-content {
+            min-height: 40px;
+            padding: 20px 40px;
+            text-align: left;
+            font-size: 14px;
+            line-height: 24px;
+            color: #5a626d;
+        } // .section-content-text-indent {
+        //     text-indent: 32px;
+        // }
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            span {
+                color: #409eff;
+            }
+        }
+    }
+    #investmentPreference {
+        .preference-title {
+            font-weight: 700;
+            color: #666;
+            min-width: 80px;
+        }
+        .preference-list {
+            span {
+                margin-right: 15px;
+            }
+        }
+    }
+    #investmentPreference {
+        .industry-tag {
+            cursor: pointer;
+            display: inline-block;
+            min-width: 50px;
+            background: rgba(107, 162, 252, .2);
+            color: #409eff;
+            text-align: center;
+            margin-right: 20px;
+        }
+        .case-item {
+            padding: 20px 0;
+            .el-card {
+                width: 80%;
+                min-width: 300px;
+            }
+            .el-card__body {
+                padding: 20px;
+            }
+            .case-item-name {
+                margin-top: 10px;
+                font-size: 16px;
+                font-weight: 700;
+            }
+            .case-item-summary {
+                color: #999;
+            }
+        }
+        .case-item-logo {
+            width: 66px;
+            height: 66px;
+            border: 1px solid #e5e5e5;
+            border-radius: 33px;
+            img {
+                margin-top: 2px;
+                margin-left: 2px;
+                width: 60px;
+                height: 60px;
+                border-radius: 30px;
+            }
         }
     }
 }

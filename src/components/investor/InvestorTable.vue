@@ -102,7 +102,7 @@ export default {
 		},
 		handleClick(row) {
 			this.$router.push({
-				path: `/investor/detail/${row.project_id}`
+				path: `/investor/detail/${row.investor_id}`
 			})
 		}
 	},
