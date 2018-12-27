@@ -135,6 +135,7 @@ import { getCookie } from '@/utils/cookie'
 import validator from '@/utils/validator'
 
 export default {
+	name: 'investorAuth',
 	data() {
 		return {
 			isSubmiting: false,

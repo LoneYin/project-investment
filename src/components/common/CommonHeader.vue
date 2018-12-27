@@ -7,8 +7,8 @@
 				ref="headerMenu"
 				router
 			>
-				<el-menu-item index="/submit_project">提交项目</el-menu-item>
-				<el-menu-item index="/auth_investor">认证投资人</el-menu-item>
+				<el-menu-item index="/project/submit">提交项目</el-menu-item>
+				<el-menu-item index="/investor/auth">认证投资人</el-menu-item>
 				<template v-if="isLogin">
 					<el-menu-item index="/user">{{ currentUserData ? currentUserData.user_name : ''}}</el-menu-item>
 
@@ -29,8 +29,8 @@ export default {
 	data() {
 		return {
 			pathArr: [
-				'/submit_project',
-				'/auth_investor',
+				'/project/submit',
+				'/investor/auth',
 				'/user',
 				'/logout',
 				'/register',

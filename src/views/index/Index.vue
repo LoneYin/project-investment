@@ -229,7 +229,7 @@ export default {
 		]),
 		toProjectDetail(id) {
 			this.$router.push({
-				path: `/project_detail/${id}`
+				path: `/project/detail/${id}`
 			})
 		}
 	},

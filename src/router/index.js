@@ -6,23 +6,31 @@ import { getCookie } from '@/utils/cookie'
 import guard from './routerGuard'
 
 import Index from '@/views/index/Index.vue'
+
 // userAuth
 import Login from '@/views/userAuth/Login.vue'
 import Register from '@/views/userAuth/Register.vue'
 import Logout from '@/views/userAuth/Logout.vue'
 import Forget from '@/views/userAuth/Forget.vue'
+
 // discovery
 import Projects from '@/views/discovery/Projects.vue'
 import OptimalProjects from '@/views/discovery/OptimalProjects.vue'
 import NewProjects from '@/views/discovery/NewProjects.vue'
 import NewExperienceProjects from '@/views/discovery/NewExperienceProjects.vue'
 import FinancingProjects from '@/views/discovery/FinancingProjects.vue'
-import Investors from '@/views/discovery/Investors.vue'
+
 // project
 import ProjectDetail from '@/views/project/ProjectDetail.vue'
-import SubmitProject from '@/views/project/SubmitProject.vue'
+import SubmitProject from '@/views/project/ProjectSubmit.vue'
+import Project from '@/views/project/Project.vue'
+
 // investor
-import AuthInvestor from '@/views/investor/AuthInvestor.vue'
+import Investor from '@/views/investor/Investor.vue'
+import InvestorsList from '@/views/discovery/Investors.vue'
+// import AuthInvestor from '@/views/investor/AuthInvestor.vue'
+import InvestorAuth from '@/views/investor/InvestorAuth.vue'
+import InvestorDetail from '@/views/investor/InvestorDetail.vue'
 
 Vue.use(Router)
 
@@ -55,8 +63,27 @@ const router = new Router({
 			component: Forget
 		}, {
 			path: '/projects',
-			name: 'project',
+			name: 'projects',
 			component: Projects
+		}, {
+			path: '/project',
+			name: 'project',
+			component: Project,
+			children: [
+				{
+					path: 'detail/:projectId',
+					name: 'projectDetail',
+					component: ProjectDetail,
+					props: true
+				}, {
+					path: 'submit',
+					name: 'submitProject',
+					component: SubmitProject,
+					meta: {
+						requireAuth: true
+					}
+				}
+			]
 		}, {
 			path: '/optimal_projects',
 			name: 'optimalProjects',
@@ -76,26 +103,23 @@ const router = new Router({
 		}, {
 			path: '/investors',
 			name: 'investors',
-			component: Investors
+			component: InvestorsList
 		}, {
-			path: '/project_detail/:projectId',
-			name: 'projectDetail',
-			component: ProjectDetail,
-			props: true
-		}, {
-			path: '/auth_investor',
-			name: 'authInvestor',
-			component: AuthInvestor,
-			meta: {
-				requireAuth: true
-			}
-		}, {
-			path: '/submit_project',
-			name: 'submitProject',
-			component: SubmitProject,
-			meta: {
-				requireAuth: true
-			}
+			path: '/investor',
+			name: 'investor',
+			component: Investor,
+			children: [
+				{
+					path: 'auth',
+					name: 'investorAuth',
+					component: InvestorAuth,
+				}, {
+					path: 'detail/:investorId',
+					name: 'investorDetail',
+					component: InvestorDetail,
+					props: true
+				}
+			]
 		}
 	]
 })
