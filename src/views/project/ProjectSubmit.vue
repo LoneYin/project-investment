@@ -14,7 +14,6 @@
 				</el-steps>
 			</div>
 			<div class="form-body">
-
 				<!-- step1: 基础信息表单 -->
 				<!-- primaryForm -->
 				<el-form
@@ -249,7 +248,7 @@
 						</el-row>
 					</el-form-item>
 				</el-form>
-				
+
 				<!-- step2: 其它信息表单 -->
 				<!-- extraForm -->
 				<el-form
@@ -454,6 +453,36 @@
 				</div>
 			</div>
 		</div>
+		<el-dialog title="用户需知" :visible.sync="dialogVisible" width="30%" custom-class="need-to-know">
+			<p>尊敬的用户：</p>
+			<br>
+			<p>您好，为了保证您合理、高效的使用本平台，请您仔细阅读以下内容。</p>
+			<br>
+
+			<p>1. 平台致力于让投资人和创业者更高效的对接，因此本平台力求提供全面、真实的创业项目及客观、公正的项目信息，这是对每一位用户的尊重，对创业的尊重。</p>
+			<br>
+
+			<p>2. 多年来深耕于互联网创投领域，我们的工作人员对投资人的风格和习惯有着很深的理解，并形成了一套行之有效的标准，真实、客观、公正是此标准的基本准则。为了保证创业项目能被投资人快速了解或认可，我们将会按照标准对每一个项目的信息进行修改和完善。</p>
+			<br>
+
+			<p>3. 平台鼓励您积极分享自己的或他人的创业项目，并按照提示提供尽可能客观、公正的信息，平台会把您提供的信息作为重要参考，并依照标准评定项目是否展示及展示何种信息。</p>
+			<br>
+
+			<p>您在使用本平台的过程中有任何疑问均可联系我们的客服邮箱，我们会第一时间给您回复，感谢您的支持与理解。</p>
+			<div class="text-footer">
+				<p class="text-footer-button">
+					<el-button
+						@click="dialogVisible = false"
+						type="primary"
+						size="small"
+						:disabled="!checked"
+					>同意并继续</el-button>
+				</p>
+				<p class="text-footer-checkbox">
+					<el-checkbox v-model="checked">我已阅读相关信息</el-checkbox>
+				</p>
+			</div>
+		</el-dialog>
 	</div>
 </template>
 <script>
@@ -470,6 +499,8 @@ export default {
 			activeStep: 0,
 			showUploadButton: true,
 			teamFormVisible: false,
+			dialogVisible: false,
+			checked: false,
 			primaryForm: {
 				name: '', // 项目名称
 				industry_id: '', // 项目类别
@@ -787,6 +818,9 @@ export default {
 		!this.industryData && this.getIndustryList()
 		!this.areaData && this.getAreaList()
 		!this.roundData && this.getRoundList()
+	},
+	mounted() {
+		this.dialogVisible = true
 	}
 }
 </script>

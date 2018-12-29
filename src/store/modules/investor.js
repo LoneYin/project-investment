@@ -11,6 +11,7 @@ export default {
         },
         [CLEAR_INVESTOR_DETAIL](state) {
             state.investorDetail = undefined
+            state.investmentCases = undefined
         },
         [GET_INVESTMENT_CASES](state, payload) {
             state.investmentCases = { ...payload }

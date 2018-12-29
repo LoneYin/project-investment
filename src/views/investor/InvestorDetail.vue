@@ -74,10 +74,10 @@
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-suitcase"></i>
 						投资案例
-						<span>{{investmentCases.counts > 0 ? `(${investmentCases.counts})` : '' }}</span>
+						<span>{{(investmentCases && investmentCases.counts) > 0 ? `(${investmentCases.counts})` : '' }}</span>
 					</div>
 					<div class="section-content">
-						<template v-if="investmentCases.data.length > 0">
+						<template v-if="investmentCases && investmentCases.data.length > 0">
 							<p>
 								<span
 									:key="item.id"

@@ -50,7 +50,7 @@
 				</el-menu-item>
 				<el-menu-item index="/star_projects">
 					<i class="el-icon-star-on"></i>
-					<span slot="title">关注项目</span>
+					<span slot="title">收藏项目</span>
 				</el-menu-item>
 			</el-menu-item-group>
 

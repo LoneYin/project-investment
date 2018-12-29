@@ -19,6 +19,8 @@ import OptimalProjects from '@/views/discovery/OptimalProjects.vue'
 import NewProjects from '@/views/discovery/NewProjects.vue'
 import NewExperienceProjects from '@/views/discovery/NewExperienceProjects.vue'
 import FinancingProjects from '@/views/discovery/FinancingProjects.vue'
+import StarProjects from '@/views/discovery/StarProjects.vue'
+import SubscribedTags from '@/views/discovery/SubscribedTags.vue'
 
 // project
 import ProjectDetail from '@/views/project/ProjectDetail.vue'
@@ -28,7 +30,6 @@ import Project from '@/views/project/Project.vue'
 // investor
 import Investor from '@/views/investor/Investor.vue'
 import InvestorsList from '@/views/discovery/Investors.vue'
-// import AuthInvestor from '@/views/investor/AuthInvestor.vue'
 import InvestorAuth from '@/views/investor/InvestorAuth.vue'
 import InvestorDetail from '@/views/investor/InvestorDetail.vue'
 
@@ -100,6 +101,14 @@ const router = new Router({
 			path: '/financing_projects',
 			name: 'financingProjects',
 			component: FinancingProjects
+		}, {
+			path: '/star_projects',
+			name: 'starProjects',
+			component: StarProjects
+		}, {
+			path: '/subscribed_tags',
+			name: 'subscribedTags',
+			component: SubscribedTags
 		}, {
 			path: '/investors',
 			name: 'investors',

@@ -94,6 +94,24 @@ export default {
             const res = await postData('/index/project/index', params)
             res.data && commit('GET_PROJECTS_LIST', res.data)
         },
+        async getStarProjects({ commit }, params) {
+            if (params) {
+                params.is_collection = 1
+            } else {
+                params = { is_collection: 1 }
+            }
+            const res = await postData('/index/project/index', params)
+            res.data && commit('GET_PROJECTS_LIST', res.data)
+        },
+        async getTagsProjects({commit}, params) {
+            if (params) {
+                params.tags = 1
+            } else {
+                params = { tags: 1 }
+            }
+            const res = await postData('/index/project/index', params)
+            res.data && commit('GET_PROJECTS_LIST', res.data)
+        },
         async getInvestorsList({ commit }, params) {
             const res = await postData('/index/investor/index', params)
             res.data && commit('GET_INVESTORS_LIST', res.data)

@@ -11,7 +11,7 @@
 						</el-col>
 						<el-col :span="20" class="item-text">
 							<p class="text-name">{{scope.row.name}}</p>
-							<p class="text-summary">{{scope.row.summary}}</p>
+							<p class="text-summary">{{scope.row.synopsis}}</p>
 							<p v-if="scope.row.tags.length > 0">
 								<span :key="item.tag_id" class="text-tag" v-for="item in scope.row.tags">
 									<i class="el-icon-fa-tags"></i>
@@ -22,9 +22,15 @@
 					</el-row>
 				</template>
 			</el-table-column>
-			<el-table-column label="行业" prop="industry_name"></el-table-column>
-			<el-table-column label="轮次" prop="round_name"></el-table-column>
-			<el-table-column label="所在地" prop="region_name"></el-table-column>
+			<el-table-column label="行业">
+				<template slot-scope="scope">{{scope.row.industry_name || '—'}}</template>
+			</el-table-column>
+			<el-table-column label="轮次">
+				<template slot-scope="scope">{{scope.row.round_name || '未披露'}}</template>
+			</el-table-column>
+			<el-table-column label="所在地">
+				<template slot-scope="scope">{{scope.row.region_name || '—'}}</template>
+			</el-table-column>
 			<el-table-column label="成立时间">
 				<template
 					slot-scope="scope"
@@ -90,9 +96,6 @@ export default {
 				path: `/project/detail/${row.project_id}`
 			})
 		}
-	},
-	created() {
-		// console.log(this.projectsList)
 	},
 	mounted() {
 		document
