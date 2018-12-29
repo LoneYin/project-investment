@@ -1,5 +1,8 @@
 <template>
 	<div class="common-header">
+		<div class="logo">
+			<img src="../../assets/images/dingtai.png" alt="">
+		</div>
 		<div class="auth-navigator">
 			<el-menu
 				:default-active="activeIndex"
@@ -8,9 +11,9 @@
 				router
 			>
 				<el-menu-item index="/project/submit">提交项目</el-menu-item>
-				<el-menu-item index="/investor/auth">认证投资人</el-menu-item>
+				<el-menu-item index="/investor/auth" v-if="!currentUserData || currentUserData.authentication !== 2">认证投资人</el-menu-item>
 				<template v-if="isLogin">
-					<el-menu-item index="/user">{{ currentUserData ? currentUserData.user_name : ''}}</el-menu-item>
+					<el-menu-item index="/account">{{ currentUserData ? currentUserData.user_name : ''}}</el-menu-item>
 
 					<el-menu-item index="/logout">退出登陆</el-menu-item>
 				</template>

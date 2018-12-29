@@ -1,4 +1,4 @@
-import { GET_ROUND_LIST, GET_INDUSTRY_LIST, GET_AREA_LIST, GET_PROJECTS_LIST, GET_INVESTORS_LIST, CLEAR_PROJECTS_LIST } from '../mutations-types'
+import { GET_ROUND_LIST, GET_INDUSTRY_LIST, GET_AREA_LIST, GET_PROJECTS_LIST, GET_INVESTORS_LIST, CLEAR_PROJECTS_LIST, GET_TAGS_LIST, GET_USER_TAGS } from '../mutations-types'
 import { getData, postData } from "@/http"
 
 export default {
@@ -7,6 +7,9 @@ export default {
         roundList: undefined,
         industryList: undefined,
         areaList: undefined,
+        // 标签
+        tagsList: undefined,
+        userTags: undefined,
         // 项目
         projectsList: undefined,
         projectsListPages: {
@@ -54,6 +57,12 @@ export default {
             }
             state.investorsListPages.total = payload.pages
             state.investorsListPages.currentPage = payload.current_page
+        },
+        [GET_TAGS_LIST](state, payload) {
+            state.tagsList = [...payload]
+        },
+        [GET_USER_TAGS](state, payload) {
+            state.userTags = [...payload]
         }
     },
     actions: {
@@ -69,6 +78,16 @@ export default {
             const res = await getData('/index/index/area')
             res.data && commit('GET_AREA_LIST', res.data)
         },
+        async getTagsList({ commit }) {
+            const res = await getData('/index/tag/tags')
+            res.data && commit('GET_TAGS_LIST', res.data)
+        },
+        async getUserTags({ commit }) {
+            const res = await getData('/index/tag/userTags')
+            res.data && commit('GET_USER_TAGS', res.data)
+        },
+
+        //  更新projectsList
         async getProjectsList({ commit }, params) {
             const res = await postData('/index/project/index', params)
             res.data && commit('GET_PROJECTS_LIST', res.data)
@@ -112,6 +131,8 @@ export default {
             const res = await postData('/index/project/index', params)
             res.data && commit('GET_PROJECTS_LIST', res.data)
         },
+
+        //  更新investorsList
         async getInvestorsList({ commit }, params) {
             const res = await postData('/index/investor/index', params)
             res.data && commit('GET_INVESTORS_LIST', res.data)

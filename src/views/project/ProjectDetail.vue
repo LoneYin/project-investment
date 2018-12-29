@@ -310,14 +310,16 @@
 									>{{scope.row.create_time ? scope.row.create_time.substring(0, 7) : scope.row.time}}</template>
 								</el-table-column>
 							</el-table>
-							<div style="text-align: center; margin-top: 10px;" v-if="!tableLoading">
-								<template v-if="!loadAll">
-									<el-button size="small" v-if="!buttonLoading" @click="moreSimilarProjects">加载更多</el-button>
-									<el-button size="small" v-if="buttonLoading">
-										<i class="el-icon-loading"></i>加载中
-									</el-button>
-								</template>
-								<p v-else>没有更多数据了</p>
+							<div style="text-align: center; margin-top: 10px; height: 32px;">
+								<div v-if="!tableLoading">
+									<template v-if="!loadAll">
+										<el-button size="small" v-if="!buttonLoading" @click="moreSimilarProjects">加载更多</el-button>
+										<el-button size="small" v-if="buttonLoading">
+											<i class="el-icon-loading"></i>加载中
+										</el-button>
+									</template>
+									<p v-else>没有更多数据了</p>
+								</div>
 							</div>
 						</div>
 						<p v-else>暂无类似</p>
@@ -343,7 +345,12 @@
 			</div>
 			<div class="absolute-footer" :style="{ width: navbarWidth ? `${navbarWidth}px` : '100%' }">
 				<el-card class="no-border">
-					<el-button size="small" type="warning" class="btn-connect">获取联系方式</el-button>
+					<el-button
+						size="small"
+						type="warning"
+						class="btn-connect"
+						@click="visibleConnect = true"
+					>获取联系方式</el-button>
 					<el-button
 						v-if="isCollect"
 						size="small"
@@ -352,10 +359,40 @@
 						@click="handleCancelCollect"
 					>取消收藏</el-button>
 					<el-button v-else size="small" type="primary" class="btn-collect" @click="handleCollect">收藏</el-button>
-					<el-button @click="downloadBp" type="primary" size="small">下载BP</el-button>
+					<el-button @click="downloadBp" type="primary" size="small">查看BP</el-button>
+					<a :href="bpPath" target="_blank" visibility="hidden">
+						<button id="BpDownload"></button>
+					</a>
 				</el-card>
 			</div>
 		</template>
+		<el-dialog title="是否申请下载BP" :visible.sync="visibleDownloadBp" width="450px">
+			<span>您暂时没有权限查看BP，是否选择向项目所有者申请查看BP?</span>
+			<span slot="footer" class="dialog-footer">
+				<el-button size="small" @click="visibleDownloadBp = false">取 消</el-button>
+				<el-button size="small" type="primary" @click="handleApply">确 定</el-button>
+			</span>
+		</el-dialog>
+		<el-dialog title="项目所有者联系方式" :visible.sync="visibleConnect" width="400px" v-if="projectDetail" class="project-connect">
+			<el-row>
+				<el-col :span="10" class="label">
+					<i class="el-icon-fa-phone"></i>电话
+				</el-col>
+				<el-col :span="14" class="text">{{projectDetail.your_mobile}}</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="10" class="label">
+					<i class="el-icon-fa-envelope"></i>邮箱
+				</el-col>
+				<el-col :span="14" class="text">{{projectDetail.email}}</el-col>
+			</el-row>
+			<el-row>
+				<el-col :span="10" class="label">
+					<i class="el-icon-fa-wechat"></i>微信
+				</el-col>
+				<el-col :span="14" class="text">{{projectDetail.wechat}}</el-col>
+			</el-row>
+		</el-dialog>
 	</div>
 </template>
 
@@ -363,6 +400,7 @@
 import { mapActions, mapState } from 'vuex'
 import scroll from '@/utils/scroll'
 import { getData, postData } from '@/http'
+// import download from 'downloadjs'
 
 export default {
 	data() {
@@ -378,7 +416,11 @@ export default {
 			page_size: 5,
 			tagId: 0,
 			tableLoading: false,
-			buttonLoading: false
+			buttonLoading: false,
+			visibleConnect: false,
+			visibleDownloadBp: false,
+			bpPath: '',
+			ableToDownload: 1 // 1 未申请  2 申请中  3 已回复 同意  4 已回复 拒绝
 		}
 	},
 	props: {
@@ -391,7 +433,8 @@ export default {
 			similarProjects: state => state.project.similarProjects,
 			similarProjectsMeta: state => state.project.similarProjectsMeta,
 			isCollect: state => state.project.isCollect,
-			loginStatus: state => state.app.loginStatus
+			loginStatus: state => state.app.loginStatus,
+			currentUserData: state => state.app.currentUserData
 		}),
 		similarParams() {
 			return {
@@ -523,15 +566,63 @@ export default {
 			}, 1000)
 		},
 		downloadBp() {
+			if (this.currentUserData.authentication !== 2) {
+				this.$message.error('认证投资人后才能查看项目BP')
+				this.$router.push({
+					path: '/investor/auth'
+				}, 1000)
+			} else {
+				if (this.ableToDownload == 1) {
+					this.visibleDownloadBp = true
+				} else if (this.ableToDownload == 2) {
+					this.$message.success('您已发送过申请，请耐心等待项目所有人的回复')
+				} else if (this.ableToDownload == 3) {
+					if (this.bpPath) {
+						// const lastIndex = this.bpPath.lastIndexOf('/')
+						// const fileName = this.bpPath.substring(lastIndex + 1)
+						// download(this.bpPath, fileName, this.resolveFileType(fileName))
+						document.querySelector('#BpDownload').click()
+					}
+				} else {
+					this.$message.error('您没有权限查看该BP')
+				}
+			}
+		},
+		applyToDownload() {
 			getData('/index/download', {
 				project_id: this.projectId
 			}).then(
 				res => {
-					console.log(res)
+					this.ableToDownload = res.data.code
+					if (res.data.code == 3) {
+						this.bpPath = res.data.path
+					}
 				},
 				err => {
 					console.log(err)
 				})
+		},
+		handleApply() {
+			this.visibleDownloadBp = false
+			postData('/index/consult', {
+				project_id: this.projectId
+			}).then(() => {
+				this.$message.success('已成功发送申请，正在等待项目所有者回复')
+				this.ableToDownload = 2
+			}, err => {
+				console.log(err)
+			})
+		},
+		resolveFileType(fileName) {
+			if (fileName.includes('xls')) {
+				return 'application/vnd.ms-excel'
+			} else if (fileName.includes('doc')) {
+				return 'application/msword'
+			} else if (fileName.includes('pdf')) {
+				return 'application/pdf'
+			} else {
+				return 'text/plain'
+			}
 		}
 	},
 	created() {
@@ -541,6 +632,7 @@ export default {
 				this.init = false
 				this.getSimilarProjects(this.similarParams)
 			})
+			this.applyToDownload()
 		} else {
 			this.$message.error('请您登陆后再进行查看')
 			setTimeout(() => {
@@ -555,9 +647,9 @@ export default {
 			document
 				.querySelector('.el-main')
 				.addEventListener('scroll', this.onScroll, false)
-			
+
 		})
-		
+
 		setTimeout(() => {
 			this.initAnchorArr()
 			this.navbarWidth = document.querySelector(

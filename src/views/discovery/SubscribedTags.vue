@@ -1,6 +1,6 @@
 <template>
 	<div class="projects">
-        <UserTags/>
+		<UserTags @refreshList="getProjets"/>
 		<ProjectSelectors @refreshList="getProjets"/>
 		<ProjectTable
 			:defaultData="projectsList"
@@ -20,7 +20,7 @@ import UserTags from '@/components/project/UserTags.vue'
 import { mapActions, mapState } from 'vuex'
 
 export default {
-	name: 'starProjects',
+	name: 'subscribedTags',
 	data() {
 		return {
 			selectorsData: {},
@@ -30,8 +30,8 @@ export default {
 	},
 	components: {
 		ProjectSelectors,
-        ProjectTable,
-        UserTags
+		ProjectTable,
+		UserTags
 	},
 	computed: {
 		...mapState({
@@ -42,6 +42,13 @@ export default {
 	methods: {
 		...mapActions(['getTagsProjects']),
 		getProjets(data) {
+			if (!data) {
+				data = {
+					round_id: [],
+					industry_id: [],
+					region_id: []
+				}
+			}
 			this.selectorsData = { ...data }
 			this.getTagsProjects({
 				...data,
@@ -65,11 +72,11 @@ export default {
 		}
 	},
 	created() {
-        this.tableInitLoading = true
-        this.getTagsProjects().finally(() => {
-            this.tableInitLoading = false
-        })
-    }
+		this.tableInitLoading = true
+		this.getTagsProjects().finally(() => {
+			this.tableInitLoading = false
+		})
+	}
 }
 </script>
 

@@ -33,9 +33,11 @@ import InvestorsList from '@/views/discovery/Investors.vue'
 import InvestorAuth from '@/views/investor/InvestorAuth.vue'
 import InvestorDetail from '@/views/investor/InvestorDetail.vue'
 
+// account
+import Account from '@/views/account/Account.vue'
+import AccountSetting from '@/views/account/AccountSetting.vue'
+
 Vue.use(Router)
-
-
 
 const router = new Router({
 	mode: 'history',
@@ -132,6 +134,18 @@ const router = new Router({
 					props: true
 				}
 			]
+		}, {
+			path: '/account',
+			name: 'account',
+			component: Account,
+			children: [
+				{
+					path: 'setting',
+					name: 'accountSetting',
+					component: AccountSetting
+				}
+			],
+			redirect: '/account/setting'
 		}
 	]
 })

@@ -214,8 +214,8 @@
 								<span class="comment" v-if="showUploadButton">请上传小于7.5M的excel/word/PDF文件</span>
 							</el-upload>
 						</el-form-item>
-						<el-form-item label="BP查看设置">
-							<el-checkbox v-model="primaryForm.is_bp">需要投资人申请查看BP</el-checkbox>
+						<el-form-item label="BP查看设置" v-show="primaryForm.business_plan">
+							<el-checkbox v-model="primaryForm.is_bp">需要投资人申请才能查看您的BP</el-checkbox>
 						</el-form-item>
 					</div>
 					<el-form-item label="商业计划书" v-if="primaryForm.is_financing !== 1">
@@ -235,6 +235,9 @@
 							<el-button size="small" v-if="showUploadButton">上传文件</el-button>
 							<span class="comment" v-if="showUploadButton">请上传小于7.5M的excel/word/PDF文件</span>
 						</el-upload>
+					</el-form-item>
+					<el-form-item label="BP查看设置" v-show="primaryForm.business_plan" v-if="primaryForm.is_financing !== 1">
+						<el-checkbox v-model="primaryForm.is_bp">需要投资人申请才能查看您的BP</el-checkbox>
 					</el-form-item>
 
 					<el-form-item>
@@ -711,6 +714,7 @@ export default {
 		},
 		handleFileRemove() {
 			this.showUploadButton = true
+			this.primaryForm.business_plan = ''
 		},
 		// 提交相关
 		handleFirstStep() {

@@ -9,7 +9,6 @@ export const authKey = 'asjs82iqos0ad823'
 
 export const getData = (url, params) => {
     const sign = encrypt(params, authKey)
-    
     return axios.get(server + url, {
         params,
         headers: {
@@ -29,6 +28,28 @@ export const postData = (url, params, contentType) => {
         }
     })
 }
+
+export const delData = (url, params) => {
+    const sign = encrypt(params, authKey)
+    return axios.delete(server + url, {
+        params,
+        headers: {
+            sign,
+            'access-user-token': getCookie('access-user-token') || ''
+        }
+    })
+}
+
+export const putData = (url, params) => {
+    const sign = encrypt(params, authKey)
+    return axios.put(server + url, params, {
+        headers: {
+            sign,
+            'access-user-token': getCookie('access-user-token') || ''
+        }
+    })
+}
+
 
 axios.interceptors.response.use(
 	res => {

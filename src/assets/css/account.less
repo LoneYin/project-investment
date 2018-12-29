@@ -1,0 +1,58 @@
+.account {
+    width: 1140px;
+    margin: 30px auto; // background: #FFF;
+    height: 600px;
+    .account-part-left {
+        width: 240px;
+        .el-card__body {
+            height: 560px;
+        }
+    }
+    .account-part-right {
+        margin-left: 30px;
+        width: 870px;
+        height: 600px;
+        .el-tabs__content {
+            margin-top: 25px;
+            -webkit-box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+        }
+        .el-tabs__item {
+            font-size: 18px;
+        }
+    }
+    .avatar-uploader {
+        margin-top: 40px;
+        .el-upload {
+            border: 1px solid #d9d9d9;
+            border-radius: 50px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            width: 100px;
+            height: 100px;
+            &:hover {
+                .mask {
+                    opacity: 1;
+                }
+            }
+        }
+        .avatar {
+            width: 100px;
+            height: 100px;
+        }
+        .mask {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(0, 0, 0, 0.6);
+            top: 70px;
+            left: 0;
+            color: #fff;
+            font-size: 12px;
+            line-height: 25px;
+            opacity: 0;
+            transition: all 0.5s;
+        }
+    }
+}
