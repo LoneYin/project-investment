@@ -359,15 +359,15 @@
 						@click="handleCancelCollect"
 					>取消收藏</el-button>
 					<el-button v-else size="small" type="primary" class="btn-collect" @click="handleCollect">收藏</el-button>
-					<el-button @click="downloadBp" type="primary" size="small">查看BP</el-button>
-					<a :href="bpPath" target="_blank" visibility="hidden">
-						<button id="BpDownload"></button>
+					<el-button @click="downloadBp" type="primary" size="small">查看商业计划书</el-button>
+					<a :href="bpPath" target="_blank" style="display: none;">
+						<button id="BpDownload" ></button>
 					</a>
 				</el-card>
 			</div>
 		</template>
 		<el-dialog title="是否申请下载BP" :visible.sync="visibleDownloadBp" width="450px">
-			<span>您暂时没有权限查看BP，是否选择向项目所有者申请查看BP?</span>
+			<span>您暂时没有权限查看商业计划书，是否选择向项目所有者申请查看商业计划书?</span>
 			<span slot="footer" class="dialog-footer">
 				<el-button size="small" @click="visibleDownloadBp = false">取 消</el-button>
 				<el-button size="small" type="primary" @click="handleApply">确 定</el-button>
@@ -400,7 +400,6 @@
 import { mapActions, mapState } from 'vuex'
 import scroll from '@/utils/scroll'
 import { getData, postData } from '@/http'
-// import download from 'downloadjs'
 
 export default {
 	data() {
@@ -578,9 +577,6 @@ export default {
 					this.$message.success('您已发送过申请，请耐心等待项目所有人的回复')
 				} else if (this.ableToDownload == 3) {
 					if (this.bpPath) {
-						// const lastIndex = this.bpPath.lastIndexOf('/')
-						// const fileName = this.bpPath.substring(lastIndex + 1)
-						// download(this.bpPath, fileName, this.resolveFileType(fileName))
 						document.querySelector('#BpDownload').click()
 					}
 				} else {

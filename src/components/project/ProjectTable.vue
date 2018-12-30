@@ -77,8 +77,8 @@ export default {
 				document.body.clientHeight ||
 				document.documentElement.clientHeight
 			if (
-				container.scrollTop + clientHeight ==
-				container.firstElementChild.offsetHeight + 80
+				container.scrollTop + clientHeight >=
+				container.firstElementChild.offsetHeight + 75
 			) {
 				if (!this.loadAll && !this.loadLock) {
 					this.loadLock = true

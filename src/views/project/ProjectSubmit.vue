@@ -456,7 +456,7 @@
 				</div>
 			</div>
 		</div>
-		<el-dialog title="用户需知" :visible.sync="dialogVisible" width="30%" custom-class="need-to-know">
+		<el-dialog title="用户需知" :visible.sync="dialogVisible" width="30%" custom-class="need-to-know" :show-close="false">
 			<p>尊敬的用户：</p>
 			<br>
 			<p>您好，为了保证您合理、高效的使用本平台，请您仔细阅读以下内容。</p>

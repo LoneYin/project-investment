@@ -8,7 +8,7 @@
 				<el-aside width="180px">
 					<CommonAside/>
 				</el-aside>
-				<el-main>
+				<el-main v-loading="fullScreenLoading">
 					<transition mode="out-in" name="fade">
 						<router-view></router-view>
 					</transition>
@@ -22,7 +22,7 @@
 // @ is an alias to /src
 import CommonAside from '@/components/common/CommonAside.vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
-import { mapMutations, mapActions } from 'vuex'
+import { mapState, mapMutations, mapActions } from 'vuex'
 import { getCookie } from '@/utils/cookie'
 
 export default {
@@ -30,6 +30,11 @@ export default {
 	components: {
 		CommonAside,
 		CommonHeader
+	},
+	computed: {
+		...mapState({
+			fullScreenLoading: state => state.app.fullScreenLoading
+		})
 	},
 	methods: {
 		...mapMutations({

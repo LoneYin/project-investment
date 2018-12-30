@@ -1,4 +1,4 @@
-import { SET_LOGIN_STATUS, SET_LOGOUT, GET_CURRENT_USER_DATA, SET_AUTO_LOGIN, SET_RECENT_MOBILE, SET_ACTIVE_INDEX } from '../mutations-types'
+import { SET_LOGIN_STATUS, SET_LOGOUT, GET_CURRENT_USER_DATA, SET_AUTO_LOGIN, SET_RECENT_MOBILE, SET_ACTIVE_INDEX, SET_LOADING_STATUS } from '../mutations-types'
 import { setCookie, delCookie } from '@/utils/cookie'
 import { getData } from '@/http'
 
@@ -8,7 +8,8 @@ export default {
         accessUserToken: '',
         currentUserData: undefined,
         recentMobile: '',
-        activeIndex: '/'
+        activeIndex: '/',
+        fullScreenLoading: false
     },
     mutations: {
         [SET_LOGIN_STATUS](state, data) {
@@ -38,6 +39,9 @@ export default {
         },
         [SET_ACTIVE_INDEX](state, index) {
             state.activeIndex = index
+        },
+        [SET_LOADING_STATUS](state, status) {
+            state.fullScreenLoading = status
         }
     },
     actions: {
