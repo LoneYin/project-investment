@@ -15,7 +15,7 @@
                         </el-col>
 
                         <el-col class="account-info-right" :span="8">
-                            <div class="pull-right button-edit">
+                            <div class="pull-right button-edit" @click="showDialog('username')">
                                 <i class="el-icon-edit"></i>
                             </div>
                         </el-col>
@@ -43,11 +43,11 @@
                                 <span class="account-info-text">{{userData.mobile}}</span>
                             </p>
                             <p>
-                                <span class="account-info-comment">安全邮箱可以用于登录本平台，重置密码或其它安全验证</span>
+                                <span class="account-info-comment">安全手机可以用于登录本平台，重置密码或其它安全验证</span>
                             </p>
                         </el-col>
                         <el-col class="account-info-right" :span="8">
-                            <div class="pull-right button-edit">
+                            <div class="pull-right button-edit" @click="showDialog('mobile')">
                                 <i class="el-icon-edit"></i>
                             </div>
                         </el-col>
@@ -62,7 +62,7 @@
                             </p>
                         </el-col>
                         <el-col class="account-info-right" :span="8">
-                            <div class="pull-right button-edit">
+                            <div class="pull-right button-edit" @click="showDialog('password')">
                                 <i class="el-icon-edit"></i>
                             </div>
                         </el-col>
@@ -85,6 +85,11 @@ export default {
         ...mapState({
             userData: state => state.app.currentUserData
         })
+    },
+    methods: {
+        showDialog(name) {
+            console.log(name)
+        } 
     }
 }
 </script>

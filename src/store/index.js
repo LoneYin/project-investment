@@ -5,6 +5,7 @@ import app from './modules/app'
 import discovery from './modules/discovery'
 import project from './modules/project'
 import investor from './modules/investor'
+import user from './modules/user'
 
 Vue.use(Vuex)
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
 		app,
 		discovery,
 		project,
-		investor
+		investor,
+		user
 	}
 })

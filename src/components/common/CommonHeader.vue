@@ -31,14 +31,14 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			pathArr: [
-				'/project/submit',
-				'/investor/auth',
-				'/user',
-				'/logout',
-				'/register',
-				'/login'
-			]
+			// pathArr: [
+			// 	'/project/submit',
+			// 	'/investor/auth',
+			// 	'/user',
+			// 	'/logout',
+			// 	'/register',
+			// 	'/login'
+			// ]
 		}
 	},
 	computed: {

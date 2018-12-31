@@ -36,6 +36,8 @@ import InvestorDetail from '@/views/investor/InvestorDetail.vue'
 // account
 import Account from '@/views/account/Account.vue'
 import AccountSetting from '@/views/account/AccountSetting.vue'
+import AccountInformation from '@/views/account/AccountInformation.vue'
+import AccountProject from '@/views/account/AccountProject.vue'
 
 Vue.use(Router)
 
@@ -143,6 +145,15 @@ const router = new Router({
 					path: 'setting',
 					name: 'accountSetting',
 					component: AccountSetting
+				},
+				{
+					path: 'information',
+					name: 'accountInformation',
+					component: AccountInformation
+				}, {
+					path: 'project',
+					name: 'accountProject',
+					component: AccountProject
 				}
 			],
 			redirect: '/account/setting'

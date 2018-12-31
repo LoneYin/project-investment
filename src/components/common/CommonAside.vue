@@ -69,17 +69,17 @@ import { mapState } from 'vuex'
 export default {
 	data() {
 		return {
-			pathArr: [
-				'/',
-				'/projects',
-				'/investors',
-				'/optimal_projects',
-				'/new_projects',
-				'/new_experience_projects',
-				'/financing_projects',
-				'/subscribed_tags',
-				'/star_projects'
-			]
+			// pathArr: [
+			// 	'/',
+			// 	'/projects',
+			// 	'/investors',
+			// 	'/optimal_projects',
+			// 	'/new_projects',
+			// 	'/new_experience_projects',
+			// 	'/financing_projects',
+			// 	'/subscribed_tags',
+			// 	'/star_projects'
+			// ]
 		}
 	},
 	computed: {
