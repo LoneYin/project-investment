@@ -25,15 +25,15 @@
 						ref="accountMenu"
                     >
                         <el-menu-item index="/account/setting">
-                            <i class="el-icon-menu"></i>
+                            <i class="el-icon-setting"></i>
                             <span slot="title">账号设置</span>
                         </el-menu-item>
                         <el-menu-item index="/account/information">
-                            <i class="el-icon-document"></i>
+                            <i class="el-icon-bell"></i>
                             <span slot="title">消息管理</span>
                         </el-menu-item>
                         <el-menu-item index="/account/project">
-                            <i class="el-icon-setting"></i>
+                            <i class="el-icon-menu"></i>
                             <span slot="title">项目管理</span>
                         </el-menu-item>
                     </el-menu>
