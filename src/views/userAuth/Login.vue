@@ -17,7 +17,7 @@
 				<div class="auth-link-row">
 					<router-link :to="{ path: '/register'}" class="el-form-link pull-left">注册新用户</router-link>
 					<router-link :to="{ path: '/forget'}" class="el-form-link pull-right">忘记密码</router-link>
-					<a class="el-form-link pull-right auth-btn-qq" href="http://api.dtai88.com/qq">
+					<a class="el-form-link pull-right auth-btn-qq" :href="`${server}/qqLogin`">
 						<i class="el-icon-fa-qq"></i>
 						QQ登录
 					</a>
@@ -37,7 +37,7 @@
 
 <script>
 import validator from '@/utils/validator'
-import { postData } from '@/http'
+import { postData, server } from '@/http'
 import { mapMutations, mapActions, mapState } from 'vuex'
 export default {
 	data() {
@@ -88,7 +88,10 @@ export default {
 	computed: {
 		...mapState({
 			recentMobile: state => state.app.recentMobile
-		})
+		}),
+		server() {
+			return server
+		}
 	},
 	mounted() {
 		if (this.recentMobile) {

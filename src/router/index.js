@@ -38,6 +38,7 @@ import Account from '@/views/account/Account.vue'
 import AccountSetting from '@/views/account/AccountSetting.vue'
 import AccountInformation from '@/views/account/AccountInformation.vue'
 import AccountProject from '@/views/account/AccountProject.vue'
+import QQLogin from '@/views/account/QQLogin.vue'
 
 Vue.use(Router)
 
@@ -154,6 +155,10 @@ const router = new Router({
 					path: 'project',
 					name: 'accountProject',
 					component: AccountProject
+				}, {
+					path: 'qqlogin',
+					component: QQLogin,
+					beforeEnter: guard.qqLogin
 				}
 			],
 			redirect: '/account/setting'

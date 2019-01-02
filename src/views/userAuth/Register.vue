@@ -2,7 +2,7 @@
 	<div class="auth register">
 		<el-card>
 			<h5>用户注册</h5>
-			<el-form :model="formData" :rules="rules">
+			<el-form :model="formData" :rules="rules" ref="registerForm">
 				<el-form-item prop="mobile">
 					<el-input placeholder="请输入手机号" prefix-icon="el-icon-fa-mobile" v-model="formData.mobile"></el-input>
 				</el-form-item>
@@ -128,26 +128,30 @@ export default {
 			}
 		},
 		handleSubmit() {
-			this.submitButtonLoading = true
-			postData('/index/register', {
-				mobile: this.formData.mobile,
-				password: this.formData.password,
-				r_password: this.formData.r_password,
-				code: this.formData.verificationCode
+			this.$refs['registerForm'].validate(valid => {
+				if (valid) {
+					this.submitButtonLoading = true
+					postData('/index/register', {
+						mobile: this.formData.mobile,
+						password: this.formData.password,
+						r_password: this.formData.r_password,
+						code: this.formData.verificationCode
+					})
+						.then(
+							res => {
+								this.$message.success(res.message)
+								this.setRecentMobile(this.formData.mobile)
+								this.$router.push({ path: '/login' })
+							},
+							err => {
+								console.log(err)
+							}
+						)
+						.finally(() => {
+							this.submitButtonLoading = false
+						})
+				}
 			})
-				.then(
-					res => {
-						this.$message.success(res.message)
-						this.setRecentMobile(this.formData.mobile)
-						this.$router.push({ path: '/login' })
-					},
-					err => {
-						console.log(err)
-					}
-				)
-				.finally(() => {
-					this.submitButtonLoading = false
-				})
 		}
 	}
 }

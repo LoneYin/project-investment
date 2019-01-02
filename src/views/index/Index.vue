@@ -288,7 +288,7 @@ export default {
                 this.getRecommendedInvestorsList()
             ]).finally(() => {
                 this.init(false)
-            });
+            })
         }
     }
 };

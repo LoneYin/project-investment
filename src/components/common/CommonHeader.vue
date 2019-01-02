@@ -14,8 +14,7 @@
 				<el-menu-item index="/investor/auth" v-if="!currentUserData || currentUserData.authentication !== 2">认证投资人</el-menu-item>
 				<template v-if="isLogin">
 					<el-menu-item index="/account">{{ currentUserData ? currentUserData.user_name : ''}}</el-menu-item>
-
-					<el-menu-item index="/logout">退出登陆</el-menu-item>
+					<!-- <el-menu-item index="/logout">退出登陆</el-menu-item> -->
 				</template>
 				<template v-else>
 					<el-menu-item index="/register">注册</el-menu-item>

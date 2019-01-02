@@ -2,7 +2,7 @@
 	<div class="auth register">
 		<el-card>
 			<h5>找回密码</h5>
-			<el-form :model="formData" :rules="rules">
+			<el-form :model="formData" :rules="rules" ref="forgetForm">
 				<el-form-item prop="mobile">
 					<el-input placeholder="请输入注册手机号" prefix-icon="el-icon-fa-mobile" v-model="formData.mobile"></el-input>
 				</el-form-item>
@@ -10,7 +10,7 @@
 					<el-input
 						placeholder="请输入新密码"
 						prefix-icon="el-icon-fa-lock"
-                        type="password"
+						type="password"
 						v-model="formData.new_password"
 					></el-input>
 				</el-form-item>
@@ -49,7 +49,7 @@ import validator from '@/utils/validator'
 import { postData } from '@/http'
 import { mapMutations } from 'vuex'
 export default {
-    name: 'forget',
+	name: 'forget',
 	data() {
 		return {
 			isForbidden: false,
@@ -76,7 +76,7 @@ export default {
 		}
 	},
 	methods: {
-        ...mapMutations({
+		...mapMutations({
 			setRecentMobile: 'SET_RECENT_MOBILE'
 		}),
 		sendMessage() {
@@ -108,25 +108,29 @@ export default {
 			}
 		},
 		handleSubmit() {
-			this.submitButtonLoading = true
-			postData('/index/findPassWord', {
-				mobile: this.formData.mobile,
-				new_password: this.formData.new_password,
-				code: this.formData.verificationCode
+			this.$refs['forgetForm'].validate(valid => {
+				if (valid) {
+					this.submitButtonLoading = true
+					postData('/index/findPassWord', {
+						mobile: this.formData.mobile,
+						new_password: this.formData.new_password,
+						code: this.formData.verificationCode
+					})
+						.then(
+							res => {
+								this.$message.success(res.message)
+								this.setRecentMobile(this.formData.mobile)
+								this.$router.push({ path: '/login' })
+							},
+							err => {
+								console.log(err)
+							}
+						)
+						.finally(() => {
+							this.submitButtonLoading = false
+						})
+				}
 			})
-				.then(
-					res => {
-						this.$message.success(res.message)
-						this.setRecentMobile(this.formData.mobile)
-						this.$router.push({ path: '/login' })
-					},
-					err => {
-						console.log(err)
-					}
-				)
-				.finally(() => {
-					this.submitButtonLoading = false
-				})
 		}
 	}
 }
