@@ -179,8 +179,8 @@ export default {
 	methods: {
 		...mapActions(['getCurrentUserData']),
 		changeUserName() {
-			if (!this.userName || this.userName.length < 3 || this.userName.length > 24) {
-				this.$message.error('请输入3-24位的用户名')
+			if (!this.userName || this.userName.length < 2 || this.userName.length > 24) {
+				this.$message.error('请输入2-24位的用户名')
 				return
 			}
 			putData(`/index/user/${this.userData.user_id}`, {

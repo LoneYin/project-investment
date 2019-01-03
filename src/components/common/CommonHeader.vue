@@ -16,7 +16,7 @@
 					<el-menu-item index="/account" class="user-avatar">
 						<span>{{ currentUserData ? currentUserData.user_name : ''}}</span>
 						<div class="avatar-box">
-							<img :src="currentUserData.user_image || '../../assets/images/default-user.png'" alt>
+							<img :src="currentUserData && currentUserData.user_image ? currentUserData.user_image  : '../../assets/images/default-user.png'" alt>
 						</div>
 					</el-menu-item>
 					<!-- <el-menu-item index="/logout">退出登陆</el-menu-item> -->
