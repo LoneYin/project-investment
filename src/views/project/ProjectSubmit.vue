@@ -236,7 +236,11 @@
 							<span class="comment" v-if="showUploadButton">请上传小于7.5M的excel/word/PDF文件</span>
 						</el-upload>
 					</el-form-item>
-					<el-form-item label="BP查看设置" v-show="primaryForm.business_plan" v-if="primaryForm.is_financing !== 1">
+					<el-form-item
+						label="BP查看设置"
+						v-show="primaryForm.business_plan"
+						v-if="primaryForm.is_financing !== 1"
+					>
 						<el-checkbox v-model="primaryForm.is_bp">需要投资人申请才能查看您的BP</el-checkbox>
 					</el-form-item>
 
@@ -456,7 +460,14 @@
 				</div>
 			</div>
 		</div>
-		<el-dialog title="用户需知" :visible.sync="dialogVisible" width="30%" custom-class="need-to-know" :show-close="false">
+		<el-dialog
+			title="用户需知"
+			:close-on-click-modal="false"
+			:visible.sync="dialogVisible"
+			width="30%"
+			custom-class="need-to-know"
+			:show-close="false"
+		>
 			<p>尊敬的用户：</p>
 			<br>
 			<p>您好，为了保证您合理、高效的使用本平台，请您仔细阅读以下内容。</p>
@@ -828,6 +839,3 @@ export default {
 	}
 }
 </script>
-
-<style>
-</style>

@@ -9,6 +9,3 @@ export default {
 	name: 'investor'
 }
 </script>
-
-<style>
-</style>

@@ -38,7 +38,12 @@ import Account from '@/views/account/Account.vue'
 import AccountSetting from '@/views/account/AccountSetting.vue'
 import AccountInformation from '@/views/account/AccountInformation.vue'
 import AccountProject from '@/views/account/AccountProject.vue'
-import QQLogin from '@/views/account/QQLogin.vue'
+
+// ohters
+import QQLogin from '@/views/others/QQLogin.vue'
+
+// article
+import Article from '@/views/article/Article.vue'
 
 Vue.use(Router)
 
@@ -162,6 +167,11 @@ const router = new Router({
 				}
 			],
 			redirect: '/account/setting'
+		}, {
+			path: '/article/:articleId',
+			name: 'article',
+			component: Article,
+			props: true
 		}
 	]
 })

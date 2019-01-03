@@ -56,7 +56,7 @@ li {
 }
 
 .margin-bottom-10 {
-    margin-bottom: 10px!important;
+    margin-bottom: 10px !important;
 }
 
 // scrollBar
@@ -73,6 +73,33 @@ li {
 .scroll::-webkit-scrollbar-thumb {
     border-radius: 6px;
     background-color: #e5e5e5;
+}
+
+#app {
+    font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+    text-align: center;
+    color: #2c3e50;
+}
+
+#nav {
+    padding: 30px;
+    a {
+        font-weight: bold;
+        color: #2c3e50;
+        &.router-link-exact-active {
+            color: #42b983;
+        }
+    }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity .3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
 }
 
 @import './index.less';

@@ -27,6 +27,11 @@
 						<el-menu-item index="/account/information">
 							<i class="el-icon-bell"></i>
 							<span slot="title">消息管理</span>
+							<el-badge
+								:value="userData.notification"
+								v-if="userData && userData.notification !== 0"
+								class="notification-badge"
+							></el-badge>
 						</el-menu-item>
 						<el-menu-item index="/account/project">
 							<i class="el-icon-menu"></i>
@@ -35,10 +40,10 @@
 					</el-menu>
 				</el-card>
 				<div class="buttton-logout">
-                    <button @click="$router.push({ path: '/logout' })">
-                        <i class="el-icon-fa-power-off"></i>
-                        退出登陆
-                    </button>
+					<button @click="$router.push({ path: '/logout' })">
+						<i class="el-icon-fa-power-off"></i>
+						退出登陆
+					</button>
 				</div>
 			</el-col>
 			<el-col class="account-part-right">
@@ -80,7 +85,7 @@ export default {
 	watch: {
 		userData(val) {
 			if (val) {
-				this.imageUrl = val.user_image || '../../assets/images/default-user.png'
+				this.imageUrl = val.user_image || require('../../assets/images/default-user.png')
 			}
 		}
 	},
@@ -116,6 +121,8 @@ export default {
 	created() {
 		if (this.userData && this.userData.user_image) {
 			this.imageUrl = this.userData.user_image
+		} else {
+			this.imageUrl = require('../../assets/images/default-user.png')
 		}
 	}
 

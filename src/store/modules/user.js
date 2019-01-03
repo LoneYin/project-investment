@@ -6,13 +6,12 @@ export default {
     },
     mutations: {
         [GET_INFORMATION_LIST](state, payload) {
-            this.state.informationList = [...payload]
+            state.informationList = [...payload]
         }
     },
     actions: {
         async getInformationList({ commit }) {
             const res = await getData('/index/notify')
-            debugger
             res.data && commit('GET_INFORMATION_LIST', res.data)
         }
     }

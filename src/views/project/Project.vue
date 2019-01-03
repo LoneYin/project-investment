@@ -9,6 +9,3 @@ export default {
 	name: 'project'
 }
 </script>
-
-<style>
-</style>

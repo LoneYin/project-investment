@@ -13,6 +13,7 @@
                         <el-carousel-item
                             :key="item.news_id"
                             v-for="item in advertisementList.sowing_map"
+                            @click.native="toArticleDetail(item.article_id)"
                         >
                             <img :src="item.img" alt>
                         </el-carousel-item>
@@ -185,6 +186,7 @@
                         <el-carousel-item
                             :key="item.news_id"
                             v-for="item in advertisementList.upper_right_ad"
+                            @click.native="toArticleDetail(item.article_id)"
                         >
                             <img :src="item.img" alt>
                         </el-carousel-item>
@@ -225,6 +227,7 @@
                         <el-carousel-item
                             :key="item.news_id"
                             v-for="item in advertisementList.lower_right_ad"
+                            @click.native="toArticleDetail(item.article_id)"
                         >
                             <img :src="item.img" alt>
                         </el-carousel-item>
@@ -275,6 +278,13 @@ export default {
             this.$router.push({
                 path: `/investor/detail/${id}`
             })
+        },
+        toArticleDetail(id) {
+            if (id) {
+                this.$router.push({
+                    path: `/article/${id}`
+                })
+            }
         }
     },
     created() {
@@ -291,5 +301,5 @@ export default {
             })
         }
     }
-};
+}
 </script>
