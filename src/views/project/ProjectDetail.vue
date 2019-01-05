@@ -466,11 +466,6 @@ export default {
 			}
 		},
 		onScroll() {
-			// if (!this.navbarWidth) {
-			// 	this.navbarWidth = document.querySelector(
-			// 		'.project-detail'
-			// 	).offsetWidth
-			// }
 
 			const container = document.querySelector('.el-main')
 
@@ -518,6 +513,10 @@ export default {
 			})
 		},
 		handleCollect() {
+			if (!this.loginStatus) {
+				this.$message.error('请登录后再进行该操作')
+				return
+			}
 			postData('/index/user/addCollection', {
 				project_id: this.projectId
 			}).then(() => {
@@ -528,6 +527,10 @@ export default {
 			})
 		},
 		handleCancelCollect() {
+			if (!this.loginStatus) {
+				this.$message.error('请登录后再进行该操作')
+				return
+			}
 			postData('/index/user/deleteCollection', {
 				project_id: this.projectId
 			}).then(() => {
@@ -565,6 +568,10 @@ export default {
 			}, 1000)
 		},
 		downloadBp() {
+			if (!this.loginStatus) {
+				this.$message.error('请登录后再进行该操作')
+				return
+			}
 			if (this.currentUserData.authentication !== 2) {
 				this.$message.error('认证投资人后才能查看项目BP')
 				this.$router.push({
@@ -608,34 +615,16 @@ export default {
 			}, err => {
 				console.log(err)
 			})
-		},
-		resolveFileType(fileName) {
-			if (fileName.includes('xls')) {
-				return 'application/vnd.ms-excel'
-			} else if (fileName.includes('doc')) {
-				return 'application/msword'
-			} else if (fileName.includes('pdf')) {
-				return 'application/pdf'
-			} else {
-				return 'text/plain'
-			}
 		}
 	},
 	created() {
+		this.init = true
+		this.getProjectDetail(this.projectId).finally(() => {
+			this.init = false
+			this.getSimilarProjects(this.similarParams)
+		})
 		if (this.loginStatus) {
-			this.init = true
-			this.getProjectDetail(this.projectId).finally(() => {
-				this.init = false
-				this.getSimilarProjects(this.similarParams)
-			})
 			this.applyToDownload()
-		} else {
-			this.$message.error('请您登陆后再进行查看')
-			setTimeout(() => {
-				this.$router.push({
-					path: '/login'
-				})
-			}, 1000)
 		}
 	},
 	mounted() {
