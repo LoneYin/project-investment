@@ -54,7 +54,7 @@
 								</el-col>
 							</el-row>
 						</template>
-						<p v-else>暂无项目介绍</p>
+						<p v-else>暂无投资偏好信息</p>
 					</div>
 				</el-card>
 
