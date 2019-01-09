@@ -5,15 +5,15 @@ export default {
         const el = document.querySelector('.el-main')
         const end = document.getElementById(endNode).offsetTop - 60
 
-        let start = el.scrollTop
-        let clock = Date.now()
+        const start = el.scrollTop
+        const clock = Date.now()
 
         const requestAnimationFrame = window.requestAnimationFrame ||
             window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame ||
             function (fn) { window.setTimeout(fn, 15) }
 
         const step = function () {
-            let elapsed = Date.now() - clock
+            const elapsed = Date.now() - clock
             el.scrollTop = position(start, end, elapsed, duration)
             
             if (elapsed > duration) {
