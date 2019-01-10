@@ -12,7 +12,7 @@
 								<el-col style="width: 400px;" class="item-content">
 									<span>{{item.content}}</span>
 								</el-col>
-								<el-col class="pull-right" style="width: 200px;">
+								<el-col class="pull-right" style="width: 200px;" v-if="item.from_user">
 									<el-button size="small" type="primary" @click="reply(item.message_id, 3)">同意</el-button>
 									<el-button size="small" type="danger" @click="reply(item.message_id, 4)">拒绝</el-button>
 								</el-col>

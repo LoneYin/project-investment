@@ -2,7 +2,7 @@
 	<div class="common-header">
 		<div class="logo">
 			<router-link :to="{path: '/'}">
-				<img src="../../assets/images/dingtai.png" alt>
+				<img src="../../assets/img/dingtai.png" alt>
 			</router-link>
 		</div>
 		<div class="auth-navigator">
@@ -16,7 +16,7 @@
 					<el-menu-item index="/account" class="user-avatar">
 						<span>{{ currentUserData ? currentUserData.user_name : ''}}</span>
 						<div class="avatar-box">
-							<img :src="currentUserData && currentUserData.user_image ? currentUserData.user_image  : '../../assets/images/default-user.png'" alt>
+							<img :src="currentUserData && currentUserData.user_image ? currentUserData.user_image  : require('../../assets/img/default-user.png')" alt>
 						</div>
 					</el-menu-item>
 					<!-- <el-menu-item index="/logout">退出登陆</el-menu-item> -->

@@ -574,8 +574,10 @@ export default {
 			}
 			if (this.currentUserData.authentication !== 2) {
 				this.$message.error('认证投资人后才能查看项目BP')
-				this.$router.push({
-					path: '/investor/auth'
+				setTimeout(() => {
+					this.$router.push({
+						path: '/investor/auth'
+					})
 				}, 1000)
 			} else {
 				if (this.ableToDownload == 1) {

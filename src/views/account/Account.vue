@@ -85,7 +85,7 @@ export default {
 	watch: {
 		userData(val) {
 			if (val) {
-				this.imageUrl = val.user_image || require('../../assets/images/default-user.png')
+				this.imageUrl = val.user_image || require('../../assets/img/default-user.png')
 			}
 		}
 	},
@@ -122,7 +122,7 @@ export default {
 		if (this.userData && this.userData.user_image) {
 			this.imageUrl = this.userData.user_image
 		} else {
-			this.imageUrl = require('../../assets/images/default-user.png')
+			this.imageUrl = require('../../assets/img/default-user.png')
 		}
 	}
 
