@@ -20,10 +20,10 @@
 
 <script>
 // @ is an alias to /src
-import CommonAside from '@/components/common/CommonAside.vue'
-import CommonHeader from '@/components/common/CommonHeader.vue'
-import { mapState, mapMutations, mapActions } from 'vuex'
-import { getCookie } from '@/utils/cookie'
+import CommonAside from '@/components/common/CommonAside.vue';
+import CommonHeader from '@/components/common/CommonHeader.vue';
+import { mapState, mapMutations, mapActions } from 'vuex';
+import { getCookie } from '@/utils/cookie';
 
 export default {
 	name: 'home',
@@ -45,17 +45,25 @@ export default {
 	watch: {
 		$route() {
 			setTimeout(() => {
-				document.querySelector('.el-main').scrollTo(0, 0)
-			}, 300)
+				document.querySelector('.el-main').scrollTo(0, 0);
+			}, 300);
 		}
 	},
 	created() {
-		const token = getCookie('access-user-token')
+		const token = getCookie('access-user-token');
 		if (token) {
-			this.autoLogin(token)
-			this.getCurrentUserData()
+			this.autoLogin(token);
+			this.getCurrentUserData().then(
+				() => {},
+				err => {
+					console.log(err);
+					this.$router.push({
+						path: '/login'
+					});
+				}
+			);
 		}
 	}
-}
+};
 </script>
 
