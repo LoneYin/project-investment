@@ -71,14 +71,14 @@ export default {
 				mobile: this.formData.mobile,
 				password: this.formData.password
 			}).then(
-					res => {
-						this.$message.success('登陆成功')
-						this.setLoginStatus(res.data)
-						this.getCurrentUserData()
-						this.$router.push({ path: '/' })
-					},
-					err => {
-						console.log(err)
+				res => {
+					this.$message.success('登陆成功')
+					this.setLoginStatus(res.data)
+					this.getCurrentUserData()
+					this.$router.push({ path: '/' })
+				},
+				err => {
+					console.log(err)
 				}
 			).finally(() => {
 				this.submitButtonLoading = false
