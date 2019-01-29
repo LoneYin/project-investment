@@ -3,6 +3,7 @@ import encrypt from './utils/encrypt'
 import { getCookie } from './utils/cookie'
 import { Message } from 'element-ui'
 import router from './router'
+import store from './store';
 
 export const server = 'http://api.ir8.vip'
 export const authKey = 'asjs82iqos0ad823'
@@ -62,6 +63,8 @@ axios.interceptors.response.use(
 	},
 	err => {
         if (err.response.status == 401) {
+            store.commit('SET_LOGOUT')
+            store.commit('CLEAR_CURRENT_USER_DATA')
             Message.error('请您先登录')
             router.push({path: '/login'})
         }

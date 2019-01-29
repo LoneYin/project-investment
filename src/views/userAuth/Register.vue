@@ -70,6 +70,8 @@ export default {
 			isForbidden: false,
 			count: 90,
 			submitButtonLoading: false,
+			qqCreate: false,
+			qqSecret: '',
 			formData: {
 				mobile: '',
 				password: '',
@@ -131,17 +133,29 @@ export default {
 			this.$refs['registerForm'].validate(valid => {
 				if (valid) {
 					this.submitButtonLoading = true
-					postData('/index/register', {
+					let url
+					const params = {
 						mobile: this.formData.mobile,
 						password: this.formData.password,
 						r_password: this.formData.r_password,
 						code: this.formData.verificationCode
-					})
+					}
+					if (this.qqCreate) {
+						url = '/index/complete'
+						params.qqcreate = this.qqSecret
+					} else {
+						url = '/index/register'
+					}
+					postData(url, params)
 						.then(
-							res => {
-								this.$message.success(res.message)
-								this.setRecentMobile(this.formData.mobile)
-								this.$router.push({ path: '/login' })
+							(res) => {
+								if (this.qqCreate) {
+									this.$router.push({ path: '/account/' + res.data })
+								} else {
+									this.$message.success('注册成功')
+									this.setRecentMobile(this.formData.mobile)
+									this.$router.push({ path: '/login' })
+								}
 							},
 							err => {
 								console.log(err)
@@ -152,6 +166,13 @@ export default {
 						})
 				}
 			})
+		}
+	},
+	created() {
+		this.$message.warning('该QQ号尚未绑定平台账号，请您先注册，成功后将自动进行绑定')
+		if (this.$route.fullPath.includes('qqcreate')) {
+			this.qqCreate = true
+			this.qqSecret = this.$route.fullPath.substring(19)
 		}
 	}
 }

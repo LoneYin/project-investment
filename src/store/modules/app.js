@@ -1,4 +1,4 @@
-import { SET_LOGIN_STATUS, SET_LOGOUT, GET_CURRENT_USER_DATA, SET_AUTO_LOGIN, SET_RECENT_MOBILE, SET_ACTIVE_INDEX, SET_LOADING_STATUS, GET_ARTICLE_DETAIL, CLEAR_ARTICLE_DETAIL } from '../mutations-types'
+import { SET_LOGIN_STATUS, SET_LOGOUT, GET_CURRENT_USER_DATA, SET_AUTO_LOGIN, SET_RECENT_MOBILE, SET_ACTIVE_INDEX, SET_LOADING_STATUS, GET_ARTICLE_DETAIL, CLEAR_ARTICLE_DETAIL, CLEAR_CURRENT_USER_DATA } from '../mutations-types'
 import { setCookie, delCookie } from '@/utils/cookie'
 import { getData } from '@/http'
 
@@ -26,6 +26,9 @@ export default {
         },
         [GET_CURRENT_USER_DATA](state, payload) {
             state.currentUserData = { ...payload }
+        },
+        [CLEAR_CURRENT_USER_DATA](state) {
+            state.currentUserData = undefined
         },
         [SET_AUTO_LOGIN](state, token) {
             state.loginStatus = true
