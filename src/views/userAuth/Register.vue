@@ -2,6 +2,11 @@
 	<div class="auth register">
 		<el-card>
 			<h5>用户注册</h5>
+			<template  v-if="qqCreate">
+				<p style="color: #999; font-size: 12px;">该QQ号尚未绑定平台账号，请您先注册，成功后将自动进行绑定。</p>
+				<p style="color: #999; font-size: 12px; margin-bottom: 20px;">如您已有平台账号，请登陆后再进行QQ绑定。</p>
+			</template>
+			
 			<el-form :model="formData" :rules="rules" ref="registerForm">
 				<el-form-item prop="mobile">
 					<el-input placeholder="请输入手机号" prefix-icon="el-icon-fa-mobile" v-model="formData.mobile"></el-input>
@@ -170,7 +175,6 @@ export default {
 	},
 	created() {
 		if (this.$route.fullPath.includes('qqcreate')) {
-			this.$message.warning('该QQ号尚未绑定平台账号，请您先注册，成功后将自动进行绑定')
 			this.qqCreate = true
 			this.qqSecret = this.$route.fullPath.substring(19)
 		}

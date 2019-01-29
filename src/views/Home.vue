@@ -52,11 +52,13 @@ export default {
 	created() {
 		const token = getCookie('access-user-token');
 		if (token) {
-			this.autoLogin(token);
 			this.getCurrentUserData().then(
-				() => {},
+				() => {
+					this.autoLogin(token);
+				},
 				err => {
-					console.log(err);
+					console.log(err)
+					this.$store.commit('SET_LOGOUT')
 					this.$router.push({
 						path: '/login'
 					});

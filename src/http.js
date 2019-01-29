@@ -64,7 +64,6 @@ axios.interceptors.response.use(
 	err => {
         if (err.response.status == 401) {
             store.commit('SET_LOGOUT')
-            store.commit('CLEAR_CURRENT_USER_DATA')
             Message.error('请您先登录')
             router.push({path: '/login'})
         }

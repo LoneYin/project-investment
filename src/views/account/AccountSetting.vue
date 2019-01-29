@@ -132,7 +132,7 @@
 							</div>
 						</el-col>
 					</el-row>
-					<el-dialog title="解除绑定" :visible.sync="visibleBind" width="400px;">
+					<el-dialog title="解除绑定" :visible.sync="visibleBind" width="400px">
 						<el-input placeholder="请输入密码以确认" type="password" v-model="confirmPassword"></el-input>
 						<span slot="footer" class="dialog-footer">
 							<el-button @click="visibleBind = false">取 消</el-button>
