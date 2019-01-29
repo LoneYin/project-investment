@@ -169,8 +169,8 @@ export default {
 		}
 	},
 	created() {
-		this.$message.warning('该QQ号尚未绑定平台账号，请您先注册，成功后将自动进行绑定')
 		if (this.$route.fullPath.includes('qqcreate')) {
+			this.$message.warning('该QQ号尚未绑定平台账号，请您先注册，成功后将自动进行绑定')
 			this.qqCreate = true
 			this.qqSecret = this.$route.fullPath.substring(19)
 		}
