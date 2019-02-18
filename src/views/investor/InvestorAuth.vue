@@ -167,9 +167,7 @@ export default {
 						trigger: 'blur'
 					}
 				],
-				wechat: [{ required: true, message: '微信号不能为空' }],
 				position: [{ required: true, message: '职位不能为空' }],
-				resume: [{ required: true, message: '个人履历不能为空' }],
 				region_id: [{ required: true, message: '所在地区不能为空' }],
 				identity: [{ required: true, message: '投资身份不能为空' }]
 			}
