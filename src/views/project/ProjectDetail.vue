@@ -361,7 +361,7 @@
 					<el-button v-else size="small" type="primary" class="btn-collect" @click="handleCollect">收藏</el-button>
 					<el-button @click="downloadBp" type="primary" size="small">查看商业计划书</el-button>
 					<a :href="bpPath" target="_blank" style="display: none;">
-						<button id="BpDownload" ></button>
+						<button id="BpDownload"></button>
 					</a>
 				</el-card>
 			</div>
@@ -373,7 +373,13 @@
 				<el-button size="small" type="primary" @click="handleApply">确 定</el-button>
 			</span>
 		</el-dialog>
-		<el-dialog title="项目所有者联系方式" :visible.sync="visibleConnect" width="400px" v-if="projectDetail" class="project-connect">
+		<el-dialog
+			title="项目所有者联系方式"
+			:visible.sync="visibleConnect"
+			width="400px"
+			v-if="projectDetail"
+			class="project-connect"
+		>
 			<el-row>
 				<el-col :span="10" class="label">
 					<i class="el-icon-fa-phone"></i>电话
@@ -444,7 +450,10 @@ export default {
 			}
 		},
 		tagsList() {
-			return [{ tag_id: 0, tag_name: '综合' }, ...this.similarProjectsMeta.tags]
+			return [
+				{ tag_id: 0, tag_name: '综合' },
+				...this.similarProjectsMeta.tags
+			]
 		},
 		loadAll() {
 			return this.page == this.similarProjectsMeta.pages
@@ -466,7 +475,6 @@ export default {
 			}
 		},
 		onScroll() {
-
 			const container = document.querySelector('.el-main')
 
 			if (container.scrollTop > 116 && !this.showFixedBar) {
@@ -478,29 +486,47 @@ export default {
 			if (!this.scrollLock) {
 				if (container.scrollTop < this.anchorArr[1]) {
 					this.currentName = this.anchorNameArr[0]
-				} else if (
-					container.scrollTop >= this.anchorArr[1] &&
-					container.scrollTop <= this.anchorArr[2]
-				) {
-					this.currentName = this.anchorNameArr[1]
-				} else if (
-					container.scrollTop >= this.anchorArr[2] &&
-					container.scrollTop <= this.anchorArr[3]
-				) {
-					this.currentName = this.anchorNameArr[2]
-				} else if (
-					container.scrollTop >= this.anchorArr[3] &&
-					container.scrollTop <= this.anchorArr[4]
-				) {
-					this.currentName = this.anchorNameArr[3]
-				} else if (
-					container.scrollTop >= this.anchorArr[4] &&
-					container.scrollTop <= this.anchorArr[5]
-				) {
-					this.currentName = this.anchorNameArr[4]
 				} else {
-					this.currentName = this.anchorNameArr[5]
+					for (let i = 1; i < this.anchorArr.length; i++) {
+						if (i == this.anchorArr.length - 1 && container.scrollTop >= this.anchorArr[i]) {
+							this.currentName = this.anchorNameArr[i]
+						} else {
+							if (
+								container.scrollTop >= this.anchorArr[i] &&
+								container.scrollTop < this.anchorArr[i + 1]
+							) {
+								this.currentName = this.anchorNameArr[i]
+								break
+							}
+						}
+					}
 				}
+
+				// if (container.scrollTop < this.anchorArr[1]) {
+				// 	this.currentName = this.anchorNameArr[0]
+				// } else if (
+				// 	container.scrollTop >= this.anchorArr[1] &&
+				// 	container.scrollTop < this.anchorArr[2]
+				// ) {
+				// 	this.currentName = this.anchorNameArr[1]
+				// } else if (
+				// 	container.scrollTop >= this.anchorArr[2] &&
+				// 	container.scrollTop < this.anchorArr[3]
+				// ) {
+				// 	this.currentName = this.anchorNameArr[2]
+				// } else if (
+				// 	container.scrollTop >= this.anchorArr[3] &&
+				// 	container.scrollTop < this.anchorArr[4]
+				// ) {
+				// 	this.currentName = this.anchorNameArr[3]
+				// } else if (
+				// 	container.scrollTop >= this.anchorArr[4] &&
+				// 	container.scrollTop < this.anchorArr[5]
+				// ) {
+				// 	this.currentName = this.anchorNameArr[4]
+				// } else {
+				// 	this.currentName = this.anchorNameArr[5]
+				// }
 			}
 		},
 		initAnchorArr() {
@@ -519,12 +545,15 @@ export default {
 			}
 			postData('/index/user/addCollection', {
 				project_id: this.projectId
-			}).then(() => {
-				this.$message.success('收藏成功')
-				this.$store.commit('CHANGE_COLLECT_STATUS', 1)
-			}, err => {
-				console.log(err)
-			})
+			}).then(
+				() => {
+					this.$message.success('收藏成功')
+					this.$store.commit('CHANGE_COLLECT_STATUS', 1)
+				},
+				err => {
+					console.log(err)
+				}
+			)
 		},
 		handleCancelCollect() {
 			if (!this.loginStatus) {
@@ -533,12 +562,15 @@ export default {
 			}
 			postData('/index/user/deleteCollection', {
 				project_id: this.projectId
-			}).then(() => {
-				this.$message.success('取消收藏成功')
-				this.$store.commit('CHANGE_COLLECT_STATUS', 0)
-			}, err => {
-				console.log(err)
-			})
+			}).then(
+				() => {
+					this.$message.success('取消收藏成功')
+					this.$store.commit('CHANGE_COLLECT_STATUS', 0)
+				},
+				err => {
+					console.log(err)
+				}
+			)
 		},
 		handleTagChange() {
 			this.page = 1
@@ -583,7 +615,9 @@ export default {
 				if (this.ableToDownload == 1) {
 					this.visibleDownloadBp = true
 				} else if (this.ableToDownload == 2) {
-					this.$message.success('您已发送过申请，请耐心等待项目所有人的回复')
+					this.$message.success(
+						'您已发送过申请，请耐心等待项目所有人的回复'
+					)
 				} else if (this.ableToDownload == 3) {
 					if (this.bpPath) {
 						document.querySelector('#BpDownload').click()
@@ -605,18 +639,24 @@ export default {
 				},
 				err => {
 					console.log(err)
-				})
+				}
+			)
 		},
 		handleApply() {
 			this.visibleDownloadBp = false
 			postData('/index/consult', {
 				project_id: this.projectId
-			}).then(() => {
-				this.$message.success('已成功发送申请，正在等待项目所有者回复')
-				this.ableToDownload = 2
-			}, err => {
-				console.log(err)
-			})
+			}).then(
+				() => {
+					this.$message.success(
+						'已成功发送申请，正在等待项目所有者回复'
+					)
+					this.ableToDownload = 2
+				},
+				err => {
+					console.log(err)
+				}
+			)
 		}
 	},
 	created() {
@@ -634,7 +674,6 @@ export default {
 			document
 				.querySelector('.el-main')
 				.addEventListener('scroll', this.onScroll, false)
-
 		})
 
 		setTimeout(() => {
@@ -654,7 +693,9 @@ export default {
 		const projectId = to.path.substring(16)
 		const url = window.location.href
 		const lastIndex = url.lastIndexOf('/')
-		window.location.replace(`${url.substring(0, lastIndex + 1) + projectId}`)
+		window.location.replace(
+			`${url.substring(0, lastIndex + 1) + projectId}`
+		)
 	}
 }
 </script>
