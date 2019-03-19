@@ -14,9 +14,7 @@
 							</p>
 						</el-col>
 						<el-col class="account-info-right" :span="8">
-							<div class="pull-right button-edit" @click="visibleUserName = true">
-								<i class="el-icon-edit"></i>
-							</div>
+							<el-button class="pull-right" @click="visibleUserName = true" type="primary" size="small">修改</el-button>
 						</el-col>
 					</el-row>
 					<el-row class="account-info-item">
@@ -30,9 +28,7 @@
 							</p>
 						</el-col>
 						<el-col class="account-info-right" :span="8">
-							<div class="pull-right button-edit">
-								<i class="el-icon-edit"></i>
-							</div>
+							<el-button class="pull-right" size="small" type="primary">修改</el-button>
 						</el-col>
 					</el-row>
 					<el-row class="account-info-item">
@@ -45,10 +41,8 @@
 								<span class="account-info-comment">安全手机可以用于登录本平台，重置密码或其它安全验证</span>
 							</p>
 						</el-col>
-						<el-col class="account-info-right" :span="8">
-							<div class="pull-right button-edit" @click="visibleMobileFirst = true">
-								<i class="el-icon-edit"></i>
-							</div>
+						<el-col class="account-info-right" :span="8">		
+							<el-button class="pull-right" @click="visibleMobileFirst = true" type="primary" size="small">修改</el-button>
 						</el-col>
 					</el-row>
 					<el-row class="account-info-item">
@@ -61,9 +55,7 @@
 							</p>
 						</el-col>
 						<el-col class="account-info-right" :span="8">
-							<div class="pull-right button-edit" @click="visiblePassword = true">
-								<i class="el-icon-edit"></i>
-							</div>
+							<el-button class="pull-right" @click="visiblePassword = true" type="primary" size="small">修改</el-button>
 						</el-col>
 					</el-row>
 					<el-row class="account-info-item">

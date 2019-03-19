@@ -195,25 +195,25 @@
                 <div class="index-users">
                     <el-card class="no-border">
                         <h5 class="index-users-title">认证创业者</h5>
-                        <ul v-if="authenticatedUsersList">
+                        <!-- <ul v-if="authenticatedUsersList">
                             <li
                                 :key="item.user_id"
                                 class="index-users-item"
                                 v-for="item in authenticatedUsersList"
                             >
-                                <el-row>
+                                <el-row v-if="item.investors">
                                     <el-col :span="10">
                                         <div class="index-users-item-avatar">
-                                            <img :src="item.user_image" alt>
+                                            <img :src="item.investors.portrait || ''" alt>
                                         </div>
                                     </el-col>
                                     <el-col :span="14" class="index-users-item-text">
-                                        <p class="text-full_name">{{item.full_name}}</p>
-                                        <p class="text-position">{{item.position}}</p>
+                                        <p class="text-full_name">{{item.investors.real_name || ''}}</p>
+                                        <p class="text-position">{{item.investors.position || ''}}</p>
                                     </el-col>
                                 </el-row>
                             </li>
-                        </ul>
+                        </ul> -->
                     </el-card>
                 </div>
                 <div class="index-bottom_right-carousel" v-if="advertisementList">
