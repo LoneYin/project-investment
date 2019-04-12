@@ -17,7 +17,8 @@
 				<div class="auth-link-row">
 					<router-link :to="{ path: '/register'}" class="el-form-link pull-left">注册新用户</router-link>
 					<router-link :to="{ path: '/forget'}" class="el-form-link pull-right">忘记密码</router-link>
-					<a class="el-form-link pull-right auth-btn-qq" :href="`${server}/qqLogin`">
+					<!-- <a class="el-form-link pull-right auth-btn-qq" :href="`${server}/qqLogin`"> -->
+					<a class="el-form-link pull-right auth-btn-qq" @click="getUniqueKey">
 						<i class="el-icon-fa-qq"></i>
 						QQ登录
 					</a>
@@ -47,6 +48,7 @@ export default {
 				mobile: undefined,
 				password: undefined
 			},
+			uniqueKey: '',
 			rules: {
 				mobile: [
 					{ required: true, message: '手机号不能为空' },
@@ -56,7 +58,8 @@ export default {
 					{ required: true, message: '密码不能为空' },
 					{ validator: validator.password, trigger: 'blur' }
 				]
-			}
+			},
+			timer: null
 		}
 	},
 	methods: {
@@ -70,19 +73,81 @@ export default {
 			postData('/index/login', {
 				mobile: this.formData.mobile,
 				password: this.formData.password
-			}).then(
+			})
+				.then(
+					res => {
+						this.$message.success('登陆成功')
+						this.setLoginStatus(res.data)
+						this.getCurrentUserData()
+						this.$router.push({ path: '/' })
+					},
+					err => {
+						console.log(err)
+					}
+				)
+				.finally(() => {
+					this.submitButtonLoading = false
+				})
+		},
+		qqLogin() {
+			window.open(`${server}/qqLogin`, '', 'width=700,height=400')
+		},
+		getUniqueKey() {
+			let loginWindow
+			clearInterval(this.timer)
+			postData('/index/keys').then(
 				res => {
-					this.$message.success('登陆成功')
-					this.setLoginStatus(res.data)
-					this.getCurrentUserData()
-					this.$router.push({ path: '/' })
+					this.uniqueKey = res.data
+					loginWindow = window.open(
+						`${server}/qqLogin?key=${this.uniqueKey}`,
+						'',
+						'width=700,height=400'
+					)
+					this.timer = setInterval(() => {
+						postData('/index/checkout', {
+							key: this.uniqueKey
+						}).then(
+							res => {
+								clearInterval(this.timer)
+								if (res.status === 1) {
+									postData('/index/login', {
+										secret: res.data
+									}).then(
+										res => {
+											this.$store.commit(
+												'SET_LOGIN_STATUS',
+												res.data
+											)
+											this.$store.dispatch(
+												'getCurrentUserData'
+											)
+											this.$router.push({ path: '/' })
+											loginWindow && loginWindow.close()
+										},
+										err => {
+											console.log(err)
+											this.$router.push({
+												path: '/login'
+											})
+											loginWindow && loginWindow.close()
+										}
+									)
+								} else if (res.status === 4) {
+									this.$router.push(res.data.url.substring(14))
+									loginWindow && loginWindow.close()
+								}
+							},
+							err => {
+								console.log(err)
+							}
+						)
+					}, 1000)
 				},
 				err => {
 					console.log(err)
+					this.$message.error('唤起QQ登录失败')
 				}
-			).finally(() => {
-				this.submitButtonLoading = false
-			})
+			)
 		}
 	},
 	computed: {
@@ -95,8 +160,13 @@ export default {
 	},
 	mounted() {
 		if (this.recentMobile) {
-			this.formData.mobile = this.recentMobile 
+			this.formData.mobile = this.recentMobile
 			this.clearRecentMobile()
+		}
+	},
+	beforeDestroy() {
+		if (this.timer) {
+			clearInterval(this.timer)
 		}
 	}
 }

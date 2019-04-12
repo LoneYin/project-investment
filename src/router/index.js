@@ -5,6 +5,7 @@ import { getCookie } from '@/utils/cookie'
 
 import guard from './routerGuard'
 
+import Home from '../views/Home.vue'
 import Index from '@/views/index/Index.vue'
 
 // userAuth
@@ -33,6 +34,9 @@ import InvestorsList from '@/views/discovery/Investors.vue'
 import InvestorAuth from '@/views/investor/InvestorAuth.vue'
 import InvestorDetail from '@/views/investor/InvestorDetail.vue'
 
+// entrepreneur
+import EntrepreneurAuth from '@/views/entrepreneur/EntrepreneurAuth.vue'
+
 // account
 import Account from '@/views/account/Account.vue'
 import AccountSetting from '@/views/account/AccountSetting.vue'
@@ -41,6 +45,7 @@ import AccountProject from '@/views/account/AccountProject.vue'
 
 // ohters
 import QQLogin from '@/views/others/QQLogin.vue'
+import LoginSuccess from '@/views/LoginSuccess.vue'
 
 // article
 import Article from '@/views/article/Article.vue'
@@ -53,125 +58,162 @@ const router = new Router({
 	routes: [
 		{
 			path: '/',
-			name: 'index',
-			component: Index
-		}, {
-			path: '/login',
-			name: 'login',
-			component: Login
-		}, {
-			path: '/register',
-			name: 'register',
-			component: Register
-		}, {
-			path: '/logout',
-			name: 'logout',
-			component: Logout,
-			beforeEnter: guard.confirmLogout
-		}, {
-			path: '/forget',
-			name: 'forget',
-			component: Forget
-		}, {
-			path: '/projects',
-			name: 'projects',
-			component: Projects
-		}, {
-			path: '/project',
-			name: 'project',
-			component: Project,
+			component: Home,
 			children: [
 				{
-					path: 'detail/:projectId',
-					name: 'projectDetail',
-					component: ProjectDetail,
-					props: true
-				}, {
-					path: 'submit',
-					name: 'submitProject',
-					component: SubmitProject,
-					meta: {
-						requireAuth: true
-					}
-				}
-			]
-		}, {
-			path: '/optimal_projects',
-			name: 'optimalProjects',
-			component: OptimalProjects
-		}, {
-			path: '/new_projects',
-			name: 'newProjects',
-			component: NewProjects
-		}, {
-			path: '/new_experience_projects',
-			name: 'newExperienceProjects',
-			component: NewExperienceProjects
-		}, {
-			path: '/financing_projects',
-			name: 'financingProjects',
-			component: FinancingProjects
-		}, {
-			path: '/star_projects',
-			name: 'starProjects',
-			component: StarProjects
-		}, {
-			path: '/subscribed_tags',
-			name: 'subscribedTags',
-			component: SubscribedTags
-		}, {
-			path: '/investors',
-			name: 'investors',
-			component: InvestorsList
-		}, {
-			path: '/investor',
-			name: 'investor',
-			component: Investor,
-			children: [
-				{
-					path: 'auth',
-					name: 'investorAuth',
-					component: InvestorAuth,
-					meta: {
-						requireAuth: true
-					}
-				}, {
-					path: 'detail/:investorId',
-					name: 'investorDetail',
-					component: InvestorDetail,
-					props: true
-				}
-			]
-		}, {
-			path: '/account',
-			name: 'account',
-			component: Account,
-			children: [
-				{
-					path: 'setting',
-					name: 'accountSetting',
-					component: AccountSetting
+					path: '/',
+					name: 'index',
+					component: Index
 				},
 				{
-					path: 'information',
-					name: 'accountInformation',
-					component: AccountInformation
-				}, {
-					path: 'project',
-					name: 'accountProject',
-					component: AccountProject
-				}, {
-					path: 'qqlogin',
-					component: QQLogin,
-					beforeEnter: guard.qqLogin
+					path: '/login',
+					name: 'login',
+					component: Login
+				},
+				{
+					path: '/register',
+					name: 'register',
+					component: Register
+				},
+				{
+					path: '/logout',
+					name: 'logout',
+					component: Logout,
+					beforeEnter: guard.confirmLogout
+				},
+				{
+					path: '/forget',
+					name: 'forget',
+					component: Forget
+				},
+				{
+					path: '/projects',
+					name: 'projects',
+					component: Projects
+				},
+				{
+					path: '/project',
+					name: 'project',
+					component: Project,
+					children: [
+						{
+							path: 'detail/:projectId',
+							name: 'projectDetail',
+							component: ProjectDetail,
+							props: true
+						},
+						{
+							path: 'submit',
+							name: 'submitProject',
+							component: SubmitProject,
+							meta: {
+								requireAuth: true
+							}
+						}
+					]
+				},
+				{
+					path: '/optimal_projects',
+					name: 'optimalProjects',
+					component: OptimalProjects
+				},
+				{
+					path: '/new_projects',
+					name: 'newProjects',
+					component: NewProjects
+				},
+				{
+					path: '/new_experience_projects',
+					name: 'newExperienceProjects',
+					component: NewExperienceProjects
+				},
+				{
+					path: '/financing_projects',
+					name: 'financingProjects',
+					component: FinancingProjects
+				},
+				{
+					path: '/star_projects',
+					name: 'starProjects',
+					component: StarProjects
+				},
+				{
+					path: '/subscribed_tags',
+					name: 'subscribedTags',
+					component: SubscribedTags
+				},
+				{
+					path: '/investors',
+					name: 'investors',
+					component: InvestorsList
+				},
+				{
+					path: '/investor',
+					name: 'investor',
+					component: Investor,
+					children: [
+						{
+							path: 'auth',
+							name: 'investorAuth',
+							component: InvestorAuth,
+							meta: {
+								requireAuth: true
+							}
+						},
+						{
+							path: 'detail/:investorId',
+							name: 'investorDetail',
+							component: InvestorDetail,
+							props: true
+						}
+					]
+				},
+				{
+					path: '/entrepreneur/auth',
+					component: EntrepreneurAuth,
+					meta: {
+						requireAuth: true
+					}
+				},
+				{
+					path: '/account',
+					name: 'account',
+					component: Account,
+					children: [
+						{
+							path: 'setting',
+							name: 'accountSetting',
+							component: AccountSetting
+						},
+						{
+							path: 'information',
+							name: 'accountInformation',
+							component: AccountInformation
+						},
+						{
+							path: 'project',
+							name: 'accountProject',
+							component: AccountProject
+						},
+						{
+							path: 'qqlogin',
+							component: QQLogin,
+							beforeEnter: guard.qqLogin
+						}
+					],
+					redirect: '/account/setting'
+				},
+				{
+					path: '/article/:articleId',
+					name: 'article',
+					component: Article,
+					props: true
 				}
-			],
-			redirect: '/account/setting'
-		}, {
-			path: '/article/:articleId',
-			name: 'article',
-			component: Article,
-			props: true
+			]
+		},
+		{
+			path: '/login_success',
+			component: LoginSuccess
 		}
 	]
 })
@@ -192,8 +234,7 @@ router.beforeEach((to, from, next) => {
 	}
 })
 
-
-router.afterEach((to) => {
+router.afterEach(to => {
 	store.commit('SET_ACTIVE_INDEX', to.path)
 })
 

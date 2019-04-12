@@ -177,6 +177,7 @@ export default {
 		if (this.$route.fullPath.includes('qqcreate')) {
 			this.qqCreate = true
 			this.qqSecret = this.$route.fullPath.substring(19)
+			console.log(this.qqSecret)
 		}
 	}
 }

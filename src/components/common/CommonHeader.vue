@@ -5,13 +5,17 @@
 				<img src="../../assets/img/dingtai.png" alt>
 			</router-link>
 		</div>
-		<div class="auth-navigator">
+		<div class="auth-navigator" v-if="!hideMenu">
 			<el-menu :default-active="activeIndex" mode="horizontal" ref="headerMenu" router>
 				<el-menu-item index="/project/submit">提交项目</el-menu-item>
 				<el-menu-item
 					index="/investor/auth"
-					v-if="!currentUserData || currentUserData.authentication !== 2"
+					v-if="!currentUserData || currentUserData.authentication === 3"
 				>认证投资人</el-menu-item>
+				<el-menu-item
+					index="/entrepreneur/auth"
+					v-if="!currentUserData || currentUserData.business === 3"
+				>认证创业者</el-menu-item>
 				<template v-if="isLogin">
 					<el-menu-item index="/account" class="user-avatar">
 						<span>{{ currentUserData ? currentUserData.user_name : ''}}</span>
@@ -33,6 +37,9 @@
 <script>
 import { mapState } from 'vuex'
 export default {
+	props: {
+		hideMenu: Boolean
+	},
 	data() {
 		return {
 			// pathArr: [

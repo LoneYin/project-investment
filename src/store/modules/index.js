@@ -54,10 +54,7 @@ export default {
             res.data && commit('GET_HOT_PROJECTS_LIST', res.data)
         },
         async getAuthenticatedUsersList({ commit }) {
-            const res = await getData('/index/user/index', {
-                authentication: 2,
-                page_size: 3
-            })
+            const res = await getData('/index/business')
             res.data && commit('GET_AUTHENTICATED_USERS_LIST', res.data)
         },
         async getRecommendedInvestorsList({ commit }) {

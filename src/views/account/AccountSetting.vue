@@ -41,8 +41,13 @@
 								<span class="account-info-comment">安全手机可以用于登录本平台，重置密码或其它安全验证</span>
 							</p>
 						</el-col>
-						<el-col class="account-info-right" :span="8">		
-							<el-button class="pull-right" @click="visibleMobileFirst = true" type="primary" size="small">修改</el-button>
+						<el-col class="account-info-right" :span="8">
+							<el-button
+								class="pull-right"
+								@click="visibleMobileFirst = true"
+								type="primary"
+								size="small"
+							>修改</el-button>
 						</el-col>
 					</el-row>
 					<el-row class="account-info-item">
@@ -62,7 +67,7 @@
 						<el-col class="account-info-left" :span="16">
 							<p>
 								<span class="account-info-title">投资人:</span>
-								<span class="account-info-text">{{userData.authentication == 2 ? '已认证' : '未认证'}}</span>
+								<span class="account-info-text">{{returnAuthStatus(userData.authentication)}}</span>
 							</p>
 							<p>
 								<span class="account-info-comment">成为平台认证投资人，享受众多特权与服务</span>
@@ -70,8 +75,25 @@
 						</el-col>
 						<el-col class="account-info-right" :span="8">
 							<div class="pull-right">
-								<el-button v-if="userData.authentication == 2" type="primary" size="small">修改认证信息</el-button>
-								<el-button v-else type="primary" size="small">去认证</el-button>
+								<el-button v-if="userData.authentication == 1" type="primary" size="small">修改认证信息</el-button>
+								<el-button v-if="userData.authentication == 3" type="primary" size="small" @click="$router.push('/investor/auth')">去认证</el-button>
+							</div>
+						</el-col>
+					</el-row>
+					<el-row class="account-info-item">
+						<el-col class="account-info-left" :span="16">
+							<p>
+								<span class="account-info-title">创业者:</span>
+								<span class="account-info-text">{{returnAuthStatus(userData.business)}}</span>
+							</p>
+							<p>
+								<span class="account-info-comment">成为平台认证创业者，获得更多投资人的关注</span>
+							</p>
+						</el-col>
+						<el-col class="account-info-right" :span="8">
+							<div class="pull-right">
+								<!-- <el-button type="primary" size="small">修改认证信息</el-button> -->
+								<el-button v-if="userData.business == 3" type="primary" size="small" @click="$router.push('/entrepreneur/auth')">去认证</el-button>
 							</div>
 						</el-col>
 					</el-row>
@@ -171,7 +193,11 @@ export default {
 	methods: {
 		...mapActions(['getCurrentUserData']),
 		changeUserName() {
-			if (!this.userName || this.userName.length < 2 || this.userName.length > 24) {
+			if (
+				!this.userName ||
+				this.userName.length < 2 ||
+				this.userName.length > 24
+			) {
 				this.$message.error('请输入2-24位的用户名')
 				return
 			}
@@ -193,19 +219,33 @@ export default {
 			if (this.confirmPassword) {
 				postData('/index/unbind', {
 					password: this.confirmPassword
-				}).then(
-					() => {
-						this.$message.success('解除绑定成功')
-						this.getCurrentUserData()
-					},
-					err => {
-						console.log(err)
-					}
-				).finally(() => {
-					this.visibleBind = false
 				})
+					.then(
+						() => {
+							this.$message.success('解除绑定成功')
+							this.getCurrentUserData()
+						},
+						err => {
+							console.log(err)
+						}
+					)
+					.finally(() => {
+						this.visibleBind = false
+					})
 			} else {
 				this.$message.error('请输入密码以确认')
+			}
+		},
+		returnAuthStatus(status) {
+			switch (status) {
+				case 1:
+					return '已认证'
+				case 2:
+					return '待审核'
+				case 3:
+					return '未认证'
+				default:
+					return ''
 			}
 		}
 	}

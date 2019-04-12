@@ -22,7 +22,7 @@
                 <div class="index-projects">
                     <el-card class="no-border">
                         <el-tabs v-model="activeProjectType">
-                            <el-tab-pane label="每日精选项目" name="daily_project">
+                            <el-tab-pane label="每日精选" name="daily_project">
                                 <el-row v-if="dailyProjectsList">
                                     <el-col
                                         :key="item.project_id"
@@ -195,16 +195,16 @@
                 <div class="index-users">
                     <el-card class="no-border">
                         <h5 class="index-users-title">认证创业者</h5>
-                        <!-- <ul v-if="authenticatedUsersList">
+                        <ul v-if="authenticatedUsersList">
                             <li
                                 :key="item.user_id"
                                 class="index-users-item"
                                 v-for="item in authenticatedUsersList"
                             >
-                                <el-row v-if="item.investors">
+                                <el-row>
                                     <el-col :span="10">
                                         <div class="index-users-item-avatar">
-                                            <img :src="item.investors.portrait || ''" alt>
+                                            <img :src="item.investors.user_image || ''" alt>
                                         </div>
                                     </el-col>
                                     <el-col :span="14" class="index-users-item-text">
@@ -213,7 +213,7 @@
                                     </el-col>
                                 </el-row>
                             </li>
-                        </ul> -->
+                        </ul>
                     </el-card>
                 </div>
                 <div class="index-bottom_right-carousel" v-if="advertisementList">
