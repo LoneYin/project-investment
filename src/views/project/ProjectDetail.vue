@@ -604,7 +604,7 @@ export default {
 				this.$message.error('请登录后再进行该操作')
 				return
 			}
-			if (this.currentUserData.authentication !== 2) {
+			if (this.currentUserData.authentication !== 1) {
 				this.$message.error('认证投资人后才能查看项目BP')
 				setTimeout(() => {
 					this.$router.push({

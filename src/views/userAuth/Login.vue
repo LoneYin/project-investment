@@ -18,7 +18,7 @@
 					<router-link :to="{ path: '/register'}" class="el-form-link pull-left">注册新用户</router-link>
 					<router-link :to="{ path: '/forget'}" class="el-form-link pull-right">忘记密码</router-link>
 					<!-- <a class="el-form-link pull-right auth-btn-qq" :href="`${server}/qqLogin`"> -->
-					<a class="el-form-link pull-right auth-btn-qq" @click="getUniqueKey">
+					<a class="el-form-link pull-right auth-btn-qq" @click="getUniqueKey" style="cursor: pointer;">
 						<i class="el-icon-fa-qq"></i>
 						QQ登录
 					</a>

@@ -2,11 +2,20 @@
     width: 1140px;
     margin: 20px auto;
     height: 600px;
+
     .index-carousel {
         height: 265px;
-    }
-    .el-carousel {
         background: #ffffff;
+    }
+
+    .index-top_right-carousel {
+        height: 265px;
+        background: #ffffff;
+    }
+
+    .el-carousel {
+        height: 100%;
+
         .el-carousel__button {
             width: 18px;
         }
@@ -23,6 +32,7 @@
     .el-col {
         padding: 0 10px;
     }
+
     .index-project-item {
         padding: 0 8px;
     }
@@ -38,8 +48,10 @@
 
 .index-projects {
     height: 330px;
+
     .el-card {
         height: 100%;
+
         &>div {
             padding-top: 10px;
         }
@@ -49,13 +61,16 @@
 .index-project-item {
     height: 110px;
     margin-bottom: 16px;
+
     .el-card {
         border: 1px solid #f3f6ff;
+
         &:hover {
             background: #f7f9fe;
             cursor: pointer;
         }
     }
+
     .el-card__body {
         padding: 10px;
         height: 92px;
@@ -69,6 +84,7 @@
     height: 54px;
     border: 1px solid #e5e5e5;
     border-radius: 27px;
+
     img {
         margin-top: 2px;
         width: 50px;
@@ -78,23 +94,32 @@
 }
 
 .index-project-item-text {
-    margin-top: 18px;
+    // margin-top: 18px;
+
     p {
         font-size: 12px;
         text-align: left;
     }
+
     .text-name {
         font-size: 16px;
         line-height: 20px;
         font-weight: 700;
+        max-width: 64px;
+        position: relative;
+        top: 5px;
+        display: inline-block;
     }
+
     .text-round_name {
         margin-bottom: 2px;
         font-size: 14px;
     }
+
     .text-summary {
         color: #999;
     }
+
     .text-industry_name {
         position: relative;
         top: -2px;
@@ -105,10 +130,12 @@
         color: #999;
     }
 }
+
 .index-users {
     margin-top: 20px;
     margin-bottom: 20px;
     height: 330px;
+
     .index-users-title {
         border-left: 4px solid #409EFF;
         text-align: left;
@@ -117,9 +144,11 @@
         line-height: 24px;
         margin-bottom: 20px;
     }
+
     .el-card {
         height: 100%;
     }
+
     .index-users-item {
         height: 74px;
         margin: 10px 0;
@@ -132,20 +161,24 @@
     border-radius: 36px;
     padding: 2px;
     border: 1px solid #e5e5e5;
+
     img {
         width: 68px;
         height: 68px;
         border-radius: 34px;
     }
 }
+
 .index-users-item-text {
     margin-top: 16px;
     text-align: left;
+
     .text-full_name {
         font-size: 16px;
         font-weight: 700;
         margin-bottom: 2px;
     }
+
     .text-position {
         font-size: 14px;
         height: 19px;
@@ -161,17 +194,20 @@
     padding: 2px;
     border: 1px solid #e5e5e5;
     margin: 0 auto;
+
     img {
         width: 68px;
         height: 68px;
         border-radius: 34px;
     }
 }
-.index-investor-item  {
+
+.index-investor-item {
     margin-top: 10px;
-    height: 252px;
+    height: 182px;
+
     .el-card {
-        height: 236px;
+        height: 176px;
         border: 1px solid #f3f6ff;
         &:hover {
             background: #f7f9fe;
@@ -183,12 +219,14 @@
 
 .index-investor-item-text {
     margin-bottom: 20px;
+
     .text-real_name {
         margin-top: 10px;
         line-height: 30px;
         font-size: 16px;
         font-weight: 600;
     }
+
     .text-position {
         color: #999;
         font-size: 14px;
@@ -197,9 +235,10 @@
 }
 
 .index-investors {
-    &>.el-card {
+    height: 286px;
+    .el-card {
         &>div {
-            padding-top: 10px;
+            padding-top: 20px;
         }
     }
 }

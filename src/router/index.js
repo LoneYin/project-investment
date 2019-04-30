@@ -50,12 +50,20 @@ import LoginSuccess from '@/views/LoginSuccess.vue'
 // article
 import Article from '@/views/article/Article.vue'
 
+// 500/404
+import Page500 from '@/views/500.vue'
+import NotFound from '@/views/404.vue'
+
 Vue.use(Router)
 
 const router = new Router({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes: [
+		{
+			path: '/login_success',
+			component: LoginSuccess
+		},
 		{
 			path: '/',
 			component: Home,
@@ -208,12 +216,18 @@ const router = new Router({
 					name: 'article',
 					component: Article,
 					props: true
+				},
+				{
+					path: '/error',
+					name: 'page500',
+					component: Page500
+				},
+				{
+					path: '*',
+					name: 'notfound',
+					component: NotFound
 				}
 			]
-		},
-		{
-			path: '/login_success',
-			component: LoginSuccess
 		}
 	]
 })

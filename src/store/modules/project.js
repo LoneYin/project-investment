@@ -40,7 +40,7 @@ export default {
         async getProjectDetail({ rootState, commit}, projectId) {
             const res = await getData(`/index/project/${projectId}`)
             res.data && commit('GET_PROJECT_DETAIL', res.data)
-            if (res.data && res.data.more && rootState.app.currentUserData && rootState.app.currentUserData.authentication == 2) {
+            if (res.data && res.data.more && rootState.app.currentUserData && rootState.app.currentUserData.authentication == 1) {
                 const more = await getData(`/index/project/more`, { project_id: projectId })
                 more.data && commit('SET_MORE_DETAIL_INFOS', more.data)
             }

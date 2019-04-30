@@ -236,12 +236,6 @@ export default {
 					this.isSubmiting = false
 				})
 		},
-		handleChange(val) {
-			console.log(val)
-			if (val && !isNaN(parseInt(val))) {
-				console.log(val)
-			}
-		},
 		handleBack() {
 			this.$router.push({ path: '/' })
 		}

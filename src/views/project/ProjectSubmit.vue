@@ -24,10 +24,10 @@
 					ref="primaryForm"
 					v-show="activeStep == 0"
 				>
-					<el-form-item label="项目名称" prop="name">
+					<el-form-item label="项目名称" prop="name" max="30">
 						<el-input placeholder="请输入项目名称" v-model="primaryForm.name"></el-input>
 					</el-form-item>
-					<el-form-item label="工商注册公司全称">
+					<el-form-item label="工商注册公司全称" max="30">
 						<el-input placeholder="请输入公司全称" v-model="primaryForm.company_name"></el-input>
 					</el-form-item>
 					<el-form-item class="is-required" label="项目Logo">

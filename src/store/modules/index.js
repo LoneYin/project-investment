@@ -1,10 +1,11 @@
-import { getData } from '@/http'
+import { getData, postData } from '@/http'
 import {
     GET_ADVERTISEMENT_LIST,
     GET_DAILY_PROJECTS_LIST,
     GET_HOT_PROJECTS_LIST,
     GET_AUTHENTICATED_USERS_LIST,
-    GET_RECOMMENDED_INVESTORS_LIST
+    GET_RECOMMENDED_INVESTORS_LIST,
+    GET_RECENT_PROJECT_LIST
 } from '../mutations-types'
 
 export default {
@@ -15,7 +16,8 @@ export default {
         authenticatedUsersList: undefined,
         consultInvestorsList: undefined,
         activeInvestorsList: undefined,
-        popularInvestorsList: undefined
+        popularInvestorsList: undefined,
+        recentProjectsList: undefined
     },
     mutations: {
         [GET_ADVERTISEMENT_LIST](state, payload) {
@@ -26,6 +28,9 @@ export default {
         },
         [GET_HOT_PROJECTS_LIST](state, payload) {
             state.hotProjectsList = [...payload.data]
+        },
+        [GET_RECENT_PROJECT_LIST](state, payload) {
+            state.recentProjectsList = [...payload.data]
         },
         [GET_AUTHENTICATED_USERS_LIST](state, payload) {
             state.authenticatedUsersList = [...payload.data]
@@ -52,6 +57,12 @@ export default {
                 page_size: 6
             })
             res.data && commit('GET_HOT_PROJECTS_LIST', res.data)
+        },
+        async getRecentProjectsList({ commit }) {
+            const res = await postData('/index/project/newPeoject', {
+                page_size: 6
+            })
+            res.data && commit('GET_RECENT_PROJECT_LIST', res.data)
         },
         async getAuthenticatedUsersList({ commit }) {
             const res = await getData('/index/business')
