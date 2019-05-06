@@ -1,4 +1,4 @@
-import { getData, postData } from '@/http'
+import { getData } from '@/http'
 import {
     GET_ADVERTISEMENT_LIST,
     GET_DAILY_PROJECTS_LIST,
@@ -59,7 +59,7 @@ export default {
             res.data && commit('GET_HOT_PROJECTS_LIST', res.data)
         },
         async getRecentProjectsList({ commit }) {
-            const res = await postData('/index/project/newPeoject', {
+            const res = await getData('/index/project/index_new', {
                 page_size: 6
             })
             res.data && commit('GET_RECENT_PROJECT_LIST', res.data)

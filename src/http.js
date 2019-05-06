@@ -72,6 +72,6 @@ axios.interceptors.response.use(
 		} else if (err.response.status === 500) {
 			router.push({ path: '/error' })
 		}
-		// return Promise.reject(err.response)
+		return Promise.reject(err.response)
 	}
 )

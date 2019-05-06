@@ -4,12 +4,12 @@
 			<el-card class="no-border project-detail-header">
 				<div class="header-container">
 					<el-row class="header-title">
-						<el-col :span="6">
+						<el-col class="pull-left project-logo-box">
 							<div class="project-logo">
 								<img :src="projectDetail.logo" alt>
 							</div>
 						</el-col>
-						<el-col :span="18" class="project-text">
+						<el-col class="project-text pull-left">
 							<p class="project-info">
 								<span :title="projectDetail.name" class="text-name text-ellipsis">{{projectDetail.name}}</span>
 								<span class="text-industry">{{projectDetail.industry.name}}</span>
@@ -39,10 +39,26 @@
 					<div class="header-navbar">
 						<el-tabs @tab-click="handleTabsClick" v-model="currentName">
 							<el-tab-pane label="项目介绍" name="projectIntroduce"></el-tab-pane>
-							<el-tab-pane label="融资历史" name="investmentHistory"></el-tab-pane>
-							<el-tab-pane label="创始团队" name="projectTeam"></el-tab-pane>
-							<el-tab-pane label="项目数据" name="projectData"></el-tab-pane>
-							<el-tab-pane label="相关新闻" name="projectNews"></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.experience && projectDetail.experience.length > 0"
+								label="融资历史"
+								name="investmentHistory"
+							></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.team_advantage || (projectDetail.team && projectDetail.team.length > 0)"
+								label="创始团队"
+								name="projectTeam"
+							></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.android_download_address || projectDetail.ios_download_address || projectDetail.official_website || projectDetail.wechat_subscription"
+								label="项目数据"
+								name="projectData"
+							></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.media_coverage && projectDetail.media_coverage.length > 0 && projectDetail.media_coverage[0]"
+								label="相关新闻"
+								name="projectNews"
+							></el-tab-pane>
 							<el-tab-pane label="类似项目" name="similarProjects"></el-tab-pane>
 						</el-tabs>
 					</div>
@@ -97,12 +113,16 @@
 						<p v-else>暂无项目介绍</p>
 					</div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="investmentHistory">
+				<el-card
+					class="no-border prject-detail-section"
+					id="investmentHistory"
+					v-if="projectDetail.experience && projectDetail.experience.length > 0"
+				>
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-money"></i>融资历史
 					</div>
 					<div class="section-content">
-						<template v-if="projectDetail.experience && projectDetail.experience.length > 0">
+						<template>
 							<div
 								:key="index"
 								class="section-history-item"
@@ -116,15 +136,20 @@
 								</div>
 								<div class="history-info">
 									<div class="info-angle"></div>
-									<span class="info-round-name">{{ item.experience_name }}</span>
+									<a :href="item.new_url || '#'" target="_blank">
+										<span class="info-round-name">{{ item.experience_name }}</span>
+									</a>
 									<span class="info-round-detail">
 										<p class="info-round-detail-row">
 											<span class="info-round-price-title">融资金额</span>
 											<span class="info-round-price">{{ item.financing_price }} 人民币</span>
 										</p>
 										<p class="info-round-detail-row">
-											<span class="info-round-investor">投资方</span>
-											<a class="info-round-investor-name" href="#">IMBA资本</a>
+											<span class="info-round-investor info-round-price-title">投资方</span>
+											<router-link
+												class="info-round-investor-name"
+												:to="`/investor/detail/${item.investor_id}`"
+											>{{ item.investor }}</router-link>
 										</p>
 									</span>
 									<!-- <span class="history-info-round-link">
@@ -133,23 +158,26 @@
 								</div>
 							</div>
 						</template>
-						<p v-else>暂无融资历史</p>
 					</div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="projectTeam">
+				<el-card
+					class="no-border prject-detail-section"
+					id="projectTeam"
+					v-if="projectDetail.team_advantage || (projectDetail.team && projectDetail.team.length > 0 && projectDetail.team[0].real_name)"
+				>
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-users"></i>创始团队
 					</div>
 					<div class="section-content">
-						<template
-							v-if="projectDetail.team_advantage || (projectDetail.team && projectDetail.team.length > 0)"
-						>
+						<template>
 							<div class="section-team-table">
 								<div class="team-advantage" v-if="projectDetail.team_advantage">
 									<h5>团队优势</h5>
 									<p>{{projectDetail.team_advantage}}</p>
 								</div>
-								<div v-if="projectDetail.team && projectDetail.team.length > 0">
+								<div
+									v-if="projectDetail.team && projectDetail.team.length > 0 && projectDetail.team[0].real_name"
+								>
 									<h5>成员信息</h5>
 									<el-table :data="projectDetail.team">
 										<el-table-column label="姓名" prop="real_name" width="160"></el-table-column>
@@ -159,17 +187,18 @@
 								</div>
 							</div>
 						</template>
-						<p v-else>暂无创始团队信息</p>
 					</div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="projectData">
+				<el-card
+					class="no-border prject-detail-section"
+					id="projectData"
+					v-if="projectDetail.android_download_address || projectDetail.ios_download_address || projectDetail.official_website || projectDetail.wechat_subscription"
+				>
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-bar-chart"></i>项目数据
 					</div>
 					<div class="section-content">
-						<div
-							v-if="projectDetail.android_download_address || projectDetail.ios_download_address || projectDetail.official_website || projectDetail.wechat_subscription"
-						>
+						<div>
 							<el-row>
 								<el-col :span="6">
 									<p>{{projectDetail.name}}</p>
@@ -222,17 +251,18 @@
 								</el-col>
 							</el-row>
 						</div>
-						<p v-else>暂无项目数据</p>
 					</div>
 				</el-card>
-				<el-card class="no-border prject-detail-section" id="projectNews">
+				<el-card
+					class="no-border prject-detail-section"
+					id="projectNews"
+					v-if="projectDetail.media_coverage && projectDetail.media_coverage.length > 0 && projectDetail.media_coverage[0]"
+				>
 					<div class="section-title" slot="header">
 						<i class="el-icon-fa-newspaper-o"></i>相关新闻
 					</div>
 					<div class="section-content">
-						<div
-							v-if="projectDetail.media_coverage && projectDetail.media_coverage.length > 0 && projectDetail.media_coverage[0]"
-						>
+						<div>
 							<el-row
 								v-for="(item, index) in projectDetail.media_coverage"
 								:key="index"
@@ -247,7 +277,6 @@
 								</el-col>
 							</el-row>
 						</div>
-						<p v-else>暂无相关新闻</p>
 					</div>
 				</el-card>
 				<el-card class="no-border prject-detail-section" id="similarProjects">
@@ -255,7 +284,7 @@
 						<i class="el-icon-fa-briefcase"></i>类似项目
 					</div>
 					<div class="section-content">
-						<div v-if="similarProjects && similarProjects.length > 0">
+						<div>
 							<template v-if="similarProjectsMeta && similarProjectsMeta.tags.length > 0">
 								<div class="tags-list">
 									<el-radio-group v-model="tagId" size="small" @change="handleTagChange">
@@ -267,62 +296,66 @@
 									</el-radio-group>
 								</div>
 							</template>
-							<el-table
-								:data="similarProjects"
-								style="wdith: 100%;"
-								row-class-name="similar-projects-item"
-								v-loading="tableLoading"
-								@row-click="handleTableRowClick"
-							>
-								<el-table-column label="项目" width="300">
-									<template slot-scope="scope">
-										<el-row>
-											<el-col :span="6">
-												<div class="item-logo">
-													<img :src="scope.row.logo" alt>
-												</div>
-											</el-col>
-											<el-col :span="18" class="item-text">
-												<p class="text-name">{{scope.row.name}}</p>
-												<p class="text-summary">{{scope.row.synopsis}}</p>
-												<!-- <p v-if="scope.row.tags.length > 0">
+							<template v-if="similarProjects && similarProjects.length > 0">
+								<el-table
+									:data="similarProjects"
+									style="wdith: 100%;"
+									row-class-name="similar-projects-item"
+									v-loading="tableLoading"
+									@row-click="handleTableRowClick"
+								>
+									<el-table-column label="项目" width="300">
+										<template slot-scope="scope">
+											<el-row>
+												<el-col :span="6">
+													<div class="item-logo">
+														<img :src="scope.row.logo" alt>
+													</div>
+												</el-col>
+												<el-col :span="18" class="item-text">
+													<p class="text-name">{{scope.row.name}}</p>
+													<p class="text-summary">{{scope.row.synopsis}}</p>
+													<!-- <p v-if="scope.row.tags.length > 0">
 													<span :key="item.tag_id" class="text-tag" v-for="item in scope.row.tags">
 														<i class="el-icon-fa-tags"></i>
 														{{item.name}}
 													</span>
-												</p>-->
-											</el-col>
-										</el-row>
-									</template>
-								</el-table-column>
-								<el-table-column label="行业">
-									<template slot-scope="scope">{{scope.row.industry_name || '—'}}</template>
-								</el-table-column>
-								<el-table-column label="轮次">
-									<template slot-scope="scope">{{scope.row.round_name || '未披露'}}</template>
-								</el-table-column>
-								<el-table-column label="所在地">
-									<template slot-scope="scope">{{scope.row.region_name || '—'}}</template>
-								</el-table-column>
-								<el-table-column label="成立时间">
-									<template
-										slot-scope="scope"
-									>{{scope.row.create_time ? scope.row.create_time.substring(0, 7) : scope.row.time}}</template>
-								</el-table-column>
-							</el-table>
-							<div style="text-align: center; margin-top: 10px; height: 32px;">
-								<div v-if="!tableLoading">
-									<template v-if="!loadAll">
-										<el-button size="small" v-if="!buttonLoading" @click="moreSimilarProjects">加载更多</el-button>
-										<el-button size="small" v-if="buttonLoading">
-											<i class="el-icon-loading"></i>加载中
-										</el-button>
-									</template>
-									<p v-else>没有更多数据了</p>
+													</p>-->
+												</el-col>
+											</el-row>
+										</template>
+									</el-table-column>
+									<el-table-column label="行业">
+										<template slot-scope="scope">{{scope.row.industry_name || '—'}}</template>
+									</el-table-column>
+									<el-table-column label="轮次">
+										<template slot-scope="scope">{{scope.row.round_name || '未披露'}}</template>
+									</el-table-column>
+									<el-table-column label="所在地">
+										<template slot-scope="scope">{{scope.row.region_name || '—'}}</template>
+									</el-table-column>
+									<el-table-column label="成立时间">
+										<template
+											slot-scope="scope"
+										>{{scope.row.create_time ? scope.row.create_time.substring(0, 7) : scope.row.time}}</template>
+									</el-table-column>
+								</el-table>
+								<div style="text-align: center; margin-top: 10px; height: 32px;">
+									<div v-if="!tableLoading">
+										<template v-if="!loadAll">
+											<el-button size="small" v-if="!buttonLoading" @click="moreSimilarProjects">加载更多</el-button>
+											<el-button size="small" v-if="buttonLoading">
+												<i class="el-icon-loading"></i>加载中
+											</el-button>
+										</template>
+										<p v-else>没有更多数据了</p>
+									</div>
 								</div>
-							</div>
+							</template>
+							<template v-else>
+								<p class="no-similar-project">暂无类似项目</p>
+							</template>
 						</div>
-						<p v-else>暂无类似</p>
 					</div>
 				</el-card>
 			</div>
@@ -334,10 +367,26 @@
 					<div class="header-navbar">
 						<el-tabs @tab-click="handleTabsClick" v-model="currentName">
 							<el-tab-pane label="项目介绍" name="projectIntroduce"></el-tab-pane>
-							<el-tab-pane label="融资历史" name="investmentHistory"></el-tab-pane>
-							<el-tab-pane label="创始团队" name="projectTeam"></el-tab-pane>
-							<el-tab-pane label="项目数据" name="projectData"></el-tab-pane>
-							<el-tab-pane label="相关新闻" name="projectNews"></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.experience && projectDetail.experience.length > 0"
+								label="融资历史"
+								name="investmentHistory"
+							></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.team_advantage || (projectDetail.team && projectDetail.team.length > 0)"
+								label="创始团队"
+								name="projectTeam"
+							></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.android_download_address || projectDetail.ios_download_address || projectDetail.official_website || projectDetail.wechat_subscription"
+								label="项目数据"
+								name="projectData"
+							></el-tab-pane>
+							<el-tab-pane
+								v-if="projectDetail.media_coverage && projectDetail.media_coverage.length > 0 && projectDetail.media_coverage[0]"
+								label="相关新闻"
+								name="projectNews"
+							></el-tab-pane>
 							<el-tab-pane label="类似项目" name="similarProjects"></el-tab-pane>
 						</el-tabs>
 					</div>
@@ -450,10 +499,7 @@ export default {
 			}
 		},
 		tagsList() {
-			return [
-				{ tag_id: 0, tag_name: '综合' },
-				...this.similarProjectsMeta.tags
-			]
+			return [{ tag_id: 0, tag_name: '综合' }, ...this.similarProjectsMeta.tags]
 		},
 		loadAll() {
 			return this.page == this.similarProjectsMeta.pages
@@ -488,7 +534,10 @@ export default {
 					this.currentName = this.anchorNameArr[0]
 				} else {
 					for (let i = 1; i < this.anchorArr.length; i++) {
-						if (i == this.anchorArr.length - 1 && container.scrollTop >= this.anchorArr[i]) {
+						if (
+							i == this.anchorArr.length - 1 &&
+							container.scrollTop >= this.anchorArr[i]
+						) {
 							this.currentName = this.anchorNameArr[i]
 						} else {
 							if (
@@ -501,38 +550,10 @@ export default {
 						}
 					}
 				}
-
-				// if (container.scrollTop < this.anchorArr[1]) {
-				// 	this.currentName = this.anchorNameArr[0]
-				// } else if (
-				// 	container.scrollTop >= this.anchorArr[1] &&
-				// 	container.scrollTop < this.anchorArr[2]
-				// ) {
-				// 	this.currentName = this.anchorNameArr[1]
-				// } else if (
-				// 	container.scrollTop >= this.anchorArr[2] &&
-				// 	container.scrollTop < this.anchorArr[3]
-				// ) {
-				// 	this.currentName = this.anchorNameArr[2]
-				// } else if (
-				// 	container.scrollTop >= this.anchorArr[3] &&
-				// 	container.scrollTop < this.anchorArr[4]
-				// ) {
-				// 	this.currentName = this.anchorNameArr[3]
-				// } else if (
-				// 	container.scrollTop >= this.anchorArr[4] &&
-				// 	container.scrollTop < this.anchorArr[5]
-				// ) {
-				// 	this.currentName = this.anchorNameArr[4]
-				// } else {
-				// 	this.currentName = this.anchorNameArr[5]
-				// }
 			}
 		},
 		initAnchorArr() {
-			const sectionList = document.querySelectorAll(
-				'.prject-detail-section'
-			)
+			const sectionList = document.querySelectorAll('.prject-detail-section')
 			Array.from(sectionList).forEach(item => {
 				this.anchorArr.push(item.offsetTop)
 				this.anchorNameArr.push(item.id)
@@ -615,9 +636,7 @@ export default {
 				if (this.ableToDownload == 1) {
 					this.visibleDownloadBp = true
 				} else if (this.ableToDownload == 2) {
-					this.$message.success(
-						'您已发送过申请，请耐心等待项目所有人的回复'
-					)
+					this.$message.success('您已发送过申请，请耐心等待项目所有人的回复')
 				} else if (this.ableToDownload == 3) {
 					if (this.bpPath) {
 						document.querySelector('#BpDownload').click()
@@ -648,9 +667,7 @@ export default {
 				project_id: this.projectId
 			}).then(
 				() => {
-					this.$message.success(
-						'已成功发送申请，正在等待项目所有者回复'
-					)
+					this.$message.success('已成功发送申请，正在等待项目所有者回复')
 					this.ableToDownload = 2
 				},
 				err => {
@@ -677,10 +694,11 @@ export default {
 		})
 
 		setTimeout(() => {
+			this.navbarWidth = document.querySelector('.project-detail').offsetWidth
+		}, 300)
+
+		setTimeout(() => {
 			this.initAnchorArr()
-			this.navbarWidth = document.querySelector(
-				'.project-detail'
-			).offsetWidth
 		}, 1000)
 	},
 	destroyed() {
@@ -693,9 +711,7 @@ export default {
 		const projectId = to.path.substring(16)
 		const url = window.location.href
 		const lastIndex = url.lastIndexOf('/')
-		window.location.replace(
-			`${url.substring(0, lastIndex + 1) + projectId}`
-		)
+		window.location.replace(`${url.substring(0, lastIndex + 1) + projectId}`)
 	}
 }
 </script>

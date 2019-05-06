@@ -23,34 +23,6 @@
 				<div class="index-projects">
 					<el-card class="no-border">
 						<el-tabs v-model="activeProjectType">
-							<el-tab-pane label="最新项目" name="new_project">
-								<el-row v-if="recentProjectsList">
-									<el-col
-										:key="item.project_id"
-										:span="8"
-										class="index-project-item"
-										v-for="item in recentProjectsList"
-									>
-										<el-card shadow="hover" @click.native="toProjectDetail(item.project_id)">
-											<el-row>
-												<el-col :span="8">
-													<div class="index-project-item-logo">
-														<img :src="item.logo" alt>
-													</div>
-												</el-col>
-												<el-col :span="16" class="index-project-item-text">
-													<p style="line-height: 20px;">
-														<span class="text-name text-ellipsis">{{item.name}}</span>
-														<span class="text-industry_name">{{item.industry_name}}</span>
-													</p>
-													<p class="text-round_name">{{item.round_name || '暂未披露'}}</p>
-													<p class="text-summary">{{item.synopsis}}</p>
-												</el-col>
-											</el-row>
-										</el-card>
-									</el-col>
-								</el-row>
-							</el-tab-pane>
 							<el-tab-pane label="每日精选" name="daily_project">
 								<el-row v-if="dailyProjectsList">
 									<el-col
@@ -86,6 +58,34 @@
 										:span="8"
 										class="index-project-item"
 										v-for="item in hotProjectsList"
+									>
+										<el-card shadow="hover" @click.native="toProjectDetail(item.project_id)">
+											<el-row>
+												<el-col :span="8">
+													<div class="index-project-item-logo">
+														<img :src="item.logo" alt>
+													</div>
+												</el-col>
+												<el-col :span="16" class="index-project-item-text">
+													<p style="line-height: 20px;">
+														<span class="text-name text-ellipsis">{{item.name}}</span>
+														<span class="text-industry_name">{{item.industry_name}}</span>
+													</p>
+													<p class="text-round_name">{{item.round_name || '暂未披露'}}</p>
+													<p class="text-summary">{{item.synopsis}}</p>
+												</el-col>
+											</el-row>
+										</el-card>
+									</el-col>
+								</el-row>
+							</el-tab-pane>
+							<el-tab-pane label="最新项目" name="new_project">
+								<el-row v-if="recentProjectsList">
+									<el-col
+										:key="item.project_id"
+										:span="8"
+										class="index-project-item"
+										v-for="item in recentProjectsList"
 									>
 										<el-card shadow="hover" @click.native="toProjectDetail(item.project_id)">
 											<el-row>
@@ -246,7 +246,7 @@ import { mapState, mapActions } from 'vuex'
 export default {
 	data() {
 		return {
-			activeProjectType: 'new_project',
+			activeProjectType: 'daily_project',
 			activeInvestorType: 'consult_investor'
 		}
 	},
