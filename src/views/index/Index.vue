@@ -40,11 +40,14 @@
 												</el-col>
 												<el-col :span="16" class="index-project-item-text">
 													<p style="line-height: 20px;">
-														<span class="text-name text-ellipsis">{{item.name}}</span>
-														<span class="text-industry_name">{{item.industry_name}}</span>
+														<span class="text-name text-ellipsis" :title="item.name">{{item.name}}</span>
 													</p>
-													<p class="text-round_name">{{item.round_name || '暂未披露'}}</p>
-													<p class="text-summary">{{item.synopsis}}</p>
+													<p class="text-round_name">
+														<span>{{item.round_name || '暂未披露'}}</span>
+														<span class="text-middle-point"></span>
+														<span>{{item.industry_name}}</span>
+													</p>
+													<p class="text-summary" :title="item.synopsis">{{item.synopsis}}</p>
 												</el-col>
 											</el-row>
 										</el-card>
@@ -68,11 +71,14 @@
 												</el-col>
 												<el-col :span="16" class="index-project-item-text">
 													<p style="line-height: 20px;">
-														<span class="text-name text-ellipsis">{{item.name}}</span>
-														<span class="text-industry_name">{{item.industry_name}}</span>
+														<span class="text-name text-ellipsis" :title="item.name">{{item.name}}</span>
 													</p>
-													<p class="text-round_name">{{item.round_name || '暂未披露'}}</p>
-													<p class="text-summary">{{item.synopsis}}</p>
+													<p class="text-round_name">
+														<span>{{item.round_name || '暂未披露'}}</span>
+														<span class="text-middle-point"></span>
+														<span>{{item.industry_name}}</span>
+													</p>
+													<p class="text-summary" :title="item.synopsis">{{item.synopsis}}</p>
 												</el-col>
 											</el-row>
 										</el-card>
@@ -96,11 +102,14 @@
 												</el-col>
 												<el-col :span="16" class="index-project-item-text">
 													<p style="line-height: 20px;">
-														<span class="text-name text-ellipsis">{{item.name}}</span>
-														<span class="text-industry_name">{{item.industry_name}}</span>
+														<span class="text-name text-ellipsis" :title="item.name">{{item.name}}</span>
 													</p>
-													<p class="text-round_name">{{item.round_name || '暂未披露'}}</p>
-													<p class="text-summary">{{item.synopsis}}</p>
+													<p class="text-round_name">
+														<span>{{item.round_name || '暂未披露'}}</span>
+														<span class="text-middle-point"></span>
+														<span>{{item.industry_name}}</span>
+													</p>
+													<p class="text-summary" :title="item.synopsis">{{item.synopsis}}</p>
 												</el-col>
 											</el-row>
 										</el-card>
@@ -207,12 +216,12 @@
 								<el-row>
 									<el-col :span="10">
 										<div class="index-users-item-avatar">
-											<img :src="item.investors.user_image || ''" alt>
+											<img :src="item.user_image || '/img/default-user.jpg'" alt>
 										</div>
 									</el-col>
 									<el-col :span="14" class="index-users-item-text">
-										<p class="text-full_name">{{item.investors.real_name || ''}}</p>
-										<p class="text-position">{{item.investors.position || ''}}</p>
+										<p class="text-full_name">{{item.real_name || ''}}</p>
+										<p class="text-position">{{item.position || ''}}</p>
 									</el-col>
 								</el-row>
 							</li>

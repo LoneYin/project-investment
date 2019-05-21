@@ -215,7 +215,7 @@
 							</el-upload>
 						</el-form-item>
 						<el-form-item label="BP查看设置" v-show="primaryForm.business_plan">
-							<el-checkbox v-model="primaryForm.is_bp">需要投资人申请才能查看您的BP</el-checkbox>
+							<el-checkbox v-model="primaryForm.is_bp" :true-label="1" :false-label="0">需要投资人申请才能查看您的BP</el-checkbox>
 						</el-form-item>
 					</div>
 					<el-form-item label="商业计划书" v-if="primaryForm.is_financing !== 1">
@@ -241,7 +241,7 @@
 						v-show="primaryForm.business_plan"
 						v-if="primaryForm.is_financing !== 1"
 					>
-						<el-checkbox v-model="primaryForm.is_bp">需要投资人申请才能查看您的BP</el-checkbox>
+						<el-checkbox v-model="primaryForm.is_bp" :true-label="1" :false-label="0">需要投资人申请才能查看您的BP</el-checkbox>
 					</el-form-item>
 
 					<el-form-item>
@@ -537,7 +537,7 @@ export default {
 				financing_price: undefined, // 融资金额
 				financing_unit: 1, // 融资金额单位 1人民币 2美元
 				is_financing: '', // 1融资中 2不需要融资
-				is_bp: false // 0 未选中 1选中
+				is_bp: 1 // 0 未选中 1选中
 			},
 			primaryRules: {
 				name: [{ required: true, message: '项目名称不能为空' }],

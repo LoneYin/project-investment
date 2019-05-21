@@ -1,6 +1,7 @@
 <template>
 	<div class="project-detail" v-loading="init">
 		<template v-if="projectDetail">
+			<h1 style="display: hidden;">{{projectDetail.synopsis}}</h1>
 			<el-card class="no-border project-detail-header">
 				<div class="header-container">
 					<el-row class="header-title">

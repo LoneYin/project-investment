@@ -33,7 +33,7 @@ export default {
             state.recentProjectsList = [...payload.data]
         },
         [GET_AUTHENTICATED_USERS_LIST](state, payload) {
-            state.authenticatedUsersList = [...payload.data]
+            state.authenticatedUsersList = [...payload]
         },
         [GET_RECOMMENDED_INVESTORS_LIST](state, payload) {
             state.consultInvestorsList = [...payload.consultInvestorsList]
